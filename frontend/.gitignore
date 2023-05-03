@@ -1,0 +1,6 @@
+# dependencies
+/node_modules
+
+# testing
+/karma.conf.js
+/protractor.conf.js
