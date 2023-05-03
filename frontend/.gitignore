@@ -4,3 +4,5 @@
 # testing
 /karma.conf.js
 /protractor.conf.js
+
+/.angular/cache
