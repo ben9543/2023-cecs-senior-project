@@ -1,1 +1,64 @@
-<p>log-in works!</p>
+<div class="middle">
+    <img src="assets/Logo/ssl.png" alt="Logo">
+</div>
+<div class="container_form">
+    <h2>Log In</h2>
+    <form
+      [formGroup]="login"
+      (ngSubmit)="onSubmit()"
+      #formDirective="ngForm"
+    >
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Email"
+        />
+        <mat-error
+        >
+          <span
+            >Please enter an email address</span
+          >
+          <span
+            >Please enter a valid email address</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Password"
+        />
+        <mat-error
+          >Please enter a password</mat-error
+        >
+      </mat-form-field>
+      <div class = "row">
+        <div class = 'btn-primary'>
+            <button
+                mat-raised-button
+                color="primary"
+                routerLink="/signup"
+            >
+            Sign Up
+            </button>
+        </div>
+        <div class = 'btn-secondary'>
+            <button
+            mat-raised-button
+            type="submit"
+            color="primary"
+          >
+          Sign In
+          </button>
+
+        </div>
+      </div>
+      <div class="forgot-password">
+        <a>Forgot Password?</a>
+      </div>
+    </form>
+  </div>
