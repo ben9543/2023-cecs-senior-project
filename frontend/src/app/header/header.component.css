@@ -1,0 +1,263 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 251, 240, 0.8);
+    height: 20%;
+    width: 100%;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+
+.button_header{
+  align-items: center;
+  height: 50px;
+  width: 50px;
+}
+button.mdc-icon-button{
+  padding: 0;
+}
+mat-icon{
+  font-size: 50px;
+  height: 50px;
+  width: 50px;
+  padding: 0;
+  color: #007F7F;
+}
+mat-icon:focus {
+  outline: none;
+}
+
+  
+  .left {
+    display: flex;
+    align-items: center;
+    top: 35px;
+    border-radius: 0px;
+
+  }
+
+  .middle {
+    display: flex;
+    align-items: center;
+  }
+  
+  .middle img {
+    height: 300px;
+  }
+  
+  .right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu-icon {
+    border: none;
+    height: 70px;
+    width: 70px;
+    left: -40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -10px;
+  }
+
+  .profile-icon {
+    background-color: #007F7F;
+    border: none;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -20px;
+  }
+
+#filterIcon {
+    position: relative;
+    margin-top: -5px;
+}
+  
+#overlayContainerMenu {
+    position: relative;
+    right: 0;
+    z-index: 1;
+    background-color: #FFFBF0;
+    height: 500px;
+    width: 300px;
+}
+
+#overlayContainerProfile {
+  position: absolute;;
+  top: 60px;
+  right: 0px;
+  background-color: #FFFBF0;
+  height: 500px;
+  width: 200px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+#overlayContainer {
+  position: absolute;;
+  top: 60px;
+  left: -5px;
+  background-color: #FFFBF0;
+  height: 500px;
+  width: 200px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+mat-sidenav.mat-drawer-opened{
+  width: 300px;
+}
+
+.toolbar-item-spacer {
+  flex: 1 1 auto;
+}
+
+.app-container {
+  height: 90%;
+  width: 200px;
+  margin-top: 150px;;
+  position: fixed;
+  background: none !important;
+}  
+
+.app-sidenav {
+  width: 100px;
+  margin-top: 1.5%;
+  background-color: rgba(255, 251, 240, 0.8) !important;
+  margin-left: -20px;
+}
+
+.app-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+} 
+
+mat-sidenav.mat-drawer-opened[_ngcontent-qpr-c40]{
+  width: 200px;
+}
+
+mat-nav-list{
+  padding-top: 20%;
+
+}
+
+mat-list-item{
+  padding: 20%;
+}
+.mat-list-item-content {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .customize {
+  background-color: rgba(255, 251, 240, 0.7) !important;
+}
+
+span{
+  font-size:medium;
+  font-weight: 800;
+}
+
+/* Styles for devices with a screen size of 768px or less (such as mobile phones) */
+
+@media only screen and (max-width: 768px) {
+  mat-toolbar {
+    height: 15%;
+  }
+
+  .button_header{
+    height: 40px;
+    width: 40px;
+  }
+  mat-icon{
+    font-size: 40px;
+    height: 40px;
+    width: 40px;
+  }
+
+  .left {
+    top: 15px;
+  }
+
+  .middle img {
+    height: 200px;
+  }
+
+  .menu-icon {
+    height: 50px;
+    width: 50px;
+    left: -20px;
+  }
+
+  .profile-icon {
+    height: 40px;
+    width: 40px;
+    right: -10px;
+  }
+
+  #overlayContainerMenu {
+    height: 300px;
+    width: 200px;
+  }
+
+  #overlayContainerProfile {
+    top: 45px;
+    right: -10px;
+    height: 300px;
+    width: 150px;
+  }
+
+  #overlayContainer {
+    top: 45px;
+    left: -10px;
+    height: 300px;
+    width: 150px;
+  }
+
+  mat-sidenav.mat-drawer-opened{
+    width: 200px;
+  }
+
+  .app-container {
+    width: 100px;
+    margin-top: 104px;
+  }
+
+  .app-sidenav {
+    margin-top: -2%;
+    width: 80px;
+    margin-left: -10px;
+  }
+
+  mat-nav-list{
+    padding-top: 60%;
+  }
+
+  mat-list-item{
+    padding: 20%;
+    right: 20%;
+  }
+
+  .mat-list-item-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  span{
+    font-size: small;
+    font-weight: 600;
+  }
+}
