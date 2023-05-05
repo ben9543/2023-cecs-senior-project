@@ -1,19 +1,29 @@
 from flask import Flask, request, jsonify, make_response
-
+from auth.auth import Auth
 app = Flask(__name__)
+auth_instance = Auth({})
 
-# Dummy user database
-users = {
-    'user1': 'password1',
-    'user2': 'password2'
-}
+# Users Routes
 
-# Authentication function
-def auth(username, password):
-    if username in users and password == users[username]:
-        return True
-    else:
-        return False
+# GET user by ID
+@app.route('/api/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    pass
+
+# CREATE a user
+@app.route('/api/users', methods=['POST'])
+def create_user():
+    pass
+
+# EDIT user profile by ID
+@app.route('/api/users/<int:user_id>', methods=['PUT'])
+def edit_user(user_id):
+    pass
+
+@app.route('/api/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    pass
+
 
 # Protected route
 @app.route('/protected')
@@ -22,22 +32,20 @@ def protected():
     if not auth_header:
         return make_response(jsonify({'error': 'Authorization header missing'}), 401)
     token = auth_header.split(' ')[1]
-    try:
-        username, password = token.split(':')
-    except:
-        return make_response(jsonify({'error': 'Invalid token'}), 401)
-    if auth(username, password):
-        return jsonify({'message': 'Protected content!'})
+
+    if auth_instance.verify_token(token):
+        return make_response(jsonify({'message': 'Protected content!'}), 200)
     else:
         return make_response(jsonify({'error': 'Authentication failed'}), 401)
 
 # Login route
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
-    username = request.json.get('username')
+    email = request.json.get('email')
     password = request.json.get('password')
-    if auth(username, password):
-        return jsonify({'token': f'{username}:{password}'})
+    token = auth_instance.generate_jwt(email, password)
+    if token:
+        return make_response(jsonify({'message': 'Token generated', 'token':token}), 401)
     else:
         return make_response(jsonify({'error': 'Authentication failed'}), 401)
 
