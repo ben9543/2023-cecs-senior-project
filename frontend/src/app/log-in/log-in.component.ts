@@ -11,7 +11,8 @@ import { HttpClient } from '@angular/common/http';
 export class LogInComponent {
 
   login!: FormGroup;
-
+  errorMessage: string = '';
+  
   constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient ) { }
 
   ngOnInit(): void {
@@ -28,7 +29,15 @@ export class LogInComponent {
         this.http.post<any>('http://127.0.0.1:5000/login', { email: email, password: password }).subscribe(response => {
           localStorage.setItem('access_token', response.token);
           this.router.navigate(['/home']);
-        }); 
+        },
+        error => {
+          if (error.status === 401) {
+            this.errorMessage = 'Invalid credentials';
+          } else {
+            this.errorMessage = 'An unknown error occurred';
+          }
+        }
+        ); 
     }
   }
 }
