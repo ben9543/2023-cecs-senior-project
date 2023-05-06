@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -7,5 +8,20 @@ import { Subject } from 'rxjs';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  
+  isLoginPage: boolean = false;
+  isSignUpPage: boolean = false;
+
+  constructor(private router: Router) { }
+
+  ngOnInit(): void {
+    console.log('HeaderComponent initialized!');
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.isLoginPage = event.url.includes('/login');
+      this.isSignUpPage = event.url.includes('/signup');
+      console.log('isLoginPage:', this.isLoginPage);
+      console.log('isSignUpPage:', this.isSignUpPage);
+    });
+  }
 }

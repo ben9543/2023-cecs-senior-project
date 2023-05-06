@@ -2,3 +2,5 @@
 flask
 flask-cors
 pyjwt
+flask-jwt
+flask_login
