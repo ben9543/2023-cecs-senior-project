@@ -1,21 +1,60 @@
 from flask import Flask, request, jsonify, make_response
 from auth.auth import Auth
-app = Flask(__name__)
-auth_instance = Auth({})
+from users.users import Users
 
-# Users Routes
+app = Flask(__name__)
+
+# Should create db instance later
+db = {}
+
+# Creating Users
+users_instance = Users(db)
+
+# Creating auth instance
+auth_instance = Auth(db, users_instance)
+
+# Constants
+AUTH_HEADER_KEY  = 'Authorization'
+
+# Protect routes
+def login_required(func):
+    def secure_function(*args, **kwargs):
+        if(not AUTH_HEADER_KEY in request.headers):
+            return make_response(jsonify({'error': 'Authorization header missing'}), 401)
+        token = request.headers.get(AUTH_HEADER_KEY)
+        if not token:
+            return make_response(jsonify({'error': 'Token is missing'}), 401)
+        if auth_instance.verify_token(token):
+            return func(*args, **kwargs)
+        else:
+            return make_response(jsonify({'error': 'Authentication failed (invalid token)'}), 401)
+    secure_function.__name__ = func.__name__
+    return secure_function
+
+""" Users Routes """
+
+# GET all users
+@app.route('/api/users', methods=['GET'])
+@login_required
+def get_users():
+    data = users_instance.get_users()
+    return make_response(jsonify({"message": "Success", "response":data}), 200)
 
 # GET user by ID
 @app.route('/api/users/<int:user_id>', methods=['GET'])
+@login_required
 def get_user(user_id):
-    pass
+    user = users_instance.get_user(user_id)
+    if(user):
+        return make_response(jsonify({"message":"Success", "response":user}),200)
+    else:
+        return make_response(jsonify({"error": "No such user with the given id."}), 404)
 
-# CREATE a user
+# Will be implemented after we complete db_connection.py 
 @app.route('/api/users', methods=['POST'])
 def create_user():
     pass
 
-# EDIT user profile by ID
 @app.route('/api/users/<int:user_id>', methods=['PUT'])
 def edit_user(user_id):
     pass
@@ -25,18 +64,6 @@ def delete_user(user_id):
     pass
 
 
-# Protected route
-@app.route('/protected')
-def protected():
-    auth_header = request.headers.get('Authorization')
-    if not auth_header:
-        return make_response(jsonify({'error': 'Authorization header missing'}), 401)
-    token = auth_header.split(' ')[1]
-
-    if auth_instance.verify_token(token):
-        return make_response(jsonify({'message': 'Protected content!'}), 200)
-    else:
-        return make_response(jsonify({'error': 'Authentication failed'}), 401)
 
 # Login route
 @app.route('/api/login', methods=['POST'])
@@ -45,7 +72,7 @@ def login():
     password = request.json.get('password')
     token = auth_instance.generate_jwt(email, password)
     if token:
-        return make_response(jsonify({'message': 'Token generated', 'token':token}), 401)
+        return make_response(jsonify({'message': 'Token generated', 'token':token}), 200)
     else:
         return make_response(jsonify({'error': 'Authentication failed'}), 401)
 

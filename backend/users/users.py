@@ -1,5 +1,3 @@
-
-
 # Create a list of users for demonstration purposes
 users = [
     {'id': 1, 'email': 'a@gmail.com', 'password': 'password1'},
@@ -11,18 +9,18 @@ class Users:
     def __init__(self, db):
         self.db = db
 
-    def get_users():
+    def get_users(self):
         return users
 
     # GET user by ID
-    def get_user(user_id):
+    def get_user(self, user_id):
         user = next((user for user in users if user['id'] == user_id), None)
         if user:
             return user
         else:
             return None
 
-    def find_user_by_email(email):
+    def find_user_by_email(self, email):
         user = next((user for user in users if user['email'] == email), None)
         if user: 
             return user
