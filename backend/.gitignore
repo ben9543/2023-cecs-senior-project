@@ -1,2 +1,4 @@
 .env
 /env
+auth/__pycache__
+users/__pycache__
