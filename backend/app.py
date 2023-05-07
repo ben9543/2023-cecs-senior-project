@@ -75,9 +75,9 @@ def login():
     password = request.json.get('password')
     token = auth_instance.generate_jwt(email, password)
     if token:
-        return make_response(jsonify({'message': 'Token generated', 'token':token}), 200)
+        return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
     else:
-        return make_response(jsonify({'error': 'Authentication failed'}), 401)
+        return jsonify({'message': 'Invalid credentials', 'authenticated': False}), 401
 
 if __name__ == '__main__':
     app.run()
