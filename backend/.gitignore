@@ -1,4 +1,4 @@
 .env
 /env
-auth/__pycache__
-users/__pycache__
+__pycache__/
+

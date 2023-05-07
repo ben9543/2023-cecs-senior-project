@@ -26,7 +26,7 @@ export class LogInComponent {
     if (this.login.valid) {
         console.log(this.login.value)
         const { email, password } = this.login.value;
-        this.http.post<any>('http://127.0.0.1:5000/login', { email: email, password: password }).subscribe(response => {
+        this.http.post<any>('http://127.0.0.1:5000/api/login', { email: email, password: password }).subscribe(response => {
           localStorage.setItem('access_token', response.token);
           this.router.navigate(['/home']);
         },
