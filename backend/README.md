@@ -19,4 +19,6 @@ python3 -m venv env
 ./env/Script/activate
 ```
 
-### 3. 
+### 3. Run app.py 
+
+    python app.py
