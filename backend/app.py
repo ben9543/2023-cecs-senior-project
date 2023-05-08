@@ -79,5 +79,23 @@ def login():
     else:
         return jsonify({'message': 'Invalid credentials', 'authenticated': False}), 401
 
+@app.route('/api/signup', methods=['POST'])
+def signup():
+    username = request.json.get('name')
+    email = request.json.get('email')
+    college = request.json.get('college')
+    password = request.json.get('password')
+
+    # Check if user already exists
+    if users_instance.find_user_by_email(email):
+        return make_response(jsonify({'message': 'User already exists'}), 409)
+
+    # Create user
+    user = {'id': users_instance.count_users() + 1, 'username': username, 'email': email, 'college': college, 'password': password}
+    users_instance.add_user(user)
+
+    # Return success response
+    return make_response(jsonify({'message': 'User created successfully'}), 201)
+
 if __name__ == '__main__':
     app.run()
