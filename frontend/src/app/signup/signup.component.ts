@@ -25,7 +25,6 @@ export class SignupComponent {
   }
   
   onSubmit(): void {
-    this.router.navigate(['/login']);
     const { username, college, email, password } =this.signup.value;
     this.http.post('http://127.0.0.1:5000/api/signup', { username, college, email, password })
     .subscribe(
