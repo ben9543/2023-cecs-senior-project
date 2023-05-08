@@ -1,8 +1,8 @@
 # Create a list of users for demonstration purposes
 users = [
-    {'id': 1, 'email': 'a@gmail.com', 'password': 'password1'},
-    {'id': 2, 'email': 'b@gmail.com', 'password': 'password2'},
-    {'id': 3, 'email': 'c@gmail.com', 'password': 'password3'}
+    {'id': 1, 'username': 'aaa', 'email': 'a@gmail.com', 'college': 'CSULB', 'password': 'password1'},
+    {'id': 2, 'username': 'bbb', 'email': 'b@gmail.com', 'college': 'CSULB', 'password': 'password2'},
+    {'id': 3, 'username': 'ccc', 'email': 'c@gmail.com', 'college': 'CSULB', 'password': 'password3'}
 ]
 
 class Users:
@@ -26,15 +26,16 @@ class Users:
             return user
         else: 
             return None
+        
+    def add_user(self, user):
+        users.append(user)
+    
+    def count_users(self):
+        return len(users)
 
-    # # CREATE a user
-    # def create_user(email, password):
-    #     if email and password:
-    #         new_user = {'id': len(users) + 1, 'email': email, 'password': password}
-    #         users.append(new_user)
-    #         return (f"{new_user} had been created successfully")
-    #     else:
-    #         return "User not Found"
+    # CREATE a user
+    def add_user(self, user):
+        users.append(user)
 
     # # EDIT user profile by ID
     # def edit_user(user_id):
@@ -54,5 +55,3 @@ class Users:
     #         (f"User had been deleted successfully")
     #     else:
     #         return "User not Found"
-
-        
