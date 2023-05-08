@@ -1,1 +1,106 @@
-<p>signup works!</p>
+<div class="middle">
+    <img src="assets/Logo/ssl.png" alt="Logo">
+</div>
+<div class="container_form">
+    <h2>Sign Up</h2>
+    <form
+      [formGroup]="signupForm"
+      (ngSubmit)="onSubmit()"
+      #formDirective="ngForm"
+    >
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          formControlName="username"
+          placeholder="Username"
+        />
+        <mat-error
+        >
+          <span
+            >Please enter username</span
+          >
+          <span
+            >Username is taken</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Email"
+        />
+        <mat-error
+        >
+          <span
+            >Please enter an email address</span
+          >
+          <span
+            >Please enter a valid email address</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>College</mat-label>
+        <input
+          matInput
+          formControlName="college"
+          placeholder="College"
+        />
+        <mat-error
+        >
+          <span
+            >Please enter your college</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Password"
+        />
+        <mat-error
+          >Please enter a password</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Conform Password</mat-label>
+        <input
+          matInput
+          formControlName="confirmPassword"
+          placeholder="Confirm Password"
+        />
+        <mat-error
+          >Please enter a password</mat-error
+        >
+        <mat-error
+          >Password don't match</mat-error
+        >
+      </mat-form-field>
+      <div class = "row">
+        <div class = 'btn-primary'>
+            <button
+                mat-raised-button
+                color="primary"
+                routerLink="/login"
+            >
+            Sign In
+            </button>
+        </div>
+        <div class = 'btn-secondary'>
+            <button
+            mat-raised-button
+            type="submit"
+            color="primary"
+          >
+          Sign Up
+          </button>
+        
+        </div>
+      </div>
+    </form>
+  </div>
