@@ -33,9 +33,14 @@ class Users:
     def count_users(self):
         return len(users)
 
-    # CREATE a user
-    def add_user(self, user):
-        users.append(user)
+    # # CREATE a user
+    # def create_user(email, password):
+    #     if email and password:
+    #         new_user = {'id': len(users) + 1, 'email': email, 'password': password}
+    #         users.append(new_user)
+    #         return (f"{new_user} had been created successfully")
+    #     else:
+    #         return "User not Found"
 
     # # EDIT user profile by ID
     # def edit_user(user_id):
