@@ -55,43 +55,6 @@ def get_user(user_id):
     else:
         return make_response(jsonify({"error": "No such user with the given id."}), 404)
 
-# Will be implemented after we complete db_connection.py 
-@app.route('/api/users', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    users_instance.add_user(data)
-    if(data):
-        return make_response(jsonify({"message": "Success"}), 201)
-    else:
-        return make_response(jsonify({"error": "Invalid parameters."}), 404)
-
-@app.route('/api/users/<int:user_id>', methods=['PUT'])
-def edit_user(user_id):
-    pass
-
-@app.route('/api/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    pass
-
-# Sign Up
-@app.route('/api/signup', methods=['POST'])
-def signup():
-    username = request.json.get('name')
-    email = request.json.get('email')
-    college = request.json.get('college')
-    password = request.json.get('password')
-
-    # Check if user already exists
-    if users_instance.find_user_by_email(email):
-        return make_response(jsonify({'message': 'User already exists'}), 409)
-
-    # Create user
-    user = {'id': users_instance.count_users() + 1, 'username': username, 'email': email, 'college': college, 'password': password}
-    users_instance.add_user(user)
-
-    # Return success response
-    return make_response(jsonify({'message': 'User created successfully'}), 201)
-
 # Login route
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -120,6 +83,15 @@ def signup():
 
     # Return success response
     return make_response(jsonify({'message': 'User created successfully'}), 201)
+
+
+@app.route('/api/users/<int:user_id>', methods=['PUT'])
+def edit_user(user_id):
+    pass
+
+@app.route('/api/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    pass
 
 if __name__ == '__main__':
     app.run()
