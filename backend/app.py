@@ -58,7 +58,13 @@ def get_user(user_id):
 # Will be implemented after we complete db_connection.py 
 @app.route('/api/users', methods=['POST'])
 def create_user():
-    pass
+    data = request.get_json()
+    users_instance.add_user(data)
+    if(data):
+        return make_response(jsonify({"message": "Success"}), 201)
+    else:
+        return make_response(jsonify({"error": "Invalid parameters."}), 404)
+
 
 @app.route('/api/users/<int:user_id>', methods=['PUT'])
 def edit_user(user_id):
