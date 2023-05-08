@@ -14,6 +14,7 @@
           matInput
           formControlName="email"
           placeholder="Email"
+          type="email"
         />
         <mat-error
         >
@@ -31,11 +32,15 @@
           matInput
           formControlName="password"
           placeholder="Password"
+          type="password"
         />
         <mat-error
           >Please enter a password</mat-error
         >
       </mat-form-field>
+      <div style="display: flex; justify-content: center; align-items: center; height: 100%">
+        <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+      </div>
       <div class = "row">
         <div class = 'btn-primary'>
             <button
