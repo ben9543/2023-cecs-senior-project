@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 from auth.auth import Auth
 from users.users import Users
+from studyspots.studyspots import StudySpots
 
 # Create Flask app
 app = Flask(__name__)
@@ -12,10 +13,13 @@ CORS(app)
 # Should create db instance later
 db = {}
 
-# Creating Users
+# Create Users instance
 users_instance = Users(db)
 
-# Creating auth instance
+# Create Studyspot instance
+studyspots_instance = StudySpots(db)
+
+# Create auth instance
 auth_instance = Auth(db, users_instance)
 
 # Constants
@@ -36,8 +40,11 @@ def login_required(func):
     secure_function.__name__ = func.__name__
     return secure_function
 
-""" Users Routes """
+""" Utility Functions """
+def parameter_check(data):
+    return True
 
+""" Users Routes """
 # GET all users
 @app.route('/api/users', methods=['GET'])
 @login_required
@@ -91,6 +98,50 @@ def edit_user(user_id):
 
 @app.route('/api/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
+    pass
+
+""" StudySpot API """
+@app.route('/api/studyspots', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def create_studyspot():
+    if request.method == 'GET':
+        return make_response(jsonify({
+                'message': 'OK', 
+                'data': studyspots_instance.get_studyspots()
+            }), 200)
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+        if parameter_check(data):
+            return make_response(jsonify({
+                    'message': 'Successfully created a studyspot.', 
+                    'data': True
+                }), 201)
+        else:
+            return make_response(jsonify({
+                    'message': 'Invalid Parmeters.', 
+                    'data': False
+                }), 201)
+    if request.method == 'PUT':
+        data = request.get_json(force=True)
+        return make_response(jsonify({
+                'message': 'Successfully updated the studyspot ', 
+                'data': True
+            }), 201)
+    if request.method == 'DELETE':
+        return make_response(jsonify({
+                'message': 'Successfully deleted the studyspot', 
+                'data': True
+            }), 201)
+
+
+# Studyspot search API
+@app.route('/api/studyspots/serach', methods=['POST'])
+def search_studyspot():
+    pass
+
+
+# Get a single studyspot by id
+@app.route('/api/studyspots/<int:studyspot_id>', methods=['GET'])
+def get_studyspot_by_id(studyspot_id):
     pass
 
 if __name__ == '__main__':
