@@ -24,20 +24,19 @@ CREATE TABLE Universities (
 CREATE TABLE Surveys(
     surveys_id INT NOT NULL,
     studyspots_id INT NOT NULL,
-    PRIMARY KEY (studyspots_id), -- Creating two pk might not work need a review
-    PRIMARY KEY (surveys_id),
+    PRIMARY KEY (studyspots_id,surveys_id), 
     survey_name VARCHAR(200),
-    survey_in_outdoor Boolean,
-    survey_noise_level INT NOT NULL, --1,2,3,4,5 range
-    survey_wifi INT NOT NULL, --1,2,3 range
-    survey_temp INT NOT NULL, --1,2,3 range
-    survey_rate FLOAT NOT NULL, --1,2,3,4,5 range
-    survey_ada Boolean,
+    survey_indoor Boolean, /*indoor: TRUE, outdoor: FALSE*/
+    survey_noise_level INT NOT NULL, /*1,2,3,4,5 range*/
+    survey_wifi INT NOT NULL, /*1,2,3 range*/
+    survey_temp INT NOT NULL, /*1,2,3 range*/
+    survey_rate FLOAT NOT NULL, /*1,2,3,4,5 range*/
+    survey_ada Boolean, /*ADA accomodation: TRUE, NO ADA: FALSE*/
+    survey_power_outlets Boolean,
+    survey_easy_to_find Boolean,
 
     FOREIGN KEY (studyspots_id) REFERENCES Studyspots(studyspots_id)
 
-
-    
 );
 
 -- Features: list
