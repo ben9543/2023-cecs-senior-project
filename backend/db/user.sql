@@ -21,23 +21,40 @@ CREATE TABLE Universities (
     university_zip INT NOT NULL
 );
 
-CREATE TABLE Surveys(
+CREATE TABLE Surveys (
     surveys_id INT NOT NULL,
     studyspots_id INT NOT NULL,
-    PRIMARY KEY (studyspots_id,surveys_id), 
-    survey_name VARCHAR(200),
-    survey_indoor Boolean, /*indoor: TRUE, outdoor: FALSE*/
-    survey_noise_level INT NOT NULL, /*1,2,3,4,5 range*/
-    survey_wifi INT NOT NULL, /*1,2,3 range*/
-    survey_temp INT NOT NULL, /*1,2,3 range*/
-    survey_rate FLOAT NOT NULL, /*1,2,3,4,5 range*/
-    survey_ada Boolean, /*ADA accomodation: TRUE, NO ADA: FALSE*/
-    survey_power_outlets Boolean,
-    survey_easy_to_find Boolean,
-
+    PRIMARY KEY (surveys_id, studyspots_id), 
+    survey_crowdedness_level INT NOT NULL, /*1, 2, 3, 4, 5 range*/
+    survey_noise_level INT NOT NULL, /*1, 2, 3, 4, 5 range*/
     FOREIGN KEY (studyspots_id) REFERENCES Studyspots(studyspots_id)
-
 );
+
+CREATE TABLE Reviews (
+    users_id INT NOT NULL,
+    reviews_id INT NOT NULL,
+    studyspots_id INT NOT NULL,
+    PRIMARY KEY (studyspots_id, users_id), 
+    reviews_comments VARCHAR(200),
+    reviews_indoor BOOLEAN, /*indoor: TRUE, outdoor: FALSE*/
+    reviews_wifi INT NOT NULL, /*1, 2, 3 range*/
+    reviews_temp INT NOT NULL, /*1, 2, 3 range*/
+    reviews_rate FLOAT NOT NULL, /*1, 2, 3, 4, 5 range*/
+    reviews_ada BOOLEAN, /*ADA accommodation: TRUE, NO ADA: FALSE*/
+    reviews_power_outlets BOOLEAN,
+    reviews_easy_to_find BOOLEAN,
+    FOREIGN KEY (users_id) REFERENCES Users(users_id)
+    FOREIGN KEY (studyspots_id) REFERENCES Studyspots(studyspots_id)
+);
+
+CREATE TABLE Favorites (
+    users_id INT NOT NULL,
+    studyspots_id INT NOT NULL,
+    PRIMARY KEY (studyspots_id, users_id), 
+    FOREIGN KEY (users_id) REFERENCES Users(users_id)
+    FOREIGN KEY (studyspots_id) REFERENCES Studyspots(studyspots_id)
+);
+
 
 -- Features: list
 -- Location: String

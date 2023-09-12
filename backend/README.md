@@ -38,6 +38,7 @@ python3 -m venv env
 - Power outlets (optional)
 - ADA Accessible (optional)
 - Easy to find (optional)
+
 #### API
 - `/studyspots`: POST
 - `/studyspots`: GET
