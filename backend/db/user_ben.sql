@@ -22,37 +22,37 @@ CREATE TABLE Universities (
 );
 
 CREATE TABLE Surveys (
-    surveys_id INT NOT NULL,
-    studyspots_id INT NOT NULL,
-    PRIMARY KEY (surveys_id, studyspots_id), 
-    survey_crowdedness_level INT NOT NULL, /*1, 2, 3, 4, 5 range*/
+    survey_id INT NOT NULL,
+    studyspot_id INT NOT NULL,
+    PRIMARY KEY (survey_id, studyspot_id), 
+    survey_crowdednes_level INT NOT NULL, /*1, 2, 3, 4, 5 range*/
     survey_noise_level INT NOT NULL, /*1, 2, 3, 4, 5 range*/
-    FOREIGN KEY (studyspots_id) REFERENCES Studyspots(studyspots_id)
+    FOREIGN KEY (studyspot_id) REFERENCES Studyspots(studyspot_id)
 );
 
 CREATE TABLE Reviews (
-    users_id INT NOT NULL,
-    reviews_id INT NOT NULL,
-    studyspots_id INT NOT NULL,
-    PRIMARY KEY (studyspots_id, users_id), 
-    reviews_comments VARCHAR(200),
-    reviews_indoor BOOLEAN, /*indoor: TRUE, outdoor: FALSE*/
-    reviews_wifi INT NOT NULL, /*1, 2, 3 range*/
-    reviews_temp INT NOT NULL, /*1, 2, 3 range*/
-    reviews_rate FLOAT NOT NULL, /*1, 2, 3, 4, 5 range*/
-    reviews_ada BOOLEAN, /*ADA accommodation: TRUE, NO ADA: FALSE*/
-    reviews_power_outlets BOOLEAN,
-    reviews_easy_to_find BOOLEAN,
-    FOREIGN KEY (users_id) REFERENCES Users(users_id),
-    FOREIGN KEY (studyspots_id) REFERENCES Studyspots(studyspots_id)
+    user_id INT NOT NULL,
+    review_id INT NOT NULL,
+    studyspot_id INT NOT NULL,
+    PRIMARY KEY (studyspot_id, user_id), 
+    review_comments VARCHAR(200),
+    review_indoor BOOLEAN, /*indoor: TRUE, outdoor: FALSE*/
+    review_wifi INT NOT NULL, /*1, 2, 3 range*/
+    review_temp INT NOT NULL, /*1, 2, 3 range*/
+    review_rate FLOAT NOT NULL, /*1, 2, 3, 4, 5 range*/
+    review_ada BOOLEAN, /*ADA accommodation: TRUE, NO ADA: FALSE*/
+    review_power_outlets BOOLEAN,
+    review_easy_to_find BOOLEAN,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (studyspot_id) REFERENCES Studyspots(studyspot_id)
 );
 
 CREATE TABLE Favorites (
-    users_id INT NOT NULL,
-    studyspots_id INT NOT NULL,
-    PRIMARY KEY (studyspots_id, users_id), 
-    FOREIGN KEY (users_id) REFERENCES Users(users_id),
-    FOREIGN KEY (studyspots_id) REFERENCES Studyspots(studyspots_id)
+    user_id INT NOT NULL,
+    studyspot_id INT NOT NULL,
+    PRIMARY KEY (studyspot_id, user_id), 
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (studyspot_id) REFERENCES Studyspots(studyspot_id)
 );
 
 
