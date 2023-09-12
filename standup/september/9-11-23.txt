@@ -3,7 +3,7 @@ What did you do yesterday?
 Amanuel -
 Holly -
 Deep -
-Sal -
+Sal - 
 Tony -
 Ben -
 Jose -
@@ -13,7 +13,7 @@ What will you do today?
 Amanuel -
 Holly -
 Deep -
-Sal -
+Sal - assign homescreen story and create branch
 Tony -
 Ben -
 Jose -
