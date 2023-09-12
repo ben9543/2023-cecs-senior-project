@@ -18,10 +18,11 @@ export class HeaderComponent {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      this.isLoginPage = event.url.includes('/login');
-      this.isSignUpPage = event.url.includes('/signup');
+      this.isLoginPage = event.urlAfterRedirects.includes('/login');
+      this.isSignUpPage = event.urlAfterRedirects.includes('/signup');
       console.log('isLoginPage:', this.isLoginPage);
       console.log('isSignUpPage:', this.isSignUpPage);
+      console.log('Event:', event);
     });
   }
 }

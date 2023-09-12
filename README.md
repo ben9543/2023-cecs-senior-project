@@ -33,6 +33,10 @@
 
     Angular CLI
 
+# Daily Update Sheet
+
+    https://docs.google.com/document/d/1QvbmgJZtz6De9V4yE0FrHBcLISRdBTr1RrME_d8EWP4/edit?usp=sharing
+
 # Confluence
 
     https://studying-spots.atlassian.net/wiki/spaces/SD/pages/
