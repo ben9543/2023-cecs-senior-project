@@ -1,1 +1,67 @@
-<p>settings works!</p>
+<app-header></app-header>
+<div class="container_form">
+    <h2>Edit Profile</h2>
+    <form
+      [formGroup]="edit"
+      (ngSubmit)="onSubmit()"
+      #formDirective="ngForm"
+    >
+    <mat-form-field>
+        <mat-label>Change Username</mat-label>
+        <input matInput formControlName="username" placeholder="Username" />
+        <mat-error *ngIf="edit.get('username')!.hasError('required')">
+          Please enter a username
+        </mat-error>
+        <mat-error *ngIf="edit.get('username')!.hasError('usernameTaken')">
+          Username is taken
+        </mat-error>
+        <mat-error *ngIf="edit.get('username')!.hasError('usernameEmpty')">
+          Username cannot be empty
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Change Email</mat-label>
+        <input matInput formControlName="email" placeholder="Email" />
+        <mat-error *ngIf="edit.get('email')!.hasError('required')">
+          Please enter an email address
+        </mat-error>
+        <mat-error *ngIf="edit.get('email')!.hasError('emailEmpty')">
+          Email address cannot be empty
+        </mat-error>
+        <mat-error *ngIf="edit.get('email')!.hasError('emailInvalid')">
+          Please enter a valid email address
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Change College</mat-label>
+        <input matInput formControlName="college" placeholder="College" />
+        <mat-error *ngIf="edit.get('college')!.hasError('required')">
+          Please enter your college
+        </mat-error>
+        <mat-error *ngIf="edit.get('college')!.hasError('collegeEmpty')">
+          College field cannot be empty
+        </mat-error>
+    </mat-form-field>
+      
+      <div class="row">
+        <div class = 'btn-secondary'>
+            <button
+                mat-raised-button
+                type="submit"
+                color="primary"
+            >
+            Save
+            </button>
+        </div>
+        <div class = 'btn-secondary'>
+            <button
+                mat-raised-button
+                color="primary"
+                routerLink="/change-password"
+            >
+            Change Password
+            </button>
+        </div>
+      </div>
+    </form>
+  </div>
