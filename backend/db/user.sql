@@ -43,7 +43,7 @@ CREATE TABLE Reviews (
     reviews_ada BOOLEAN, /*ADA accommodation: TRUE, NO ADA: FALSE*/
     reviews_power_outlets BOOLEAN,
     reviews_easy_to_find BOOLEAN,
-    FOREIGN KEY (users_id) REFERENCES Users(users_id)
+    FOREIGN KEY (users_id) REFERENCES Users(users_id),
     FOREIGN KEY (studyspots_id) REFERENCES Studyspots(studyspots_id)
 );
 
@@ -51,7 +51,7 @@ CREATE TABLE Favorites (
     users_id INT NOT NULL,
     studyspots_id INT NOT NULL,
     PRIMARY KEY (studyspots_id, users_id), 
-    FOREIGN KEY (users_id) REFERENCES Users(users_id)
+    FOREIGN KEY (users_id) REFERENCES Users(users_id),
     FOREIGN KEY (studyspots_id) REFERENCES Studyspots(studyspots_id)
 );
 
