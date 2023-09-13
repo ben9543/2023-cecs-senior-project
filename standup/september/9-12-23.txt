@@ -1,6 +1,6 @@
 What did you do yesterday?
 
-Amanuel - Finalized the settings page’s html and css and started working on the typescript.
+Amanuel - Complete the profile setting implementation [Frontend]. Profile setting has been completed and pushed to the dev branch. Commit ea388fb
 Holly -
 Deep -
 Sal - 
@@ -10,7 +10,7 @@ Jose -
 
 What will you do today?
 
-Amanuel - Complete the profile setting implementation [Frontend]. Profile setting has been completed and pushed to the dev branch. Commit ea388fb
+Amanuel - Organize and assign tickets
 Holly -
 Deep -
 Sal - assign homescreen story and create branch
