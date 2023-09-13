@@ -5,7 +5,7 @@ Holly -
 Deep -
 Sal - 
 Tony -
-Ben -
+Ben - Completed the base SQL table
 Jose -
 
 What will you do today?
@@ -15,7 +15,7 @@ Holly -
 Deep -
 Sal - assign homescreen story and create branch
 Tony -
-Ben -
+Ben - I am going to test our table catch errors before we convert it into Python codes using SQLAlchemy
 Jose -
 
 What is blocking your progress?
@@ -25,5 +25,5 @@ Holly -
 Deep -
 Sal -
 Tony -
-Ben -
+Ben - Testing in local DB
 Jose -
