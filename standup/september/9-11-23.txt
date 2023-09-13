@@ -5,7 +5,7 @@ Holly -
 Deep -
 Sal - 
 Tony -
-Ben -
+Ben - Finalized SQL tables. & Completed Studyspot API and made a commit to the dev branch.
 Jose -
 
 What will you do today?
@@ -15,7 +15,7 @@ Holly -
 Deep -
 Sal - assign homescreen story and create branch
 Tony -
-Ben -
+Ben - I’ll be working on finishing SQL tables and testing it on local DB. Also start writing SQLAlchemy Python codes.
 Jose -
 
 What is blocking your progress?
@@ -25,5 +25,5 @@ Holly -
 Deep -
 Sal -
 Tony -
-Ben -
+Ben - N/A
 Jose -
