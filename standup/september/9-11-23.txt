@@ -1,7 +1,7 @@
 What did you do yesterday?
 
 Amanuel - Finalized the settings page’s html and css and started working on the typescript.
-Holly -
+Holly - Created survey SQL table
 Deep -
 Sal - 
 Tony -
@@ -11,7 +11,7 @@ Jose -
 What will you do today?
 
 Amanuel - Complete the profile setting implementation [Frontend]. Profile setting has been completed and pushed to the dev branch. Commit ea388fb
-Holly -
+Holly - Finalize the sql tables 
 Deep -
 Sal - assign homescreen story and create branch
 Tony -
