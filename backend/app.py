@@ -2,13 +2,13 @@ from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from auth.auth import Auth
-from users.users import Users
-from studyspots.studyspots import StudySpots
+from users.users import User_API
+from studyspots.studyspots import StudySpots_API
 
 
 # Create a SQLAlchemy engine and connect to your database
 user = "postgres"
-password = "12341234"
+password = "****"
 hostname = "127.0.0.1"
 database_name = "test"
 DATABASE_URI = f"postgresql+psycopg2://{user}:{password}@{hostname}/{database_name}"
@@ -22,10 +22,10 @@ db = SQLAlchemy(app)
 CORS(app)
 
 # Create Users instance
-users_instance = Users(db)
+users_instance = User_API(db)
 
 # Create Studyspot instance
-studyspots_instance = StudySpots(db)
+studyspots_instance = StudySpots_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -51,6 +51,11 @@ def login_required(func):
 """ Utility Functions """
 def parameter_check(data):
     return True
+
+""" Test Routes """
+@app.route('/', methods=['GET'])
+def alive():
+    return make_response(jsonify({"message": "Success", "response":True}), 200)
 
 """ Users Routes """
 # GET all users
@@ -110,12 +115,20 @@ def delete_user(user_id):
 
 """ StudySpot API """
 @app.route('/api/studyspots', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def create_studyspot():
+def main_studyspot():
     if request.method == 'GET':
-        return make_response(jsonify({
+        try:
+            data = studyspots_instance.get_studyspots()
+            print(data)
+            return make_response(jsonify({
+                    'message': 'OK', 
+                    'data': data
+                }), 200)
+        except:
+            return make_response(jsonify({
                 'message': 'OK', 
-                'data': studyspots_instance.get_studyspots()
-            }), 200)
+                'data': False
+            }), 400)
     if request.method == 'POST':
         data = request.get_json(force=True)
         if parameter_check(data):

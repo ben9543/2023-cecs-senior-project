@@ -1,8 +1,11 @@
 from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import DeclarativeBase
 
-Base = declarative_base()
+# Adding dictionary parsing feature
+class Base(DeclarativeBase):
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class Universities(Base):
     __tablename__ = 'universities'
@@ -56,7 +59,6 @@ class Reviews(Base):
     review_ada = Column(Boolean)
     review_power_outlets = Column(Boolean)
     review_easy_to_find = Column(Boolean)
-
     studyspot = relationship("Studyspots")
     user = relationship("Users")
 

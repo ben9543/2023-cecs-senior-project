@@ -2,7 +2,7 @@ from db.db_connection_test import Users
 
 
 # API for CRUD Operations
-class Users():
+class User_API():
     def __init__(self, db):
         self.db = db
 
