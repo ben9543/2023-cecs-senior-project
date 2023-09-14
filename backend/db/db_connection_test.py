@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 # Create a SQLAlchemy engine and connect to your database
-user = "ben"
+user = "postgres"
 password = "12341234"
 hostname = "127.0.0.1"
 database_name = "senior_proj_test"
