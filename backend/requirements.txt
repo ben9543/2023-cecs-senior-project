@@ -1,6 +1,6 @@
 ###### Requirements without Version Specifiers ######
 flask
 flask-cors
+flask_sqlalchemy
 pyjwt
-flask-jwt
 flask_login
