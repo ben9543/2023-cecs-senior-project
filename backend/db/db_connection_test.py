@@ -2,13 +2,6 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, F
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-# Create a SQLAlchemy engine and connect to your database
-user = "postgres"
-password = "12341234"
-hostname = "127.0.0.1"
-database_name = "senior_proj_test"
-engine = create_engine(f"postgresql+psycopg2://{user}:{password}@{hostname}/{database_name}")
-
 Base = declarative_base()
 
 class Universities(Base):
