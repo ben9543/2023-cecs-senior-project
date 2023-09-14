@@ -1,69 +1,79 @@
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, Float, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime
 
+# Create a SQLAlchemy engine and connect to your database
 user = "ben"
 password = "12341234"
 hostname = "127.0.0.1"
 database_name = "senior_proj_test"
-
-
-# Create a SQLAlchemy engine and connect to your database
 engine = create_engine(f"postgresql+psycopg2://{user}:{password}@{hostname}/{database_name}")
 
 Base = declarative_base()
 
-# Define the Universities table
-class University(Base):
+class Universities(Base):
     __tablename__ = 'universities'
 
     university_id = Column(Integer, primary_key=True)
     university_name = Column(String(200))
     university_state = Column(String(2))
-    university_zip = Column(Integer, nullable=False)
+    university_zip = Column(Integer, nullable=False, unique=True)
 
-# Define the Users table
-class User(Base):
+class Studyspots(Base):
+    __tablename__ = 'studyspots'
+
+    studyspot_id = Column(Integer, primary_key=True)
+    studyspot_name = Column(String(254), unique=True)
+
+class Users(Base):
     __tablename__ = 'users'
 
     user_id = Column(Integer, primary_key=True)
     user_email = Column(String(254))
     user_name = Column(String(200))
     password = Column(String(512))
-    university_id = Column(Integer, ForeignKey('universities.university_id'))
+    university_id = Column(Integer, ForeignKey('universities.university_id'), nullable=False)
     user_photo = Column(String(250))
 
-    university = relationship('University')
+    university = relationship("Universities")
 
-# Define the Studyspots table
-class Studyspot(Base):
-    __tablename__ = 'studyspots'
-
-    studyspots_id = Column(Integer, primary_key=True)
-    university_id = Column(Integer, ForeignKey('universities.university_id'))
-    spot_name = Column(String(200))
-
-    university = relationship('University')
-
-# Define the Surveys table
-class Survey(Base):
+class Surveys(Base):
     __tablename__ = 'surveys'
 
-    surveys_id = Column(Integer, primary_key=True)
-    studyspots_id = Column(Integer, ForeignKey('studyspots.studyspots_id'))
-    survey_name = Column(String(200))
-    survey_indoor = Column(Boolean)
-    survey_noise_level = Column(Integer)
-    survey_wifi = Column(Integer)
-    survey_temp = Column(Integer)
-    survey_rate = Column(Float)
-    survey_ada = Column(Boolean)
-    survey_power_outlets = Column(Boolean)
-    survey_easy_to_find = Column(Boolean)
+    survey_id = Column(Integer, primary_key=True)
+    studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    survey_crowdednes_level = Column(Integer, nullable=False)
+    survey_noise_level = Column(Integer, nullable=False)
 
-    studyspot = relationship('Studyspot')
+    studyspot = relationship("Studyspots")
+    user = relationship("Users")
 
-# Create the tables in the database
-Base.metadata.create_all(engine)
+class Reviews(Base):
+    __tablename__ = 'reviews'
 
+    review_id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
+    review_comments = Column(String(200))
+    review_indoor = Column(Boolean)
+    review_wifi = Column(Integer, nullable=False)
+    review_temp = Column(Integer, nullable=False)
+    review_rate = Column(Float, nullable=False)
+    review_ada = Column(Boolean)
+    review_power_outlets = Column(Boolean)
+    review_easy_to_find = Column(Boolean)
+
+    studyspot = relationship("Studyspots")
+    user = relationship("Users")
+
+class Favorites(Base):
+    __tablename__ = 'favorites'
+
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
+
+    UniqueConstraint('user_id', 'studyspot_id', name='pk_fav')
+    
+    studyspot = relationship("Studyspots")
+    user = relationship("Users")
