@@ -2,7 +2,7 @@
 
 ## Installation
 
-### 1. Create the virtual environment
+### 1. Create the virtual environment (don't follow this if you have anaconda installed)
 
 ```bash
 # Windows
@@ -12,17 +12,35 @@ python -m venv env
 python3 -m venv env
 ```
 
-### 2. Activate the virtual environment
+### 2. Activate the virtual environment (don't follow this if you have anaconda installed)
 
 ```bash
 # Windows 
 ./env/Script/activate
 ```
 
-### 3. Run app.py 
+### 3. Set up the local database
 
-    python app.py
+- Install postgreSQL if you don't have.
+- Open terminal and type `psql`. Login with your credential.
+- Run `create database test`.
+- Modify `user` & `password` variables accordingly in `app.py`.
+- Open PgAdmin or any IDE you like, connect to your database and run the SQL commands in `/backend/db/main_table.sql`
+- Insert some data to test.
 
+### 4. Install dependencies
+
+- After you activate your virtual environment, do
+
+```
+pip install -r requirements.txt
+```
+
+### 5. Run the server
+
+```
+python app.py
+```
 
 ## Backend Dev Note 
 
