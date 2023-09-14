@@ -3,4 +3,5 @@ flask
 flask-cors
 flask_sqlalchemy
 pyjwt
+psycopg2
 flask_login

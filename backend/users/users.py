@@ -1,4 +1,4 @@
-from db_connection_test import Users
+from db.db_connection_test import Users
 
 
 # API for CRUD Operations

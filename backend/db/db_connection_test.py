@@ -60,13 +60,13 @@ class Reviews(Base):
     studyspot = relationship("Studyspots")
     user = relationship("Users")
 
-class Favorites(Base):
-    __tablename__ = 'favorites'
+# class Favorites(Base):
+#     __tablename__ = 'favorites'
 
-    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
-    studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
+#     user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+#     studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
 
-    UniqueConstraint('user_id', 'studyspot_id', name='pk_fav')
+#     UniqueConstraint('user_id', 'studyspot_id', name='pk_fav')
     
-    studyspot = relationship("Studyspots")
-    user = relationship("Users")
+#     studyspot = relationship("Studyspots")
+#     user = relationship("Users")

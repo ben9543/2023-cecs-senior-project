@@ -20,7 +20,7 @@ studyspots = [
 
 class StudySpots():
 
-    def __init__(self):
+    def __init__(self, db):
         pass
 
     def get_studyspots(self):
