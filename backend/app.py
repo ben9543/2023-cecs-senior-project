@@ -1,17 +1,25 @@
 from flask import Flask, request, jsonify, make_response
+from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from auth.auth import Auth
 from users.users import Users
 from studyspots.studyspots import StudySpots
 
+
+# Create a SQLAlchemy engine and connect to your database
+user = "postgres"
+password = "12341234"
+hostname = "127.0.0.1"
+database_name = "test"
+DATABASE_URI = f"postgresql+psycopg2://{user}:{password}@{hostname}/{database_name}"
+
 # Create Flask app
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
+db = SQLAlchemy(app)
 
 # Allow Cross Origin from anywhere (will be restricted in prod)
 CORS(app)
-
-# Should create db instance later
-db = {}
 
 # Create Users instance
 users_instance = Users(db)
