@@ -3,7 +3,7 @@ What did you do yesterday?
 Amanuel - 
 Holly - 
 Deep -
-Sal - 
+Sal - created branch for SS-27
 Tony - 
 Ben - 
 Jose - 
@@ -13,7 +13,7 @@ What will you do today?
 Amanuel -
 Holly -
 Deep -
-Sal -
+Sal - create homepage component and determine neccessry functionality
 Tony -
 Ben -
 Jose -
