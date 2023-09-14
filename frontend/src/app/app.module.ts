@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
@@ -64,6 +65,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
