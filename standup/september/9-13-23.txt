@@ -1,6 +1,6 @@
 What did you do yesterday?
 
-Amanuel - 
+Amanuel - Organize and assigned tickets
 Holly - 
 Deep -
 Sal - created branch for SS-27
@@ -10,7 +10,7 @@ Jose - created branch for SS-45 and planned/researched on the implmentation of s
 
 What will you do today?
 
-Amanuel -
+Amanuel - oversee what has been completed
 Holly -
 Deep -
 Sal - create homepage component and determine neccessry functionality
@@ -20,7 +20,7 @@ Jose - created toggle button for user to able to switch unversity pages. Implent
 
 What is blocking your progress?
 
-Amanuel -
+Amanuel - waiting for apis for profile setting details update
 Holly -
 Deep -
 Sal -
