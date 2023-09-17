@@ -10,8 +10,8 @@ class Base(DeclarativeBase):
 class Universities(Base):
     __tablename__ = 'universities'
 
-    university_id = Column(Integer, primary_key=True)
-    university_name = Column(String(200))
+    university_id = Column(Integer)
+    university_name = Column(String(200), primary_key=True)
     university_state = Column(String(2))
     university_zip = Column(Integer, nullable=False, unique=True)
 
@@ -28,7 +28,7 @@ class Users(Base):
     user_email = Column(String(254))
     user_name = Column(String(200))
     password = Column(String(512))
-    university_id = Column(Integer, ForeignKey('universities.university_id'), nullable=False)
+    university_name = Column(Integer, ForeignKey('universities.university_name'), nullable=False)
     user_photo = Column(String(250))
 
     university = relationship("Universities")

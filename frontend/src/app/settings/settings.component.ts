@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 
 // validator to check if the username is taken
 const usernameTakenValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -74,10 +76,26 @@ const collegeEmptyValidator: ValidatorFn = (control: AbstractControl): Validatio
 })
 export class SettingsComponent {
   edit!: FormGroup;
-  
-  constructor(private router: Router, private formBuilder: FormBuilder) { }
+  user: any = {}; // Initialize user object
+  userData: any | null = null;
+
+
+  constructor(private router: Router, private formBuilder: FormBuilder, private activeroute: ActivatedRoute,
+    private userService: UserService, private authService: AuthService ) { }
+
+  // Method to update user profile
+  updateUserProfile(): void {
+    this.userService.updateUser(this.user).subscribe((response: any) => {
+      // Handle the response (e.g., show success message)
+    });
+  }
+ 
   
   ngOnInit(): void {
+    this.authService.userData$.subscribe((userData) => {
+      this.userData = userData;
+    });
+    console.log('SettingsComponent userData', this.userData);
     this.edit = this.formBuilder.group({
       username: [
         '',

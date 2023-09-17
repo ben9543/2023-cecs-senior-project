@@ -5,13 +5,13 @@ from auth.auth import Auth
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
 
-
 # Create a SQLAlchemy engine and connect to your database
 user = "postgres"
-password = "****"
-hostname = "127.0.0.1"
+password = "1234"
+hostname = "127.0.0.1:5432"
 database_name = "test"
-DATABASE_URI = f"postgresql+psycopg2://{user}:{password}@{hostname}/{database_name}"
+port = "5432"
+DATABASE_URI = f"postgresql://{user}:{password}@{hostname}/{database_name}"
 
 # Create Flask app
 app = Flask(__name__)
@@ -39,6 +39,7 @@ def login_required(func):
         if(not AUTH_HEADER_KEY in request.headers):
             return make_response(jsonify({'error': 'Authorization header missing'}), 401)
         token = request.headers.get(AUTH_HEADER_KEY)
+        #print("Payload->>>>>>",token)
         if not token:
             return make_response(jsonify({'error': 'Token is missing'}), 401)
         if auth_instance.verify_token(token):
@@ -59,21 +60,21 @@ def alive():
 
 """ Users Routes """
 # GET all users
-@app.route('/api/users', methods=['GET'])
-@login_required
-def get_users():
-    data = users_instance.get_users()
-    return make_response(jsonify({"message": "Success", "response":data}), 200)
+# @app.route('/api/users', methods=['GET'])
+# @login_required
+# def get_users():
+#     data = users_instance.get_users()
+#     return make_response(jsonify({"message": "Success", "response":data}), 200)
 
-# GET user by ID
-@app.route('/api/users/<int:user_id>', methods=['GET'])
-@login_required
-def get_user(user_id):
-    user = users_instance.get_user(user_id)
-    if(user):
-        return make_response(jsonify({"message":"Success", "response":user}),200)
-    else:
-        return make_response(jsonify({"error": "No such user with the given id."}), 404)
+# # GET user by ID
+# @app.route('/api/users/<int:user_id>', methods=['GET'])
+# @login_required
+# def get_user(user_id):
+#     user = users_instance.get_user(user_id)
+#     if(user):
+#         return make_response(jsonify({"message":"Success", "response":user}),200)
+#     else:
+#         return make_response(jsonify({"error": "No such user with the given id."}), 404)
 
 # Login route
 @app.route('/api/login', methods=['POST'])
@@ -88,7 +89,7 @@ def login():
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
-    username = request.json.get('name')
+    username = request.json.get('username')
     email = request.json.get('email')
     college = request.json.get('college')
     password = request.json.get('password')
@@ -104,6 +105,66 @@ def signup():
     # Return success response
     return make_response(jsonify({'message': 'User created successfully'}), 201)
 
+@app.route('/user/<string:user_name>', methods=['GET'])
+def get_user(user_name):
+    # Retrieve user data based on the username from the database
+    user = users_instance.get_user_by_username(user_name)
+
+    if user:
+        # Return user data as JSON
+        return jsonify({
+            'user_id': user.user_id,
+            'user_name': user.user_name,
+            'user_email': user.user_email,
+            'university_id': user.university_id
+        })
+    else:
+        return jsonify({'message': 'User not found'}), 404
+
+# Create a route for fetching user data by email
+@app.route('/api/users', methods=['GET'])
+@login_required
+def get_user_by_email():
+    email = request.args.get('email')  # Get the email from the query parameters
+    print("Email->>>>>", email)
+    # Query the database to find the user by email
+    user = users_instance.find_user_by_email(email)
+          
+    if user is not None:
+        # If a user with the specified email is found, return their data
+        return jsonify({
+            'user_name': user.user_name,
+            'user_email': user.user_email,
+            'university_name': user.university_name
+        })
+    else:
+        # If no user with the specified email is found, return an error message
+        return jsonify({'error': 'User not found'}), 404
+
+@app.route('/user/update/<string:user_name>', methods=['PUT'])
+def update_user(user_name):
+    # Retrieve the user from the database
+    user = users_instance.get_user_by_username(user_name)
+
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    # Get the updated data from the request JSON
+    data = request.json
+    if 'user_name' in data:
+        user.user_name = data['user_name']
+    if 'user_email' in data:
+        user.user_email = data['user_email']
+    if 'university_id' in data:
+        user.university_name = data['university_name']
+
+    try:
+        # Commit the changes to the database
+        db.session.commit()
+        return jsonify({'message': 'User data updated successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'message': f'Error updating user data: {str(e)}'}), 500
 
 @app.route('/api/users/<int:user_id>', methods=['PUT'])
 def edit_user(user_id):
