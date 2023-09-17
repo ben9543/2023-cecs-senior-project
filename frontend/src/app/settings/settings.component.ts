@@ -110,6 +110,19 @@ export class SettingsComponent {
   }
   
   onSubmit(): void {
-    this.router.navigate(['/home']);
+    if (this.edit.valid) {
+      const updatedUserData = this.edit.value;
+      updatedUserData.user_id = this.userData.user_id;
+      // Call the updateUser method from the UserService to send the updated user data
+      this.userService.updateUser(updatedUserData).subscribe(
+        (response) => {
+         this.router.navigate(['/home']);
+        },
+        (error) => {
+          // Handle error response here
+          console.error('Error updating user data:', error);
+        }
+      );
+    }
   }
 }

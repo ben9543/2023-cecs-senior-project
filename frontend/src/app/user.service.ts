@@ -29,8 +29,11 @@ export class UserService {
     return this.http.get(`${this.apiUrl}/users/${username}`);
   }
 
-  updateUser(user: any): Observable<any> {
-    // Send an HTTP PUT request to update user data
-    return this.http.put(`${this.apiUrl}/users/${user.username}`, user);
+  // Update user data
+  updateUser(updatedUserData: any) {
+    const updateUrl = `${this.apiUrl}/update-user`;
+
+    // Send an HTTP PUT request to the update user endpoint
+    return this.http.put(updateUrl, updatedUserData);
   }
 }

@@ -1,6 +1,6 @@
 from db.db_connection_test import Users
 #https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/#installation
-
+from sqlalchemy.exc import SQLAlchemyError 
 
 # API for CRUD Operations
 class User_API():
@@ -79,11 +79,29 @@ class User_API():
         self.db.session.commit()
         return new_user.as_dict()
 
-    def update_user(self, user_id, updated_data):
-        user = Users.query.get(user_id)
-        if user:
-            for key, value in updated_data.items():
-                setattr(user, key, value)
-            self.db.session.commit()
-            return user.as_dict()
-        return None
+    # Function to update user data by user_id
+    def update_user(self,user_id, new_username, new_email, new_college):
+        try:
+            # Query the database to find the user by user_id
+            user =self.get_user_by_id(user_id)
+            print("User from U------->>>>>>>>>>>>>>", user)
+            if user:
+                # Update the user data with the new values
+                user.user_name = new_username
+                user.user_email = new_email
+                user.university_id = new_college
+
+                # Commit the changes to the database
+                self.db.session.commit()
+
+                return user  # Return the updated user object
+
+            return None  # User not found
+
+        except SQLAlchemyError as e:
+            # Handle any database-related errors here
+            self.db.session.rollback()  # Rollback changes in case of an error
+            raise e  # Raise the error for further handling
+
+        finally:
+            self.db.session.close()  # Close the database session

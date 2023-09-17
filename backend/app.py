@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from auth.auth import Auth
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
@@ -16,6 +16,7 @@ DATABASE_URI = f"postgresql://{user}:{password}@{hostname}/{database_name}"
 # Create Flask app
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
+app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 
 # Allow Cross Origin from anywhere (will be restricted in prod)
@@ -126,13 +127,13 @@ def get_user(user_name):
 @login_required
 def get_user_by_email():
     email = request.args.get('email')  # Get the email from the query parameters
-    print("Email->>>>>", email)
     # Query the database to find the user by email
     user = users_instance.find_user_by_email(email)
           
     if user is not None:
         # If a user with the specified email is found, return their data
         return jsonify({
+            'user_id': user.user_id,
             'user_name': user.user_name,
             'user_email': user.user_email,
             'university_name': user.university_name
@@ -141,30 +142,40 @@ def get_user_by_email():
         # If no user with the specified email is found, return an error message
         return jsonify({'error': 'User not found'}), 404
 
-@app.route('/user/update/<string:user_name>', methods=['PUT'])
-def update_user(user_name):
-    # Retrieve the user from the database
-    user = users_instance.get_user_by_username(user_name)
+# Handle OPTIONS requests for /api/update-user
+@app.route('/api/update-user', methods=['OPTIONS'])
+@cross_origin()  # Allow cross-origin requests for this route
+def handle_preflight():
+    return '', 200 # Return success for OPTIONS request
 
-    if not user:
-        return jsonify({'message': 'User not found'}), 404
 
-    # Get the updated data from the request JSON
-    data = request.json
-    if 'user_name' in data:
-        user.user_name = data['user_name']
-    if 'user_email' in data:
-        user.user_email = data['user_email']
-    if 'university_id' in data:
-        user.university_name = data['university_name']
-
+# Define an API route for updating user data
+@app.route('/api/update-user', methods=['PUT'])  # Use PUT for updating data
+@cross_origin()  # Allow cross-origin requests for this route
+def update_user():
     try:
-        # Commit the changes to the database
-        db.session.commit()
-        return jsonify({'message': 'User data updated successfully'}), 200
+        # Get the user data from the request
+        data = request.json 
+
+        # Extract user_id and other updated fields from the data
+        user_id = int(data.get('user_id'))
+        new_username = data.get('username')
+        new_email = data.get('email')
+        new_college = data.get('college')
+
+        # Update the user's data in the database
+        user = users_instance.update_user(user_id, new_username, new_email, new_college)
+        print("User------->>>>>>>>>>>>>>", user)
+        if user:
+            # User data updated successfully
+            return jsonify({'message': 'User data updated successfully'})
+
+        # If the user does not exist or the update failed
+        return jsonify({'error': 'User not found or update failed'}), 404
+
     except Exception as e:
-        db.session.rollback()
-        return jsonify({'message': f'Error updating user data: {str(e)}'}), 500
+        # Handle any exceptions (e.g., database errors)
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/users/<int:user_id>', methods=['PUT'])
 def edit_user(user_id):
