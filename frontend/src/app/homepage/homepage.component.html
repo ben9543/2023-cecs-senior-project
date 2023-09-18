@@ -1,10 +1,12 @@
-<div class="content">
-    <form class="example-form">
+<!-- Search Bar uses search css class -->
+<div class="search">
+    <form class="search">
+        <button>
+            <i class="material-icons" style="font-size: 16px;">manage_search</i>
+        </button>
         <mat-form-field class="example-full-width">
         <mat-label>Search</mat-label>
         <input type="text"
-                placeholder="Pick one"
-                aria-label="Number"
                 matInput
                 [formControl]="myControl"
                 [matAutocomplete]="auto">
@@ -15,4 +17,8 @@
         </mat-autocomplete>
         </mat-form-field>
     </form>
+</div>
+<!-- Page content: study spots -->
+<div class="content">
+    
 </div>

@@ -8,8 +8,21 @@
     width: 100%;
   }
 
+  .search {
+    background: #C8D8E4;
+    height: 70%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .content {
-    padding: 100px 0;
-    border: 3px solid green;
-    text-align: center;
+    background: #C8D8E4;
+    border-color: white;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    align-items: left;
+    justify-content: center;
   }
