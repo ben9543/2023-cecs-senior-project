@@ -22,7 +22,38 @@
     border-color: white;
     width: 100%;
     min-height: 100%;
-    display: flex;
-    align-items: left;
-    justify-content: center;
+    align-items: start;
+  }
+
+  .image-container {
+    position: relative;
+  }
+
+  .image {
+    display: block;
+    max-height: 30%;
+    max-width: 30%;
+    /* height: auto; */
+  }
+
+  .text-overlay {
+    display: inline-block;
+    color: white;
+    background-color: grey;
+    padding: 10px;
+    border-radius: 10%;
+    position: absolute;
+    bottom: 20%;
+    left: 10px;
+  }
+
+  .review-overlay{
+    display: inline-block;
+    color: white;
+    background-color: grey;
+    padding: 10px;
+    border-radius: 10%;
+    position: absolute;
+    bottom: 20%;
+    left: 10px;
   }
