@@ -6,7 +6,7 @@ Deep -
 Sal - Made home divs, search bar and started the content div
 Tony -
 Ben -
-Jose -
+Jose - Polishing Recent tab on Profile homepage and starting "you might like these" tab
 
 What will you do today?
 
@@ -16,7 +16,7 @@ Deep -
 Sal - Determine how to store and display study spot content on homepage
 Tony -
 Ben -
-Jose -
+Jose - Aligning and creating the "you might like these" tab
 
 What is blocking your progress?
 
