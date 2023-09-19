@@ -36,6 +36,7 @@ import { SignupComponent } from './signup/signup.component';
 import { StudyspotViewComponent } from './studyspot-view/studyspot-view.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatExpansionModule,
     MatTooltipModule,
     MatMenuModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

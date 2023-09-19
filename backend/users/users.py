@@ -31,8 +31,9 @@ class User_API():
             return user
         else:
             return None
+        
     def get_user_by_username(self, username):
-        return Users.query.filter_by(user_name=username).first()
+        return self.db.session.query(Users).filter_by(user_name=username).first()
 
     def get_users(self):
         try:

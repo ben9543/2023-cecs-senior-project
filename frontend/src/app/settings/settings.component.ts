@@ -1,27 +1,9 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
-
-// validator to check if the username is taken
-const usernameTakenValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  const username = control.value;
-
-  const isUsernameTaken = checkIfUsernameIsTaken(username);
-
-  if (isUsernameTaken) {
-    return { usernameTaken: true };
-  }
-
-  return null;
-};
-
-function checkIfUsernameIsTaken(username: string): boolean {
-  // logic to check if the username is taken here goes here
-  // HTTP request to your server to check
-  return false;
-}
 
 // validator to check if the username is empty
 const usernameEmptyValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -79,9 +61,8 @@ export class SettingsComponent {
   user: any = {}; // Initialize user object
   userData: any | null = null;
 
-
   constructor(private router: Router, private formBuilder: FormBuilder, private activeroute: ActivatedRoute,
-    private userService: UserService, private authService: AuthService ) { }
+    private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar ) { }
 
   // Method to update user profile
   updateUserProfile(): void {
@@ -95,11 +76,12 @@ export class SettingsComponent {
     this.authService.userData$.subscribe((userData) => {
       this.userData = userData;
     });
+
     console.log('SettingsComponent userData', this.userData);
     this.edit = this.formBuilder.group({
       username: [
         '',
-        [Validators.required, usernameTakenValidator, usernameEmptyValidator],
+        [Validators.required, usernameEmptyValidator],
       ],
       email: [
         '',
@@ -111,18 +93,32 @@ export class SettingsComponent {
   
   onSubmit(): void {
     if (this.edit.valid) {
-      const updatedUserData = this.edit.value;
-      updatedUserData.user_id = this.userData.user_id;
-      // Call the updateUser method from the UserService to send the updated user data
-      this.userService.updateUser(updatedUserData).subscribe(
-        (response) => {
-         this.router.navigate(['/home']);
-        },
-        (error) => {
-          // Handle error response here
-          console.error('Error updating user data:', error);
+      const username = this.edit.value.username;
+      const email = this.edit.value.email;
+      
+      this.userService.checkUsername(username).subscribe((usernameResponse: any) => {
+        if (usernameResponse.taken) {
+          this.snackBar.open('Username is already taken', 'Close', { duration: 3000 });
+        } else {
+          this.userService.checkEmail(email).subscribe((emailResponse: any) => {
+            if (emailResponse.taken) {
+              this.snackBar.open('Email is already taken', 'Close', { duration: 3000 });
+            } else {
+              // No username or email conflict, proceed with the update
+              const updatedUserData = this.edit.value;
+              updatedUserData.user_id = this.userData.user_id;
+              this.userService.updateUser(updatedUserData).subscribe(
+                (response) => {
+                  this.router.navigate(['/home']);
+                },
+                (error) => {
+                  console.error('Error updating user data:', error);
+                }
+              );
+            }
+          });
         }
-      );
+      });
     }
   }
 }

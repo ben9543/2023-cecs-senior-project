@@ -148,6 +148,13 @@ def get_user_by_email():
 def handle_preflight():
     return '', 200 # Return success for OPTIONS request
 
+@app.route('/api/check-username', methods=['OPTIONS'])
+def handle_preflight_username():
+    return '', 200
+
+@app.route('/api/check-email', methods=['OPTIONS'])
+def handle_preflight_email():
+    return '', 200
 
 # Define an API route for updating user data
 @app.route('/api/update-user', methods=['PUT'])  # Use PUT for updating data
@@ -176,6 +183,40 @@ def update_user():
     except Exception as e:
         # Handle any exceptions (e.g., database errors)
         return jsonify({'error': str(e)}), 500
+
+# API route to check if a username is taken
+@app.route('/api/check-username', methods=['GET', 'POST', 'OPTIONS'])
+@cross_origin()
+def check_username_availability():
+    data = request.json  # Get the JSON data from the request
+
+    if 'username' not in data:
+        return jsonify({'error': 'Username not provided'}), 400
+
+    username_to_check = data['username']
+    print("Username to check: ", username_to_check)
+    # Check if the username is taken
+    user = users_instance.get_user_by_username(username_to_check)
+
+    # Return the result as JSON
+    return jsonify({'taken': user is not None})
+
+# API route to check if an email is taken
+@app.route('/api/check-email', methods=['GET', 'POST', 'OPTIONS'])
+@cross_origin()
+def check_email_availability():
+    data = request.json  # Get the JSON data from the request
+
+    if 'email' not in data:
+        return jsonify({'error': 'Email not provided'}), 400
+
+    email_to_check = data['email']
+    print("Email to check: ", email_to_check)
+    # Check if the email is taken
+    user = users_instance.find_user_by_email(email_to_check)
+
+    # Return the result as JSON
+    return jsonify({'taken': user is not None})
 
 @app.route('/api/users/<int:user_id>', methods=['PUT'])
 def edit_user(user_id):
