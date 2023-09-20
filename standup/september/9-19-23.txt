@@ -3,7 +3,7 @@ What did you do yesterday?
 Amanuel -
 Holly -
 Deep -
-Sal -
+Sal - Created a test overlay and image for a study spot
 Tony -
 Ben - I was planning to create a GitHub contribution tracker.
 Jose -
@@ -13,7 +13,7 @@ What will you do today?
 Amanuel -
 Holly -
 Deep -
-Sal - 
+Sal - Improve overlay to include star review as an overlay
 Tony -
 Ben - I was finished creating a GitHub contribution tracker.
 Jose - 
@@ -23,7 +23,7 @@ What is blocking your progress?
 Amanuel -
 Holly -
 Deep -
-Sal -
+Sal - Don't have experience with more complicated pieces of content on a web page
 Tony -
 Ben -
 Jose -
