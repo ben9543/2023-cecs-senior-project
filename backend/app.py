@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
+import bcrypt
 from auth.auth import Auth
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
@@ -82,11 +83,21 @@ def alive():
 def login():
     email = request.json.get('email')
     password = request.json.get('password')
-    token = auth_instance.generate_jwt(email, password)
-    if token:
-        return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-    else:
-        return jsonify({'message': 'Invalid credentials', 'authenticated': False}), 401
+    
+    user = users_instance.find_user_by_email(email)
+    
+    if user:
+        stored_hashed_password = user.password.encode('utf-8')
+        input_password = bcrypt.hashpw(password.encode('utf-8'), stored_hashed_password)
+
+        if input_password == stored_hashed_password:
+            token = auth_instance.generate_jwt(email, input_password)
+            if token:
+                return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
+    
+    return jsonify({'message': 'Invalid credentials', 'authenticated': False}), 401
+
+
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
@@ -98,9 +109,12 @@ def signup():
     # Check if user already exists
     if users_instance.find_user_by_email(email):
         return make_response(jsonify({'message': 'User already exists'}), 409)
+    
+    # Hash the user's password
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
     # Create user
-    user = {'id': users_instance.count_users() + 1, 'username': username, 'email': email, 'college': college, 'password': password}
+    user = {'id': users_instance.count_users() + 1, 'username': username, 'email': email, 'college': college, 'password': hashed_password.decode('utf-8')}
     users_instance.add_user(user)
 
     # Return success response
@@ -172,7 +186,6 @@ def update_user():
 
         # Update the user's data in the database
         user = users_instance.update_user(user_id, new_username, new_email, new_college)
-        print("User------->>>>>>>>>>>>>>", user)
         if user:
             # User data updated successfully
             return jsonify({'message': 'User data updated successfully'})
@@ -194,7 +207,6 @@ def check_username_availability():
         return jsonify({'error': 'Username not provided'}), 400
 
     username_to_check = data['username']
-    print("Username to check: ", username_to_check)
     # Check if the username is taken
     user = users_instance.get_user_by_username(username_to_check)
 

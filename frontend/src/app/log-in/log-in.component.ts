@@ -26,7 +26,6 @@ export class LogInComponent {
 
   onSubmit(): void {
     if (this.login.valid) {
-        console.log(this.login.value)
         const { email, password } = this.login.value;
         this.http.post<any>('http://127.0.0.1:5000/api/login', { email: email, password: password }).subscribe(response => {
           localStorage.setItem('access_token', response.token);
@@ -34,7 +33,6 @@ export class LogInComponent {
           this.userService.getUserByEmail(email).subscribe(
             (userData) => {
               const user = userData;
-              console.log('User from login:', user);
               this.authService.setUserData(user); // Set userData
 
             },

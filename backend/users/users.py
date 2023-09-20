@@ -85,7 +85,6 @@ class User_API():
         try:
             # Query the database to find the user by user_id
             user =self.get_user_by_id(user_id)
-            print("User from U------->>>>>>>>>>>>>>", user)
             if user:
                 # Update the user data with the new values
                 user.user_name = new_username

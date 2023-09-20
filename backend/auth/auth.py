@@ -10,7 +10,7 @@ class Auth:
 
     def generate_jwt(self, email, password):
         user = self.users.find_user_by_email(email)
-        if(user and user.password == password):
+        if(user and user.password.encode('utf-8') == password):
             # generate a JWT token
             payload = {"id":int(user.user_id)}
             # Will include user id into the jwt payload
