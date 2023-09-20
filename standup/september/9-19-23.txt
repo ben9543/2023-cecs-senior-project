@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben - I was planning to create a GitHub contribution tracker.
+Jose -
+
+What will you do today?
+
+Amanuel -
+Holly -
+Deep -
+Sal - 
+Tony -
+Ben - I was finished creating a GitHub contribution tracker.
+Jose - 
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben -
+Jose -
