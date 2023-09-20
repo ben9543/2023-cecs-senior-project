@@ -15,7 +15,7 @@ Holly -
 Deep -
 Sal - Determine how to store and display study spot content on homepage
 Tony -
-Ben -
+Ben - I will create a GitHub contribution tracker
 Jose - Aligning and creating the "you might like these" tab
 
 What is blocking your progress?
