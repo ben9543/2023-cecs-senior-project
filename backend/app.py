@@ -288,7 +288,8 @@ def search_studyspot():
 # Get a single studyspot by id
 @app.route('/api/studyspots/<int:studyspot_id>', methods=['GET'])
 def get_studyspot_by_id(studyspot_id):
-    studyspot = next((spot for spot in studyspots_instance if spot['id'] == studyspot_id), None)
+    #studyspot = next((spot for spot in studyspots_instance if spot['id'] == studyspot_id), None)
+    studyspot = None
     if studyspot is not None:
         return jsonify(studyspot)
     else:
