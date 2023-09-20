@@ -63,14 +63,6 @@ export class SettingsComponent {
 
   constructor(private router: Router, private formBuilder: FormBuilder, private activeroute: ActivatedRoute,
     private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar ) { }
-
-  // Method to update user profile
-  updateUserProfile(): void {
-    this.userService.updateUser(this.user).subscribe((response: any) => {
-      // Handle the response (e.g., show success message)
-    });
-  }
- 
   
   ngOnInit(): void {
     this.authService.userData$.subscribe((userData) => {
