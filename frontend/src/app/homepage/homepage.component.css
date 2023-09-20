@@ -9,6 +9,7 @@
   }
 
   .search {
+    font-size: 16px;
     background: #C8D8E4;
     height: 70%;
     width: 100%;
@@ -48,12 +49,9 @@
   }
 
   .review-overlay{
-    display: inline-block;
+    font-size: 40px;
     color: white;
-    background-color: grey;
-    padding: 10px;
-    border-radius: 10%;
     position: absolute;
-    bottom: 20%;
-    left: 10px;
+    bottom: -60px;
+    left: 5%;
   }
