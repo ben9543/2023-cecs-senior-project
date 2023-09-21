@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS Universities (
-    university_id INT NOT NULL,
-    UNIQUE (university_id),
     university_name VARCHAR(200),
+    UNIQUE (university_name),
     university_state VARCHAR(2),
     university_zip INT NOT NULL
 );

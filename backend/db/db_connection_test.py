@@ -9,8 +9,6 @@ class Base(DeclarativeBase):
 
 class Universities(Base):
     __tablename__ = 'universities'
-
-    university_id = Column(Integer)
     university_name = Column(String(200), primary_key=True)
     university_state = Column(String(2))
     university_zip = Column(Integer, nullable=False, unique=True)
