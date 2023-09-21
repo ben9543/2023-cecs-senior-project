@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel - Finalized the settings page’s html and css and started working on the typescript.
+Holly - Created survey SQL table
+Deep -
+Sal - 
+Tony -
+Ben - Finalized SQL tables. & Completed Studyspot API and made a commit to the dev branch.
+Jose -
+
+What will you do today?
+
+Amanuel - Complete the profile setting implementation [Frontend]. Profile setting has been completed and pushed to the dev branch. Commit ea388fb
+Holly - Finalize the sql tables 
+Deep -
+Sal - assign homescreen story and create branch
+Tony -
+Ben - I’ll be working on finishing SQL tables and testing it on local DB. Also start writing SQLAlchemy Python codes.
+Jose -
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben - N/A
+Jose -

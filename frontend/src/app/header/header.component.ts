@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { UserService } from '../user.service';
 import { filter } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,10 +12,14 @@ import { filter } from 'rxjs';
 export class HeaderComponent {
   isLoginPage: boolean = false;
   isSignUpPage: boolean = false;
+  username: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
+
 
   ngOnInit(): void {
+
+    console.log('Username from header', this.username);
     console.log('HeaderComponent initialized!');
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -24,5 +30,9 @@ export class HeaderComponent {
       console.log('isSignUpPage:', this.isSignUpPage);
       console.log('Event:', event);
     });
+  }
+
+  logRouterLink(): void {
+    console.log('Router Link:', '/settings/' + this.username);
   }
 }

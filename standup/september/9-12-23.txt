@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel - Complete the profile setting implementation [Frontend]. Profile setting has been completed and pushed to the dev branch. Commit ea388fb
+Holly - Created SQL tables
+Deep -
+Sal - 
+Tony -
+Ben - Completed the base SQL table
+Jose -
+
+What will you do today?
+
+Amanuel - Organize and assign tickets
+Holly - create studyspot sql table
+Deep -
+Sal - assign homescreen story and create branch
+Tony -
+Ben - I am going to test our table catch errors before we convert it into Python codes using SQLAlchemy
+Jose -
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben - Testing in local DB
+Jose -
