@@ -44,6 +44,10 @@ python app.py
 
 ## Backend Dev Note 
 
+#### Flaks-SQLAlchemy Join
+- [Link](https://stackoverflow.com/questions/21996288/join-multiple-tables-in-sqlalchemy-flask)
+
+
 #### Attributes
 - Features: list
 - Location: String

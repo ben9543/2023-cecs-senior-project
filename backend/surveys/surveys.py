@@ -5,8 +5,3 @@ class Surveys_API():
 
     def __init__(self, db):
         self.db = db
-
-
-           
-
-
