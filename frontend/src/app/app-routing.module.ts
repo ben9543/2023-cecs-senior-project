@@ -11,6 +11,7 @@ import { SubmitRequestComponent } from './submit-request/submit-request.componen
 import { SignupComponent } from './signup/signup.component';
 import { StudyspotViewComponent } from './studyspot-view/studyspot-view.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'help', component: HelpsComponent},
   { path: 'submitrequest', component: SubmitRequestComponent},
   { path: 'signup', component: SignupComponent},
-  { path: 'studyspot-view', component: StudyspotViewComponent}
+  { path: 'studyspot-view', component: StudyspotViewComponent},
+  { path: 'reset-password', component: ResetPasswordComponent}
 ];
 
 @NgModule({

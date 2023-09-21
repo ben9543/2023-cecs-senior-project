@@ -38,6 +38,7 @@ import { StudyspotViewComponent } from './studyspot-view/studyspot-view.componen
 import { FavoritesComponent } from './favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HelpsComponent,
     SignupComponent,
     StudyspotViewComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
