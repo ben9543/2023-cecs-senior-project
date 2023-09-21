@@ -16,10 +16,10 @@ CREATE TABLE IF NOT EXISTS Users (
     user_email VARCHAR(254),
     user_name VARCHAR(200),
     password VARCHAR(512),
-    university_id INT NOT NULL,
+    university_name VARCHAR(200) NOT NULL,
     user_photo VARCHAR(250),
     UNIQUE (user_id),
-	  CONSTRAINT FK_user_university FOREIGN KEY (university_id) REFERENCES Universities(university_id)
+	  CONSTRAINT FK_user_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
 );
 
 CREATE TABLE IF NOT EXISTS Surveys (
