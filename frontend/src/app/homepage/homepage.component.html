@@ -1,1 +1,34 @@
-<p>homepage works!</p>
+<!-- Search Bar uses search css class -->
+<div class="search">
+    <form class="search">
+        <button>
+            <i class="material-icons" inline="true">manage_search</i>
+        </button>
+        <mat-form-field class="example-full-width">
+        <mat-label>Search</mat-label>
+        <input type="text"
+                matInput
+                [formControl]="myControl"
+                [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of options" [value]="option">
+            {{option}}
+            </mat-option>
+        </mat-autocomplete>
+        </mat-form-field>
+    </form>
+</div>
+<!-- Page content: study spots -->
+<div class="content">
+    <img style='height: 30%; width: 30%; object-fit: cover' src="https://www.csulb.edu/sites/default/files/images/2022-08/Horn%20Center-05.JPG" />
+    <div class="review-overlay">
+        <mat-icon inline="true">star_border</mat-icon>
+        <mat-icon inline="true">star_border</mat-icon>
+        <mat-icon inline="true">star_border</mat-icon>
+        <mat-icon inline="true">star_border</mat-icon>
+        <mat-icon inline="true">star_border</mat-icon>
+    </div>  
+    <div class="text-overlay">
+        Horn Center Computer Lab
+    </div>
+</div>
