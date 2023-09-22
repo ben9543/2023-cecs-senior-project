@@ -31,10 +31,12 @@
 
 .image-container {
     position: relative;
-    display: flex;
-    justify-content: left;
-    align-items: center;
+    display: inline-block; /* Changed from flex to inline-block to size container to the image */
     margin-left: 100px;
+}
+
+.image-container img {
+    display: block; /* Removes bottom margin/whitespace under the image */
 }
 
 .image {
@@ -45,20 +47,22 @@
 }
 
 .text-overlay {
-    display: inline-block;
-    color: white;
-    background-color: grey;
-    padding: 10px;
-    border-radius: 10%;
     position: absolute;
-    bottom: 20%;
-    left: 10px;
+    bottom: 0; /* Position at the bottom of the image-container */
+    left: 0;
+    right: 0; /* Stretch across the entire width of the image-container */
+    color: white;
+    background-color: rgba(0, 0, 0, 255); /* Use rgba for a slightly transparent background */
+    padding: 10px;
+    text-align: center; /* Center the text */
+    border-radius: 0; /* Adjust as needed */
+    width: fit-content;
 }
 
 .review-overlay{
     font-size: 40px;
-    color: white;
-    position: absolute;
+    color: red;
+    position: relative;
     bottom: -60px;
     left: 5%;
 }
