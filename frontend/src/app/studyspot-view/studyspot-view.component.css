@@ -1,0 +1,61 @@
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  .search {
+    font-size: 16px;
+    background: #C8D8E4;
+    height: 70%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .content {
+    background: #C8D8E4;
+    border-color: white;
+    width: 100%;
+    min-height: 100%;
+    align-items: start;
+  }
+
+  .image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image {
+    display: grid;
+    margin: 15px;
+    height: auto;
+    width: auto;
+    /* height: auto; */
+  }
+
+  .text-overlay {
+    display: inline-block;
+    color: white;
+    background-color: grey;
+    padding: 10px;
+    border-radius: 10%;
+    position: absolute;
+    bottom: 20%;
+    left: 10px;
+  }
+
+  .review-overlay{
+    font-size: 40px;
+    color: white;
+    position: absolute;
+    bottom: -60px;
+    left: 5%;
+  }
