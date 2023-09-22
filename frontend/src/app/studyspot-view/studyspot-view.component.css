@@ -2,13 +2,13 @@
     min-width: 150px;
     max-width: 500px;
     width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
+}
 
-  .search {
+.example-full-width {
+    width: 100%;
+}
+
+.search {
     font-size: 16px;
     background: #C8D8E4;
     height: 70%;
@@ -16,32 +16,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
 
-  .content {
+.content {
     background: #C8D8E4;
     border-color: white;
     width: 100%;
-    min-height: 100%;
-    align-items: start;
-  }
+    min-height: 100vh; /* Changed to 100vh to take at least the full height of the viewport */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-  .image-container {
+.image-container {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
-  }
+    margin-left: 100px;
+}
 
-  .image {
+.image {
     display: grid;
     margin: 15px;
     height: auto;
-    width: auto;
-    /* height: auto; */
-  }
+    width: auto;    
+}
 
-  .text-overlay {
+.text-overlay {
     display: inline-block;
     color: white;
     background-color: grey;
@@ -50,12 +53,12 @@
     position: absolute;
     bottom: 20%;
     left: 10px;
-  }
+}
 
-  .review-overlay{
+.review-overlay{
     font-size: 40px;
     color: white;
     position: absolute;
     bottom: -60px;
     left: 5%;
-  }
+}
