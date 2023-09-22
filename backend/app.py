@@ -27,10 +27,10 @@ CORS(app)
 users_instance = User_API(db)
 
 # Create Studyspot instance
-studyspots_instance = StudySpots_API(db)
+studyspots_instance = StudySpots_API(users_instance)
 
 # Create auth instance
-auth_instance = Auth(db, users_instance)
+auth_instance = Auth(db)
 
 # Constants
 AUTH_HEADER_KEY  = 'Authorization'
@@ -179,13 +179,14 @@ def update_user():
         data = request.json 
 
         # Extract user_id and other updated fields from the data
-        user_id = int(data.get('user_id'))
-        new_username = data.get('username')
+        # user_id = int(data.get('user_id'))
+        current_username = data.get('current_username')
+        new_username = data.get('new_username')
         new_email = data.get('email')
         new_college = data.get('college')
 
         # Update the user's data in the database
-        user = users_instance.update_user(user_id, new_username, new_email, new_college)
+        user = users_instance.update_user(current_username, new_username, new_email, new_college)
         if user:
             # User data updated successfully
             return jsonify({'message': 'User data updated successfully'})
