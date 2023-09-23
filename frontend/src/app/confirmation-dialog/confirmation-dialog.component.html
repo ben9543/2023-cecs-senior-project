@@ -1,6 +1,6 @@
-<h2 class="custom-dialog-title" mat-dialog-title>Notification</h2>
+<h2 class="custom-dialog-title" mat-dialog-title>{{ dialogTitle }}</h2>
 <mat-dialog-content class="custom-dialog-content">
-  <p>You have made changes to your settings. Please log in again to apply the changes.</p>
+  <p>{{ dialogMessage }}</p>
 </mat-dialog-content>
 <mat-dialog-actions class="custom-dialog-actions">
   <button mat-button [mat-dialog-close]="'close'">Close</button>

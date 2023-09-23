@@ -163,7 +163,7 @@ initializeForm(): void {
       (response) => {
         this.router.navigate(['/login']);
         // Open the confirmation dialog
-        this.confirmationDialogService.openConfirmationDialog();
+        this.confirmationDialogService.openSettingUpdateConfirmation();
       },
       (error) => {
         console.error('Error updating user data:', error);

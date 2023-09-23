@@ -1,22 +1,22 @@
 /* Style the dialog container */
 .custom-dialog-container {
-    width: 80%; /* Adjust the width for responsiveness */
-    max-width: 400px; /* Set a maximum width */
-    background-color: cadetblue; /* Background color */
-    border-radius: 8px; /* Rounded corners */
+    width: 80%; 
+    max-width: 400px; 
+    background-color: cadetblue; 
+    border-radius: 8px; 
     padding: 16px;
   }
   
   /* Style the dialog title */
   .custom-dialog-title {
-    font-size: 20px; /* Title font size */
-    color: goldenrod; /* Title color */
+    font-size: 20px; 
+    color: goldenrod; 
   }
   
   /* Style the dialog content */
   .custom-dialog-content {
-    font-size: 16px; /* Content font size */
-    color: black; /* Content color */
+    font-size: 16px; 
+    color: black; 
   }
   
   /* Style the dialog actions (buttons) */
@@ -26,10 +26,9 @@
 /* Responsive styles for screens with a maximum width of 768px (adjust as needed) */
 @media (max-width: 768px) {
     .custom-dialog-container {
-      width: 90%; /* Adjust the width for smaller screens */
+      width: 90%; 
     }
   
-    /* Adjust font sizes and padding for smaller screens */
     .custom-dialog-title {
       font-size: 18px;
     }
@@ -39,7 +38,7 @@
     }
   
     .custom-dialog-actions {
-      text-align: center; /* Center-align buttons on smaller screens */
+      text-align: center;
     }
   }
   

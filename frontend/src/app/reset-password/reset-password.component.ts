@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmationDialogService } from '../confirmation-dialog.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -11,51 +12,29 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent {
-  signup!: FormGroup;
+  reset!: FormGroup;
   errorMessage: string = '';
   
-  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient, private userService: UserService, private snackBar: MatSnackBar) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient, 
+    private userService: UserService, private snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService) { }
   
   ngOnInit(): void {
-    this.signup = this.formBuilder.group({
+    this.reset = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$")]]
-      // password: ['', Validators.required],
-      // confirmPassword: ['', Validators.required],
     });
   }
   
   onSubmit(): void {
-    const { email, password, confirmPassword } = this.signup.value;
+    const { email } = this.reset.value;
 
-      // Check if passwords match
-      if (password !== confirmPassword) {
-        this.snackBar.open('Passwords do not match', 'Close', {
-          duration: 3000,
-        });
-        return; // Stop form submission if passwords don't match
+    this.userService.checkEmail(email).subscribe((emailResponse: any) => {
+      if (emailResponse.taken) {
+        this.router.navigate(['/login']);
+        // Open the confirmation dialog
+        this.confirmationDialogService.openPasswordResetConfirmation();
+      } else {
+        this.snackBar.open('Email provided is not associated to an account! Please re-enter your email', 'Close', { duration: 5000 });
       }
-
-    // Check if the provided username and email are already taken
-
-        this.userService.checkEmail(email).subscribe((emailResponse: any) => {
-          if (emailResponse.taken) {
-            this.snackBar.open('Email is already taken', 'Close', { duration: 3000 });
-          } else {
-            // No username or email conflict, proceed with the signup
-            this.http.post('http://127.0.0.1:5000/api/signup', { email, password })
-              .subscribe(
-                (response) => {
-                  this.router.navigate(['/signup']);
-                },
-                (error) => {
-                  if (error.status === 409) {
-                    this.errorMessage = 'User Already Exists';
-                  } else {
-                    this.errorMessage = 'An unknown error occurred';
-                  }
-                }
-              );
-          }
-        });
-      }
-    }
+    });
+  }
+}

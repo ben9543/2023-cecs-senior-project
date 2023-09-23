@@ -39,7 +39,6 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { ResetLinkComponent } from './reset-link/reset-link.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 
@@ -64,7 +63,6 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
     StudyspotViewComponent,
     FavoritesComponent,
     ResetPasswordComponent,
-    ResetLinkComponent,
     ConfirmationDialogComponent,
     SearchFilterComponent
   ],
