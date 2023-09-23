@@ -60,3 +60,7 @@ CREATE TABLE IF NOT EXISTS Favorites (
 	  CONSTRAINT FK_review_studyspot FOREIGN KEY (studyspot_id) REFERENCES Studyspots(studyspot_id),
     CONSTRAINT FK_review_user FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
+
+-- Default Values
+INSERT INTO Universities(university_name, university_state, university_zip)
+VALUES('CSULB', 'CA', 90840)
