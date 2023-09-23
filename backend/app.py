@@ -8,9 +8,9 @@ from studyspots.studyspots import StudySpots_API
 
 # Create a SQLAlchemy engine and connect to your database
 user = "postgres"
-password = "1234"
+password = "hhds4343"
 hostname = "127.0.0.1:5432"
-database_name = "test"
+database_name = "test3"
 port = "5432"
 DATABASE_URI = f"postgresql://{user}:{password}@{hostname}/{database_name}"
 
@@ -88,14 +88,17 @@ def login():
     
     if user:
         stored_hashed_password = user.password.encode('utf-8')
-        input_password = bcrypt.hashpw(password.encode('utf-8'), stored_hashed_password)
-
+        input_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        #input_password = bcrypt.hashpw(password.encode('utf-8'), stored_hashed_password)
         if input_password == stored_hashed_password:
             token = auth_instance.generate_jwt(email, input_password)
+            print(token)
             if token:
                 return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-    
-    return jsonify({'message': 'Invalid credentials', 'authenticated': False}), 401
+        else:
+            return jsonify({'message': 'Invalid password', 'authenticated': False}), 401
+            
+    return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
 
 
 
