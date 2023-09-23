@@ -1,18 +1,27 @@
 import { Component } from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgFor} from '@angular/common';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.css'],
+  styleUrls: ['./homepage.component.css']
 })
-
 export class HomepageComponent {
-  myControl = new FormControl('');
-  // can list study spots to recommend here
-  options: string[] = [];
+  spots: Spot = [
+    { name: "Japan", rating: "4", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "Uganda", rating: "3", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "Mexico", rating: "5", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "Canada", rating: "4", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "Denmark", rating: "3", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "China", rating: "5", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "Russia", rating: "4", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "France", rating: "3", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "Ireland", rating: "5", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "Brazil", rating: "4", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "England", rating: "3", imageUrl: "assets/spots/Spot1.jpeg" },
+    { name: "Spain", rating: "5", imageUrl: "assets/spots/Spot1.jpeg" }
+  ];
+  constructor() {}
+
+  ngOnInit() {}
 }
+type Spot = Array<{ name: string; rating: string; imageUrl: string; }>;

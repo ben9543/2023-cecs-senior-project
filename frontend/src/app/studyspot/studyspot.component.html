@@ -1,1 +1,19 @@
-<p>studyspot works!</p>
+<div class="card-container" (click) = "onCardClick({name,imageUrl,rating})">
+    <div class="card-image">
+      <img [src]="imageUrl" alt="Card Image">
+    </div>
+    <div class="like-button">
+      <button mat-icon-button>
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+    <div class="card-details">
+      <div class="card-rating">
+        <span *ngFor="let star of getStars(rating)">
+          <mat-icon class="bigger-icon">stars</mat-icon>
+        </span>
+      </div>
+      <div class="card-name">{{ name }}</div>
+    </div>
+</div>
+  

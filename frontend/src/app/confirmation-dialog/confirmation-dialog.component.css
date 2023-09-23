@@ -1,0 +1,45 @@
+/* Style the dialog container */
+.custom-dialog-container {
+    width: 80%; /* Adjust the width for responsiveness */
+    max-width: 400px; /* Set a maximum width */
+    background-color: cadetblue; /* Background color */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px;
+  }
+  
+  /* Style the dialog title */
+  .custom-dialog-title {
+    font-size: 20px; /* Title font size */
+    color: goldenrod; /* Title color */
+  }
+  
+  /* Style the dialog content */
+  .custom-dialog-content {
+    font-size: 16px; /* Content font size */
+    color: black; /* Content color */
+  }
+  
+  /* Style the dialog actions (buttons) */
+  .custom-dialog-actions {
+    text-align: right;
+  }
+/* Responsive styles for screens with a maximum width of 768px (adjust as needed) */
+@media (max-width: 768px) {
+    .custom-dialog-container {
+      width: 90%; /* Adjust the width for smaller screens */
+    }
+  
+    /* Adjust font sizes and padding for smaller screens */
+    .custom-dialog-title {
+      font-size: 18px;
+    }
+  
+    .custom-dialog-content {
+      font-size: 14px;
+    }
+  
+    .custom-dialog-actions {
+      text-align: center; /* Center-align buttons on smaller screens */
+    }
+  }
+  

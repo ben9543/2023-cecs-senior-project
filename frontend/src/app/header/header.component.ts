@@ -13,6 +13,7 @@ export class HeaderComponent {
   isLoginPage: boolean = false;
   isSignUpPage: boolean = false;
   username: string = '';
+  isMainNavOpen = false;
 
   constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
 
@@ -31,7 +32,12 @@ export class HeaderComponent {
       console.log('Event:', event);
     });
   }
-
+  toggleMainNav() {
+    this.isMainNavOpen = !this.isMainNavOpen;
+  }
+  closeMainNav() {
+    this.isMainNavOpen = false;
+  }
   logRouterLink(): void {
     console.log('Router Link:', '/settings/' + this.username);
   }

@@ -202,16 +202,19 @@ def update_user():
 @cross_origin()
 def check_username_availability():
     data = request.json  # Get the JSON data from the request
-
     if 'username' not in data:
         return jsonify({'error': 'Username not provided'}), 400
 
     username_to_check = data['username']
-    # Check if the username is taken
+    current_user_id = data.get('user_id')
+
+    # Check if the username is taken by other users (excluding the current user)
     user = users_instance.get_user_by_username(username_to_check)
 
-    # Return the result as JSON
-    return jsonify({'taken': user is not None})
+    if user and user.user_id != current_user_id:
+        return jsonify({'taken': True})
+    else:
+        return jsonify({'taken': False})
 
 # API route to check if an email is taken
 @app.route('/api/check-email', methods=['GET', 'POST', 'OPTIONS'])
@@ -223,12 +226,15 @@ def check_email_availability():
         return jsonify({'error': 'Email not provided'}), 400
 
     email_to_check = data['email']
-    print("Email to check: ", email_to_check)
-    # Check if the email is taken
-    user = users_instance.find_user_by_email(email_to_check)
+    current_user_id = data.get('user_id')  # Get the current user's ID from the request data
 
-    # Return the result as JSON
-    return jsonify({'taken': user is not None})
+    # Check if the email is taken by other users (excluding the current user)
+    user = users_instance.find_user_by_email(email_to_check)
+    
+    if user and user.user_id != current_user_id:
+        return jsonify({'taken': True})
+    else:
+        return jsonify({'taken': False})
 
 @app.route('/api/users/<int:user_id>', methods=['PUT'])
 def edit_user(user_id):
