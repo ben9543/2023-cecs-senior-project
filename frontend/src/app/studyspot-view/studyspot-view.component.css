@@ -1,68 +1,71 @@
-.example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-}
-
-.example-full-width {
-    width: 100%;
-}
-
-.search {
-    font-size: 16px;
-    background: #C8D8E4;
-    height: 70%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .content {
-    background: #C8D8E4;
-    border-color: white;
-    width: 100%;
-    min-height: 100vh; /* Changed to 100vh to take at least the full height of the viewport */
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
+    min-height: 100vh;
+    background: #C8D8E4;
 }
 
 .image-container {
     position: relative;
-    display: inline-block; /* Changed from flex to inline-block to size container to the image */
-    margin-left: 100px;
+    height: 30vh; /* 30% of the viewport height */
+    width: 30vw; /* 30% of the viewport width */
+    overflow: hidden; /* This ensures that the content does not spill out of the container */
+    margin-left: 15vh;
 }
 
-.image-container img {
-    display: block; /* Removes bottom margin/whitespace under the image */
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
-.image {
-    display: grid;
-    margin: 15px;
-    height: auto;
-    width: auto;    
+.overlay-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6); /* Optional, for better readability */
+    padding: 10px;
+    text-align: center;
 }
 
 .text-overlay {
-    position: absolute;
-    bottom: 0; /* Position at the bottom of the image-container */
-    left: 0;
-    right: 0; /* Stretch across the entire width of the image-container */
     color: white;
-    background-color: rgba(0, 0, 0, 255); /* Use rgba for a slightly transparent background */
-    padding: 10px;
-    text-align: center; /* Center the text */
-    border-radius: 0; /* Adjust as needed */
-    width: fit-content;
+    padding: 5px;
 }
 
-.review-overlay{
+.review-overlay {
     font-size: 40px;
     color: red;
-    position: relative;
-    bottom: -60px;
-    left: 5%;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* to stack the buttons vertically */
+    align-items: center; /* to center-align the buttons horizontally */
+    margin-left: 75px; /* or the space you prefer */
+}
+
+button {
+    margin-bottom: 10px; /* space between buttons */
+    padding: 10px;
+    cursor: pointer;
+    background-color: #4CAF50; /* for example */
+    color: white;
+    border: none;
+    border-radius: none;
+    transition: background-color 0.3s;
+    width: 500px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:last-child {
+    margin-bottom: 0; /* no margin for the last button */
 }
