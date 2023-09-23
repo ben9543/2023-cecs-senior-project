@@ -80,3 +80,38 @@ button:hover {
 button:last-child {
     margin-bottom: 0;
 }
+
+.review-container {
+    position: absolute; 
+    bottom: 0; 
+    right: 0;
+    /*width: calc(70vw - 75px);  Adjusting the width of review container according to the available space */
+    width: 750px;
+    padding: 15px;
+    background-color: #eaeaea; /* Or any color you prefer */
+    overflow-y: auto; /* To allow scrolling if the content exceeds the container's height */
+}
+
+.review {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc; /* Optional, for separating reviews */
+    padding: 5px;
+}
+
+.profile-pic {
+    width: 50px; /* Or any size you prefer */
+    height: 50px;
+    border-radius: 50%; /* To make the image circular */
+    margin-right: 10px;
+}
+
+.user-rating {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.comment {
+    flex-grow: 1; /* To allow the comment to take the remaining width */
+}
