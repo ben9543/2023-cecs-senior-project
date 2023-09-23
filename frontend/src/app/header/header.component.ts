@@ -12,6 +12,7 @@ import { AuthService } from '../auth.service';
 export class HeaderComponent {
   isLoginPage: boolean = false;
   isSignUpPage: boolean = false;
+  isResetPasswordPage: boolean = false;
   username: string = '';
 
   constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
@@ -26,8 +27,10 @@ export class HeaderComponent {
     ).subscribe((event: NavigationEnd) => {
       this.isLoginPage = event.urlAfterRedirects.includes('/login');
       this.isSignUpPage = event.urlAfterRedirects.includes('/signup');
+      this.isResetPasswordPage = event.urlAfterRedirects.includes('/reset-password');
       console.log('isLoginPage:', this.isLoginPage);
       console.log('isSignUpPage:', this.isSignUpPage);
+      console.log('isResetPasswordPage:', this.isResetPasswordPage);
       console.log('Event:', event);
     });
   }
