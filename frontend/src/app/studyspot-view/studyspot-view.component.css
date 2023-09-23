@@ -4,13 +4,15 @@
     justify-content: left;
     min-height: 100vh;
     background: #C8D8E4;
+    flex-wrap: wrap; /* Allows child elements to wrap onto the next line */
+    margin-top: 75px;
 }
 
 .image-container {
     position: relative;
-    height: 30vh; /* 30% of the viewport height */
-    width: 30vw; /* 30% of the viewport width */
-    overflow: hidden; /* This ensures that the content does not spill out of the container */
+    height: 30vh;
+    width: 30vw;
+    overflow: hidden;
     margin-left: 15vh;
 }
 
@@ -28,7 +30,7 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.6); /* Optional, for better readability */
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     text-align: center;
 }
@@ -40,26 +42,35 @@ img {
 
 .review-overlay {
     font-size: 40px;
-    color: red;
+    color: yellow;
 }
 
 .right-container {
     display: flex;
-    flex-direction: column; /* to stack the buttons vertically */
-    align-items: center; /* to center-align the buttons horizontally */
-    margin-left: 75px; /* or the space you prefer */
+    flex-direction: column;
+    align-items: center;
+    margin-left: 75px;
+}
+
+.bottom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 100%;
+    margin-left: 15vh;
+    margin-top: -275px;
 }
 
 button {
-    margin-bottom: 10px; /* space between buttons */
+    margin-bottom: 10px;
     padding: 10px;
     cursor: pointer;
-    background-color: #4CAF50; /* for example */
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: none;
     transition: background-color 0.3s;
-    width: 500px;
+    width: 30vw;
 }
 
 button:hover {
@@ -67,34 +78,5 @@ button:hover {
 }
 
 button:last-child {
-    margin-bottom: 0; /* no margin for the last button */
-}
-/* ... existing styles ... */
-
-.bottom-container {
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    margin-top: 50px; /* or the space you prefer between the image and the new buttons */
-}
-
-/* If you want to style these new buttons differently, you can create a new style for them */
-.bottom-container button {
-    margin-bottom: 10px;
-    padding: 10px;
-    cursor: pointer;
-    background-color: #4CAF50; /* or any other color you prefer */
-    color: white;
-    border: none;
-    border-radius: none; /* Added border-radius for rounded corners */
-    transition: background-color 0.3s;
-    width: 100%; /* or any other width you prefer */
-}
-
-.bottom-container button:hover {
-    background-color: #45a049;
-}
-
-.bottom-container button:last-child {
-    margin-bottom: 0; /* no margin for the last button */
+    margin-bottom: 0;
 }
