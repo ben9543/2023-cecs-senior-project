@@ -39,6 +39,7 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetLinkComponent } from './reset-link/reset-link.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     SignupComponent,
     StudyspotViewComponent,
     FavoritesComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ResetLinkComponent
   ],
   imports: [
     BrowserModule,
