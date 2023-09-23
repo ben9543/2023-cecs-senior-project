@@ -43,7 +43,7 @@ img {
     color: red;
 }
 
-.button-container {
+.right-container {
     display: flex;
     flex-direction: column; /* to stack the buttons vertically */
     align-items: center; /* to center-align the buttons horizontally */
@@ -67,5 +67,34 @@ button:hover {
 }
 
 button:last-child {
+    margin-bottom: 0; /* no margin for the last button */
+}
+/* ... existing styles ... */
+
+.bottom-container {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    margin-top: 50px; /* or the space you prefer between the image and the new buttons */
+}
+
+/* If you want to style these new buttons differently, you can create a new style for them */
+.bottom-container button {
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #4CAF50; /* or any other color you prefer */
+    color: white;
+    border: none;
+    border-radius: none; /* Added border-radius for rounded corners */
+    transition: background-color 0.3s;
+    width: 100%; /* or any other width you prefer */
+}
+
+.bottom-container button:hover {
+    background-color: #45a049;
+}
+
+.bottom-container button:last-child {
     margin-bottom: 0; /* no margin for the last button */
 }
