@@ -1,6 +1,7 @@
 from db.db_connection_test import Users
 #https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/#installation
 from sqlalchemy.exc import SQLAlchemyError 
+import re
 
 # API for CRUD Operations
 class User_API():
@@ -9,6 +10,11 @@ class User_API():
     
     def add_user(self, user_data):
         try:
+            val = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+            if re.match(val,user_data['email']) is None:
+                raise ValueError("Invalid email!")
+            if user_data['username'] is None or user_data['college'] is None or user_data['password'] is None:
+                raise KeyError("Missing data!")
             # Create a new User instance and add it to the database
             new_user = Users(
                 user_id=user_data['id'],
@@ -86,6 +92,11 @@ class User_API():
             # Query the database to find the user by user_id
             user =self.get_user_by_id(user_id)
             if user:
+                val = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+                if re.match(val,new_email) is None:
+                    raise ValueError("Invalid email!")
+                if new_username is None or  new_college is None:
+                    raise KeyError("Missing data!")
                 # Update the user data with the new values
                 user.user_name = new_username
                 user.user_email = new_email
@@ -97,7 +108,9 @@ class User_API():
                 return user  # Return the updated user object
 
             return None  # User not found
-
+        except ValueError and KeyError as e:
+            return None
+        
         except SQLAlchemyError as e:
             # Handle any database-related errors here
             self.db.session.rollback()  # Rollback changes in case of an error
