@@ -6,7 +6,7 @@ Deep -
 Sal - 
 Tony -
 Ben -
-Jose -
+Jose - Working on Profile Page
 
 What will you do today?
 
@@ -16,7 +16,7 @@ Deep -
 Sal -
 Tony -
 Ben -
-Jose -
+Jose - Finish Profile Page
 
 What is blocking your progress?
 
