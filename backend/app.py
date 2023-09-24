@@ -216,10 +216,12 @@ def update_user():
         user_id = int(data.get('user_id'))
         new_username = data.get('username')
         new_email = data.get('email')
-        new_college = data.get('college')
+        new_college = data.get('university')
 
+        print(user_id, new_username, new_email, new_college)
         # Update the user's data in the database
         user = users_instance.update_user(user_id, new_username, new_email, new_college)
+        print("User->>>>>>>>>>>>>>",user)
         if user:
             # User data updated successfully
             return jsonify({'message': 'User data updated successfully'})
