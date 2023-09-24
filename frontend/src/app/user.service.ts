@@ -28,7 +28,13 @@ export class UserService {
     // Send an HTTP GET request to retrieve user data by username
     return this.http.get(`${this.apiUrl}/users/${username}`);
   }
+  // Update user data
+  changePassword(updatedUserData: any) {
+    const updateUrl = `${this.apiUrl}/change-password`;
 
+    // Send an HTTP PUT request to the update user endpoint
+    return this.http.put(updateUrl, updatedUserData);
+  }
   // Update user data
   updateUser(updatedUserData: any) {
     const updateUrl = `${this.apiUrl}/update-user`;

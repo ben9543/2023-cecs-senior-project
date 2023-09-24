@@ -34,4 +34,21 @@ export class ConfirmationDialogService {
       },
     });
   }
+
+  openPasswordChangedConfirmation(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Password Changed',
+        dialogMessage: 'You have changed your password. Log in again to see the changes.',
+      },
+    });
+  }
+  openAccountCreatedConfirmation(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Account Created',
+        dialogMessage: 'Thank you for signing up! Log in to exprience the full features of StudySpot.',
+      },
+    });
+  }
 }

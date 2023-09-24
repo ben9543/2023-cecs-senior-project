@@ -41,6 +41,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
     FavoritesComponent,
     ResetPasswordComponent,
     ConfirmationDialogComponent,
-    SearchFilterComponent
+    SearchFilterComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
