@@ -5,6 +5,7 @@ from flask_bcrypt import Bcrypt
 from auth.auth import Auth
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
+from universities.universities import Universities_API
 
 # Create a SQLAlchemy engine and connect to your database
 user = "postgres"
@@ -28,6 +29,9 @@ users_instance = User_API(db)
 
 # Create Studyspot instance
 studyspots_instance = StudySpots_API(db)
+
+# Create University instance
+universities_instance = Universities_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -85,14 +89,12 @@ def login():
     password = request.json.get('password')
     
     user = users_instance.find_user_by_email(email)
-    print("User PSWD->>>", user.password)
     if user:
         if bcrypt.check_password_hash(user.password, password):
-            print("User PSWD->>>", user.password)
             token = auth_instance.generate_jwt(email)
             if token:
-                print("token", token)
                 return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
+                # return jsonify({'token': token, 'authenticated': True}), 200 #for windows user
     
     return jsonify({'message': 'Invalid credentials', 'authenticated': False}), 401
 
@@ -108,7 +110,10 @@ def signup():
     # Check if user already exists
     if users_instance.find_user_by_email(email):
         return make_response(jsonify({'message': 'User already exists'}), 409)
-    
+    # Check if university is in the database
+    if universities_instance.get_university_by_name(college) is None:
+        return make_response(jsonify({'message': 'College does not exists in our database'}), 409)
+
     # Hash the user's password
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
