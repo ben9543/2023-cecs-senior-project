@@ -19,10 +19,10 @@
   <!-- Div for details 2 (right side) -->
   <div class="details-2">
     <div class="detail-item-button">
-      <button (click)="checkIn()">Check-In</button>
+      <button id = "special-button" (click)="checkIn()">Check-In</button>
     </div>
     <div class="detail-item-button">
-      <button (click)="rateMe()">Rate Me</button>
+      <button id = "special-button" (click)="rateMe()">Rate Me</button>
     </div>
     <div class="detail-item">
       <p id="detail-t">Traffic Status</p>
@@ -42,5 +42,19 @@
     <div class="detail-item">
         <p>User 5</p>
     </div>
+  </div>
+
+  <div class="top-right-more">
+    <button mat-icon-button matTooltip="More" [matMenuTriggerFor]="mainMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #mainMenu [overlapTrigger]="false" yPosition="below" class="customize">
+        <button id="more-on-spot" mat-menu-item>
+            <span>Report</span>
+        </button>
+        <button id="more-on-spot" mat-menu-item>
+            <span>Feedback</span>
+        </button>
+    </mat-menu>
   </div>
 </div>
