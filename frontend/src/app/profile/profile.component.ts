@@ -8,17 +8,17 @@ import { Component } from '@angular/core';
 })
 export class ProfileComponent {
   spotsRecent: Spot = [
-    { name: "Club Area", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Horn Center", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "VEC Quad", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Library", rating: "5", imageUrl: "assets/spots/Spot1.jpeg"}
+    { name: "London", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
+    { name: "Madrid", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"},
+    { name: "Barcelona", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
+    { name: "Vegas", rating: "5", imageUrl: "assets/spots/Spot1.jpeg"}
   ];
 
   spotsSuggested: Spot = [
-    { name: "Student Sucess Center", rating: "5", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Starbucks", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Outpost", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Nugget", rating: "1", imageUrl: "assets/spots/Spot1.jpeg"}
+    { name: "Portland", rating: "5", imageUrl: "assets/spots/Spot1.jpeg"},
+    { name: "Seattle", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
+    { name: "Nashville", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"},
+    { name: "Atlanta", rating: "1", imageUrl: "assets/spots/Spot1.jpeg"}
   ];
 
   constructor() {}

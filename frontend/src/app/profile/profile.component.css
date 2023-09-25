@@ -4,34 +4,54 @@
     flex-direction: column;
     justify-content: center;
     align-content: flex-end;
-    padding-top: 12%;
+    padding-top: 16%;
     padding-left: 5%;
     padding-right: 5%;
 }
-mat-button-toggle
-{
-    background-color: #007F7F;
-    padding-left: 6px;
-    padding-right: 6px;
-    color: white;
+
+.change-college{
+    position: absolute;
+    top: 10px; 
+    margin-top: 12%;
+    right: 5%;
+    width: 100px;
+    padding: 5px;
+    border: rgb(2, 35, 36) 2px solid;
+    background-color: cadetblue;
+    color: black; 
+    cursor: pointer; 
+  }
+ 
+#features {
+    padding: 5px; 
+    border: cadetblue 2px solid;
+    background-color: cadetblue;
+    color: black; 
+    cursor: pointer; 
+    width: 100px;
 }
-.switch
-{
-    left: 93.5%;
-    margin-bottom: 5px;
+  
+#features:hover {
+    background-color: goldenrod;
+    border: none;
+}
+  
+#features option {
+    background-color: cadetblue; 
+    color: #007bff; 
 }
 
 .container-title
 {   
     height: 35px;
     margin-bottom: 10px;
-    background-color: #007F7F;
+    background-color: cadetblue;
 }
 .container-objects
 {
     display: flex;
     margin-bottom: 50px;
-    background-color: #007F7F;
+    background-color: cadetblue;
     justify-content: space-between;
     padding: 20px 20px 20px 20px;
 }
