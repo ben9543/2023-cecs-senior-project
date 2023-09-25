@@ -6,6 +6,7 @@
     background: #C8D8E4;
     flex-wrap: wrap; /* Allows child elements to wrap onto the next line */
     margin-top: 75px;
+    width: 1250px;
 }
 
 .image-container {

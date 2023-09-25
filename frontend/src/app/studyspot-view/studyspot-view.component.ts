@@ -12,8 +12,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   styleUrls: ['./studyspot-view.component.css']
 })
 export class StudyspotViewComponent {
-  myControl = new FormControl('');
-    // can list study spots to recommend here
-    options: string[] = [];
-  }
+  spots: Spot = [
+    { name: "Japan", rating: "4", imageUrl: "assets/spots/Spot1.jpeg" }  ];
+  constructor() {}
 
+  ngOnInit() {}
+}
+type Spot = Array<{ name: string; rating: string; imageUrl: string; }>;
