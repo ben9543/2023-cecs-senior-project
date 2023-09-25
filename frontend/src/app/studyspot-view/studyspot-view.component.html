@@ -1,1 +1,46 @@
-<p>studyspot-view works!</p>
+<app-header></app-header>
+<div class="spots-container">
+  <!-- Div for the study spot component using hard coded data-->
+  <app-studyspot name="{{ studySpot.name }}" rating="{{ studySpot.rating }}" imageUrl="{{ studySpot.imageUrl }}"></app-studyspot>
+
+  <!-- Div for details 1 (bottom left) -->
+  <div class="details-1">
+    <p id="detail-p">Location:{{ studySpot.location }}</p>
+    <!-- Dropdown for Features, will be iteration once we have all in db -->
+    <label for="features">Features</label>
+    <select id="features" name="features">
+      <option value="powerOutlets">Power Outlets</option>
+      <option value="strongWifi">Strong Wi-Fi Signal</option>
+    </select>
+    <p id="detail-p">Noise Level: Moderate</p>
+    <p id="detail-p">Availablity: Available</p>
+  </div>
+
+  <!-- Div for details 2 (right side) -->
+  <div class="details-2">
+    <div class="detail-item-button">
+      <button (click)="checkIn()">Check-In</button>
+    </div>
+    <div class="detail-item-button">
+      <button (click)="rateMe()">Rate Me</button>
+    </div>
+    <div class="detail-item">
+      <p id="detail-t">Traffic Status</p>
+    </div>
+    <div class="detail-item">
+        <p>User 1</p>
+    </div>
+    <div class="detail-item">
+        <p>User 2</p>
+    </div>
+    <div class="detail-item">
+        <p>User 3</p>
+    </div>
+    <div class="detail-item">
+        <p>User 4</p>
+    </div>
+    <div class="detail-item">
+        <p>User 5</p>
+    </div>
+  </div>
+</div>

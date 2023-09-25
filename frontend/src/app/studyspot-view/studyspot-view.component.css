@@ -1,0 +1,124 @@
+.spots-container{
+    background-color: cadetblue;
+    position: relative;
+    width: 800px;
+    height: 400px;
+    margin: 230px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 20px;
+    font-family: 'Chalkduster, fantasy';
+    font-size: larger;
+}
+
+.study-spot-details {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .image-container {
+    flex: 1;
+  }
+  
+  .study-spot-image {
+    width: 50%;
+    top: 0; 
+    right: 0; 
+    padding: 10px; 
+  }
+  
+  .details-1 {
+    width: max-content;
+    flex: 1;
+    position: absolute;
+    bottom: 20px; 
+    left: 2.2%; 
+    padding:20px 20px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+    border: rgb(14, 75, 77) 2px solid;
+    background-color: transparent;
+    
+  }
+  
+  .details-2 {
+    margin-top: 3%;
+    flex: 1;
+    margin-left: 10%; 
+  }
+  
+  .detail-item {
+    margin-bottom: 10px;
+    font-size: 16px;
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+  }
+  
+  .detail-item p {
+    margin: 0;
+  }
+
+  .detail-item-button{
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+  }
+  
+  .detail-item-button:hover{
+    background-color: goldenrod;
+    width: max-content;
+  }
+  button{
+    border: gold 2px solid;
+    background-color: transparent;
+  }
+  button:hover{
+    background-color: goldenrod;
+    border: none;
+  }
+
+#features {
+    margin-left: 40px;
+    margin-bottom: 10px;
+    padding: 10px; 
+    border: gold 2px solid;
+    background-color: whitesmoke;
+    color: black; 
+    cursor: pointer; 
+}
+  
+#features:hover {
+    background-color: goldenrod;
+    border: none;
+}
+  
+#features option {
+    background-color: cadetblue; 
+    color: #007bff; 
+}
+
+#detail-p{
+    background-color: whitesmoke;
+    color: black;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+    margin-bottom: 10px;
+}
+#detail-t{
+    background-color: whitesmoke;
+    color: black;
+    width: max-content;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+    margin-bottom: 10px;
+}
+  
