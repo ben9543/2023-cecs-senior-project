@@ -1,1 +1,32 @@
-<p>profile works!</p>
+<div class="container">
+    <div class="container-recent">
+        <div class="switch">
+            <mat-button-toggle class="switch">CSULB</mat-button-toggle>
+        </div>
+
+        <mat-toolbar class="container-title">
+            <b>Recent</b>
+            <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                <mat-icon>share</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div class="container-objects">
+            <div *ngFor="let spot of spotsRecent">
+                    <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+            </div>  
+        </div>
+    </div>
+
+    <div class="container-ymlt"> 
+        <mat-toolbar class="container-title">
+            <b>You might like these...</b>
+        </mat-toolbar>
+
+        <div class="container-objects">
+            <div *ngFor="let spot of spotsSuggested">
+                <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+            </div>
+        </div>
+    </div>
+</div>

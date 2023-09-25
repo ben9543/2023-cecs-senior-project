@@ -1,0 +1,51 @@
+.container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: flex-end;
+    padding-top: 12%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+mat-button-toggle
+{
+    background-color: #007F7F;
+    padding-left: 6px;
+    padding-right: 6px;
+    color: white;
+}
+.switch
+{
+    left: 93.5%;
+    margin-bottom: 5px;
+}
+
+.container-title
+{   
+    height: 35px;
+    margin-bottom: 10px;
+    background-color: #007F7F;
+}
+.container-objects
+{
+    display: flex;
+    margin-bottom: 50px;
+    background-color: #007F7F;
+    justify-content: space-between;
+    padding: 20px 20px 20px 20px;
+}
+.container-recent
+{
+    display: inline-block;
+    flex-direction: column;
+}
+.container-ymlt
+{
+    display: inline-block;
+    flex-direction: column;
+}
+app-studyspot
+{
+    flex-shrink: 10;
+}
