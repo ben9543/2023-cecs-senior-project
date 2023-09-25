@@ -5,8 +5,8 @@
     justify-content: center;
     align-content: flex-end;
     padding-top: 12%;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 mat-button-toggle
 {
@@ -33,6 +33,7 @@ mat-button-toggle
     margin-bottom: 50px;
     background-color: #007F7F;
     justify-content: space-between;
+    padding: 20px 20px 20px 20px;
 }
 .container-recent
 {
