@@ -1,0 +1,29 @@
+.container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: flex-end;
+    padding-top: 15%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+.switch
+{
+    left: 94.5%;
+    margin-bottom: 5px;
+}
+.container-title
+{   
+    height: 35px;
+    margin-bottom: 10px;
+    background-color: #C8D8E4;
+}
+.container-objects
+{
+    height: 138px;
+    margin-bottom: 100px;
+    border: black;
+    border-style: dotted;
+    background-color: #C8D8E4;
+}
