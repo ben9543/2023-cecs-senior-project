@@ -1,8 +1,9 @@
 <app-header></app-header>
 <div class="spots-container">
   <!-- Div for the study spot component using hard coded data-->
-  <app-studyspot name="{{ studySpot.name }}" rating="{{ studySpot.rating }}" imageUrl="{{ studySpot.imageUrl }}"></app-studyspot>
-
+  <div class="studyspotCard">
+    <app-studyspot [ngStyle]="" name="{{ studySpot.name }}" rating="{{ studySpot.rating }}" imageUrl="{{ studySpot.imageUrl }}"></app-studyspot>
+  </div>
   <!-- Div for details 1 (bottom left) -->
   <div class="details-1">
     <p id="detail-p">Location:{{ studySpot.location }}</p>
@@ -29,28 +30,30 @@
     <div class="detail-item">
       <p id="detail-t">Traffic Status: Moderate</p>
     </div>
-    <div class="detail-item">
-        <p>User 1</p>
-    </div>
-    <div class="detail-item">
-        <p>User 2</p>
-    </div>
-    <div class="detail-item">
-        <p>User 3</p>
-    </div>
-    <div class="detail-item">
-        <p>User 4</p>
-    </div>
-    <div class="detail-item">
-        <p>User 5</p>
+    <div class="user-reviews">
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
     </div>
   </div>
 
   <div class="top-right-more">
-    <button mat-icon-button matTooltip="More" [matMenuTriggerFor]="mainMenu">
+    <button mat-icon-button matTooltip="More" [matMenuTriggerFor]="reportSpotMenu">
         <mat-icon>more_vert</mat-icon>
     </button>
-    <mat-menu #mainMenu [overlapTrigger]="false" yPosition="below" class="customize">
+    <mat-menu #reportSpotMenu [overlapTrigger]="false" yPosition="below" class="customize">
         <button id="more-on-spot" mat-menu-item>
             <span>Report</span>
         </button>

@@ -44,6 +44,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { UserratingComponent } from './userrating/userrating.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
@@ -69,7 +70,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     ResetPasswordComponent,
     ConfirmationDialogComponent,
     SearchFilterComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    UserratingComponent
   ],
   imports: [
     BrowserModule,

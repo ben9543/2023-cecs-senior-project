@@ -34,12 +34,12 @@ export class LogInComponent {
           // Fetch the username based on the email from UserService
           this.userService.getUserByEmail(email).subscribe(
             (userData) => {
-              const user = userData;
+              const user = userData; 
               this.authService.setUserData(user); // Set userData
 
             },
             (userError) => {
-              console.error('Error fetching username:', userError);
+              console.error('Error fetching username:', userError); 
             }
           );
           // Navigate to home
