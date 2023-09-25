@@ -7,11 +7,13 @@
   <div class="details-1">
     <p id="detail-p">Location:{{ studySpot.location }}</p>
     <!-- Dropdown for Features, will be iteration once we have all in db -->
-    <label for="features">Features</label>
-    <select id="features" name="features">
-      <option value="powerOutlets">Power Outlets</option>
-      <option value="strongWifi">Strong Wi-Fi Signal</option>
-    </select>
+    <div class="select-features">
+        <label for="features">Features</label>
+        <select id="features" name="features">
+        <option value="powerOutlets">Power Outlets</option>
+        <option value="strongWifi">Strong Wi-Fi Signal</option>
+        </select>
+    </div>
     <p id="detail-p">Noise Level: Moderate</p>
     <p id="detail-p">Availablity: Available</p>
   </div>
@@ -25,7 +27,7 @@
       <button id = "special-button" (click)="rateMe()">Rate Me</button>
     </div>
     <div class="detail-item">
-      <p id="detail-t">Traffic Status</p>
+      <p id="detail-t">Traffic Status: Moderate</p>
     </div>
     <div class="detail-item">
         <p>User 1</p>

@@ -1,8 +1,8 @@
 .spots-container{
     background-color: cadetblue;
     position: relative;
-    width: 800px;
-    height: 400px;
+    width: 900px;
+    height: 450px;
     margin: 230px auto;
     display: flex;
     flex-wrap: wrap;
@@ -34,13 +34,12 @@
     position: absolute;
     bottom: 10px; 
     left: 2.2%; 
-    padding: 5px 10px; 
+    padding: 20px 20px; 
     border: none;
     border-radius: 5px;
     cursor: pointer; 
     border: rgb(14, 75, 77) 2px solid;
     background-color: transparent;
-    margin-left: 10px;
   }
   
   .details-2 {
@@ -69,13 +68,14 @@
     cursor: pointer; 
   }
   
-  .detail-item-button:hover{
-    background-color: goldenrod;
-    width: max-content;
-  }
  #special-button{
-    border: gold 2px solid;
-    background-color: transparent;
+    width: 170px;
+    padding: 10px;
+    font-size: 15px;
+    border: rgb(5, 55, 57) 2px solid;
+    background-color: cadetblue;
+    color: black; 
+    cursor: pointer; 
   }
 #special-button:hover{
     background-color: goldenrod;
@@ -84,10 +84,9 @@
 
 #features {
     margin-left: 40px;
-    margin-bottom: 10px;
     padding: 10px; 
-    border: gold 2px solid;
-    background-color: whitesmoke;
+    border: cadetblue 2px solid;
+    background-color: cadetblue;
     color: black; 
     cursor: pointer; 
 }
@@ -110,7 +109,7 @@
     cursor: pointer; 
     border: rgb(14, 75, 77) 2px solid;
     margin-top: 10px;
-    padding: 2px;
+    padding: 5px;
 }
 #detail-t{
     width: max-content;
@@ -121,6 +120,15 @@
     cursor: pointer; 
     border: rgb(14, 75, 77) 2px solid;
     padding: 2px;
+}
+
+.select-features{
+    background-color: whitesmoke;
+    color: black;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer; 
+    border: rgb(14, 75, 77) 2px solid;
 }
 
 .top-right-more {
