@@ -1,0 +1,52 @@
+<div class="search-filter" [style.width]="customWidth">
+    <!-- Indoor and Outdoor checkboxes -->
+    <div class="filter-group">
+      <div class="checkbox">
+        <label><input type="checkbox" [(ngModel)]="indoor">Indoor</label>
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox" [(ngModel)]="outdoor">Outdoor</label>
+      </div>
+    </div>
+    
+    <!-- Noise Level toggle bar -->
+    <div class="filter-group">
+      <label>Noise Level</label>
+      <input type="range" [(ngModel)]="noiseLevel" min="1" max="5">
+      <span>{{ noiseLevel }}</span>
+    </div>
+    
+    <!-- Crowdedness Level toggle bar -->
+    <div class="filter-group">
+      <label>Crowdedness Level</label>
+      <input type="range" [(ngModel)]="crowdednessLevel" min="1" max="5">
+      <span>{{ crowdednessLevel }}</span>
+    </div>
+    
+    <!-- Checkboxes for additional amenities -->
+    <div class="filter-group">
+      <div class="checkbox">
+        <label><input type="checkbox" [(ngModel)]="powerOutlets">Power Outlets</label>
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox" [(ngModel)]="strongWifi">Strong Wi-Fi Signal</label>
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox" [(ngModel)]="adaAccessible">ADA Accessible</label>
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox" [(ngModel)]="easyToFind">Easy to Find</label>
+      </div>
+      <div class="temperature-range">
+        <input type="radio" name="temperature" id="cold" value="Cold" [(ngModel)]="temperature">
+        <label for="cold">Cold</label>
+        
+        <input type="radio" name="temperature" id="warm" value="Warm" [(ngModel)]="temperature">
+        <label for="warm">Warm</label>
+        
+        <input type="radio" name="temperature" id="hot" value="Hot" [(ngModel)]="temperature">
+        <label for="hot">Hot</label>
+      </div>
+    </div>
+  </div>
+  

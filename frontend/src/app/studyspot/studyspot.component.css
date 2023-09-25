@@ -1,0 +1,93 @@
+.card-container {
+    position: relative;
+    width: 300px;
+  }
+  
+  .card-image {
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .card-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card-name {
+    width: 300px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 10px;
+  }
+  
+  .card-rating {
+    background-color: none !important;
+    font-size: 35px;
+    color: gold;
+  }
+  
+  .card-rating i {
+    margin-right: 5px;
+  }
+  
+  .like-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  .bigger-icon {
+    font-size: 75%; 
+    margin-right: 5px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .card-container {
+      width: 90%;
+      margin: 0 auto;
+    }
+  
+    .card-image {
+      height: 90%;
+    }
+  
+    .card-name {
+      width: 100%;
+      height: 30px;
+      font-size: 24px;
+      margin-bottom: 2%;
+    }
+  
+    .card-rating {
+      font-size: 30px;
+    }
+  
+    .like-button {
+      margin: 5px;
+      font-size: 20px;
+    }
+    .bigger-icon {
+        font-size: 50%;
+        margin-right: 0; 
+      }
+  }
+  

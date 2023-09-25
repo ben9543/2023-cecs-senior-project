@@ -38,6 +38,10 @@ import { StudyspotViewComponent } from './studyspot-view/studyspot-view.componen
 import { FavoritesComponent } from './favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +62,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HelpsComponent,
     SignupComponent,
     StudyspotViewComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    ResetPasswordComponent,
+    ConfirmationDialogComponent,
+    SearchFilterComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

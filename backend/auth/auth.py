@@ -4,12 +4,13 @@ import jwt
 SECRET = "secret"
 
 class Auth:
-    def __init__(self, users_instance):
-        self.users_instance = users_instance
+    def __init__(self, db, users):
+        self.db = db
+        self.users = users
 
-    def generate_jwt(self, email, password):
-        user = self.users_instance.find_user_by_email(email)
-        if(user and user.password.encode('utf-8') == password):
+    def generate_jwt(self, email):
+        user = self.users.find_user_by_email(email)
+        if user:
             # generate a JWT token
             payload = {"id":int(user.user_id)}
             # Will include user id into the jwt payload
