@@ -4,26 +4,34 @@
     flex-direction: column;
     justify-content: center;
     align-content: flex-end;
-    padding-top: 15%;
+    padding-top: 12%;
     padding-left: 10%;
     padding-right: 10%;
 }
+mat-button-toggle
+{
+    background-color: #007F7F;
+    padding-left: 6px;
+    padding-right: 6px;
+    color: white;
+}
 .switch
 {
-    left: 94.5%;
+    left: 94.8%;
     margin-bottom: 5px;
 }
+
 .container-title
 {   
     height: 35px;
     margin-bottom: 10px;
-    background-color: #C8D8E4;
+    background-color: #007F7F;
 }
 .container-objects
 {
-    height: 138px;
-    margin-bottom: 100px;
-    border: black;
-    border-style: dotted;
-    background-color: #C8D8E4;
+    margin-bottom: 50px;
+    background-color: #007F7F;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 20px 20px;
 }

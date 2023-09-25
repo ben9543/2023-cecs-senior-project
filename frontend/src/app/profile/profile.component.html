@@ -1,7 +1,7 @@
 <div class="container">
     <div class="container-recent">
         <div class="switch">
-            <button mat-raised-button color="primary" class="switch">CSULB</button>
+            <mat-button-toggle class="switch">CSULB</mat-button-toggle>
         </div>
 
         <mat-toolbar class="container-title">
@@ -12,22 +12,9 @@
         </mat-toolbar>
 
         <div class="container-objects">
-            <mat-chip-listbox>
-                <mat-chip>
-                    <img matChipAvatar src="https://www.mattconstruction.com/wp-content/uploads/2018/11/m_2527_0001.jpg" alt="Study Spot"/>
-                        StudySpot
-                </mat-chip>
-                <mat-chip>
-                    <img matChipAvatar src="https://www.mattconstruction.com/wp-content/uploads/2018/11/m_2527_0001.jpg" alt="Study Spot"/>
-                        StudySpot
-                </mat-chip>
-                <mat-chip>
-                    <img matChipAvatar src="https://www.mattconstruction.com/wp-content/uploads/2018/11/m_2527_0001.jpg" alt="Study Spot"/>
-                    <div class="title">
-                        <h2>StudySpot</h2>
-                    </div>
-                </mat-chip>
-            </mat-chip-listbox>
+            <div *ngFor="let spot of spotsRecent">
+                    <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+            </div>  
         </div>
     </div>
 
@@ -40,9 +27,9 @@
         </mat-toolbar>
 
         <div class="container-objects">
-            <mat-toolbar>
-                <b>Under Construction!</b>
-            </mat-toolbar>
+            <div *ngFor="let spot of spotsSuggested">
+                <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+            </div>
         </div>
     </div>
 </div>
