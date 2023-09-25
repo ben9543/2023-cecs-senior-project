@@ -4,14 +4,22 @@
       <div class="user-details">
         <p class="username">Username</p>
         <div class="rating">
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
+          <mat-icon class="star">stars</mat-icon>
+          <mat-icon class="star">stars</mat-icon>
+          <mat-icon class="star">stars</mat-icon>
+          <mat-icon class="star">stars</mat-icon>
+          <mat-icon class="star">stars</mat-icon>
         </div>
       </div>
+      <button mat-icon-button matTooltip="Action" [matMenuTriggerFor]="reportMenu">
+        <mat-icon class="report-icon">report</mat-icon> 
+      </button>
+        <mat-menu #reportMenu [overlapTrigger]="false" yPosition="below" class="customize">
+            <button mat-menu-item>
+                <span>Report</span>
+            </button>
+        </mat-menu>
     </div>
     <p class="user-comment">User's comment goes here.</p>
-</div>
+  </div>
   
