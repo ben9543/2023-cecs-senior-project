@@ -16,8 +16,8 @@ class Universities(Base):
 class Studyspots(Base):
     __tablename__ = 'studyspots'
 
-    studyspot_id = Column(Integer, primary_key=True)
-    studyspot_name = Column(String(254), unique=True)
+    studyspot_id = Column(Integer)
+    studyspot_name = Column(String(254), primary_key=True, unique=True)
 
 class Users(Base):
     __tablename__ = 'users'
@@ -35,7 +35,7 @@ class Surveys(Base):
     __tablename__ = 'surveys'
 
     survey_id = Column(Integer, primary_key=True)
-    studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
+    studyspot_name = Column(String, ForeignKey('studyspots.studyspot_name'), nullable=False)
     user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
     survey_crowdednes_level = Column(Integer, nullable=False)
     survey_noise_level = Column(Integer, nullable=False)
@@ -48,9 +48,9 @@ class Reviews(Base):
 
     review_id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
-    studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
+    studyspot_name = Column(String, ForeignKey('studyspots.studyspot_name'), nullable=False)
     review_comments = Column(String(200))
-    review_indoor = Column(Boolean)
+    # review_indoor = Column(Boolean)
     review_wifi = Column(Integer, nullable=False)
     review_temp = Column(Integer, nullable=False)
     review_rate = Column(Float, nullable=False)
@@ -64,9 +64,9 @@ class Reviews(Base):
 #     __tablename__ = 'favorites'
 
 #     user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
-#     studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
+#     studyspot_name = Column(Integer, ForeignKey('studyspots.studyspot_name'), nullable=False)
 
-#     UniqueConstraint('user_id', 'studyspot_id', name='pk_fav')
+#     UniqueConstraint('user_id', 'studyspot_name', name='pk_fav')
     
 #     studyspot = relationship("Studyspots")
 #     user = relationship("Users")

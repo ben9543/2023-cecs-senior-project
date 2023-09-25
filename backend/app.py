@@ -5,6 +5,7 @@ import bcrypt
 from auth.auth import Auth
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
+from reviews.reviews import Reviews_API
 
 # Create a SQLAlchemy engine and connect to your database
 user = "postgres"
@@ -28,6 +29,9 @@ users_instance = User_API(db)
 
 # Create Studyspot instance
 studyspots_instance = StudySpots_API(db)
+
+# Create Review instance
+reviews_instance = Reviews_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -88,13 +92,13 @@ def login():
     
     if user:
         stored_hashed_password = user.password.encode('utf-8')
-        input_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        #input_password = bcrypt.hashpw(password.encode('utf-8'), stored_hashed_password)
+        input_password = bcrypt.hashpw(password.encode('utf-8'), stored_hashed_password)
         if input_password == stored_hashed_password:
             token = auth_instance.generate_jwt(email, input_password)
             print(token)
             if token:
-                return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
+                # return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
+                return jsonify({'token': token, 'authenticated': True}), 200
         else:
             return jsonify({'message': 'Invalid password', 'authenticated': False}), 401
             
@@ -287,6 +291,22 @@ def main_studyspot():
                 'data': True
             }), 201)
 
+# Studyspot aggregation API
+@app.route('/api/studyspots/reviews', methods=['GET'])
+def get_studyspot_with_reviews():
+    try:
+        data = reviews_instance.get_reviews_by_university()
+        print(data)
+        return make_response(jsonify({
+            'message': 'OK', 
+            'data': data
+        }), 200)
+    except Exception as e:
+        print(e)
+        return make_response(jsonify({
+            'message': 'OK', 
+            'data': None
+        }), 400)
 
 # Studyspot search API
 @app.route('/api/studyspots/serach', methods=['POST'])
