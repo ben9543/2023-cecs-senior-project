@@ -17,7 +17,7 @@ mat-button-toggle
 }
 .switch
 {
-    left: 94.8%;
+    left: 93.5%;
     margin-bottom: 5px;
 }
 
@@ -29,9 +29,22 @@ mat-button-toggle
 }
 .container-objects
 {
+    display: flex;
     margin-bottom: 50px;
     background-color: #007F7F;
-    display: flex;
     justify-content: space-between;
-    padding: 20px 20px 20px 20px;
+}
+.container-recent
+{
+    display: inline-block;
+    flex-direction: column;
+}
+.container-ymlt
+{
+    display: inline-block;
+    flex-direction: column;
+}
+app-studyspot
+{
+    flex-shrink: 10;
 }
