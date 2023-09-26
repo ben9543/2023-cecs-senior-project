@@ -17,9 +17,15 @@
         <div class="middle">
             <img src="assets/Logo/ssl.png" alt="Logo">
         </div>
-        <button mat-icon-button class="button_header" matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
-            <mat-icon>account_circle</mat-icon>
-        </button>
+        <div class="user">
+            <div class="username">
+                {{username}}
+            </div>
+            <button mat-icon-button class="button_header" matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
+                <mat-icon>account_circle</mat-icon>
+            </button>
+        </div>
+        
         <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below" class="customize">
             <button mat-menu-item routerLink="/profile">
                 <mat-icon>person</mat-icon><span>Profile</span>

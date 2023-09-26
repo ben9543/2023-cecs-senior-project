@@ -21,7 +21,7 @@ export class UserService {
     });
 
     // Make the HTTP request to fetch user data
-    return this.http.get('http://127.0.0.1:5000/api/users?email=' + email, { headers });
+    return this.http.get(`${this.apiUrl}/users?email=` + email, { headers });
   }
 
   getUserByUsername(username: string): Observable<any> {
@@ -39,16 +39,14 @@ export class UserService {
   updateUser(updatedUserData: any) {
     const updateUrl = `${this.apiUrl}/update-user`;
 
-    // Send an HTTP PUT request to the update user endpoint
     return this.http.put(updateUrl, updatedUserData);
   }
 
   // check if username is available
 checkUsername(username: string, currentUserId: number | null = null) {
   // Define the API endpoint URL
-  const apiUrl = 'http://127.0.0.1:5000/api/check-username';
+  const apiUrl = `${this.apiUrl}/check-username`;
 
-  // Create an object with the username and currentUserId to send in the request body
   const requestData = { username, currentUserId };
 
   // Send a POST request to the API endpoint
@@ -58,9 +56,8 @@ checkUsername(username: string, currentUserId: number | null = null) {
 // check if email is available
 checkEmail(email: string, currentUserId: number | null = null) {
   // Define the API endpoint URL
-  const apiUrl = 'http://127.0.0.1:5000/api/check-email';
+  const apiUrl = `${this.apiUrl}/check-email`;
 
-  // Create an object with the email and currentUserId to send in the request body
   const requestData = { email, currentUserId };
 
   // Send a POST request to the API endpoint
