@@ -8,10 +8,6 @@ import { Subscriber } from 'rxjs';
   styleUrls: ['./studyspot-view.component.css']
 })
 export class StudyspotViewComponent {
-  spots: Spot = [
-    { name: "Japan", rating: "4", imageUrl: "assets/spots/Spot1.jpeg" }  ];
-  constructor() {}
-
   studySpot: any;
   
   constructor(private route: ActivatedRoute, private router: Router) { }
