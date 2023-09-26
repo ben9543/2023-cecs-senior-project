@@ -1,118 +1,152 @@
-.content {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    min-height: 100vh;
-    background: #C8D8E4;
-    flex-wrap: wrap; /* Allows child elements to wrap onto the next line */
-    margin-top: 75px;
-    
-}
-
-.image-container {
+.spots-container{
+    background-color: cadetblue;
     position: relative;
-    height: 30vh;
-    width: 30vw;
-    overflow: hidden;
-    margin-left: 15vh;
+    width: 900px;
+    height: fit-content;
+    margin: 230px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 20px;
+    font-family: 'Chalkduster, fantasy';
+    font-size: larger;
 }
 
-img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
-.overlay-wrapper {
+.study-spot-details {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .image-container {
+    flex: 1;
+  }
+  
+  .study-spot-image {
+    width: 50%;
+    top: 0; 
+    right: 0; 
+    padding: 10px; 
+  }
+  
+  .details-1 {
+    width: max-content;
+    flex: 1;
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    text-align: center;
-}
-
-.text-overlay {
-    color: white;
-    padding: 5px;
-}
-
-.review-overlay {
-    font-size: 40px;
-    color: yellow;
-}
-
-.right-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 75px;
-}
-
-.bottom-container {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    width: 100%;
-    margin-left: 15vh;
-    margin-top: -275px;
-}
-
-button {
-    margin-bottom: 10px;
-    padding: 10px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
+    top: 25%;
+    left: 2.2%; 
+    padding: 20px 20px; 
     border: none;
-    border-radius: none;
-    transition: background-color 0.3s;
-    width: 30vw;
+    border-radius: 5px;
+    cursor: pointer; 
+    background-color: transparent;
+  }
+  
+  .details-2 {
+    margin-top: 3%;
+    flex: 1;
+    margin-left: 10%; 
+  }
+  
+  .detail-item {
+    margin-bottom: 10px;
+    font-size: 16px;
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+  }
+  
+  .detail-item p {
+    margin: 0;
+  }
+
+  .detail-item-button{
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+  }
+  
+ #special-button{
+    width: 170px;
+    padding: 10px;
+    font-size: 15px;
+    border: rgb(5, 55, 57) 2px solid;
+    background-color: cadetblue;
+    color: black; 
+    cursor: pointer; 
+  }
+#special-button:hover{
+    background-color: goldenrod;
+    border: none;
+  }
+
+#features {
+    margin-left: 40px;
+    padding: 10px; 
+    border: cadetblue 2px solid;
+    background-color: cadetblue;
+    color: black; 
+    cursor: pointer; 
+}
+  
+#features:hover {
+    background-color: goldenrod;
+    border: none;
+}
+  
+#features option {
+    background-color: cadetblue; 
+    color: #007bff; 
 }
 
-button:hover {
-    background-color: #45a049;
-}
-
-button:last-child {
-    margin-bottom: 0;
-}
-
-.review-container {
-    position: absolute; 
-    bottom: 0; 
-    right: 0;
-    /*width: calc(70vw - 75px);  Adjusting the width of review container according to the available space */
-    width: 750px;
-    padding: 15px;
-    background-color: #eaeaea; /* Or any color you prefer */
-    overflow-y: auto; /* To allow scrolling if the content exceeds the container's height */
-}
-
-.review {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #ccc; /* Optional, for separating reviews */
+#detail-p{
+    background-color: whitesmoke;
+    color: black;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer; 
+    border: rgb(14, 75, 77) 2px solid;
+    margin-top: 10px;
     padding: 5px;
 }
-
-.profile-pic {
-    width: 50px; /* Or any size you prefer */
-    height: 50px;
-    border-radius: 50%; /* To make the image circular */
-    margin-right: 10px;
+#detail-t{
+    width: max-content;
+    background-color: whitesmoke;
+    color: black;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer; 
+    border: rgb(14, 75, 77) 2px solid;
+    padding: 4px;
 }
 
-.user-rating {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
+.select-features{
+    background-color: whitesmoke;
+    color: black;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer; 
+    border: rgb(14, 75, 77) 2px solid;
 }
 
-.comment {
-    flex-grow: 1; /* To allow the comment to take the remaining width */
+.top-right-more {
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    color: white; 
+    border-radius: 5px; 
+}
+
+#more-on-spot{
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.user-reviews{
+    border-left: rgb(14, 75, 77) 2px solid;
+    padding-left: 5%;
+    margin-left: -5%;
 }

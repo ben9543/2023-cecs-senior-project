@@ -101,7 +101,7 @@ class User_API():
         except SQLAlchemyError as e:
             # Handle any database-related errors here
             self.db.session.rollback()  # Rollback changes in case of an error
-            raise e  # Raise the error for further handling
+            raise e 
 
         finally:
             self.db.session.close()  # Close the database session

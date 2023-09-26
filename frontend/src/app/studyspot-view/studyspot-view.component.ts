@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgFor} from '@angular/common';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-studyspot-view',
@@ -16,6 +12,23 @@ export class StudyspotViewComponent {
     { name: "Japan", rating: "4", imageUrl: "assets/spots/Spot1.jpeg" }  ];
   constructor() {}
 
-  ngOnInit() {}
+  studySpot: any;
+  
+  constructor(private route: ActivatedRoute, private router: Router) { }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.studySpot = JSON.parse(params['data']);
+    });
+  }
+
+  checkIn() {
+    // Route to the Check-In survey component
+    this.router.navigate(['/check-in']);
+  }
+
+  rateMe() {
+    // Route to the Rate Me survey component
+    this.router.navigate(['/rate-me']);
+  }
 }
-type Spot = Array<{ name: string; rating: string; imageUrl: string; }>;

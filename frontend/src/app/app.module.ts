@@ -42,6 +42,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { UserratingComponent } from './userrating/userrating.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ResetPasswordComponent,
     ConfirmationDialogComponent,
     SearchFilterComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    UserratingComponent
   ],
   imports: [
     BrowserModule,
