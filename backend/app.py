@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
-import bcrypt
+from flask_bcrypt import Bcrypt
 from auth.auth import Auth
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
+from universities.universities import Universities_API
 from reviews.reviews import Reviews_API
 
 # Create a SQLAlchemy engine and connect to your database
@@ -20,7 +21,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
 app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
-
+bcrypt = Bcrypt(app)
 # Allow Cross Origin from anywhere (will be restricted in prod)
 CORS(app)
 
@@ -32,6 +33,9 @@ studyspots_instance = StudySpots_API(db)
 
 # Create Review instance
 reviews_instance = Reviews_API(db)
+
+# Create University instance
+universities_instance = Universities_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -89,19 +93,19 @@ def login():
     password = request.json.get('password')
     
     user = users_instance.find_user_by_email(email)
-    
     if user:
         stored_hashed_password = user.password.encode('utf-8')
         input_password = bcrypt.hashpw(password.encode('utf-8'), stored_hashed_password)
+
         if input_password == stored_hashed_password:
             token = auth_instance.generate_jwt(email, input_password)
-            print(token)
             if token:
                 # return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
                 return jsonify({'token': token, 'authenticated': True}), 200
         else:
             return jsonify({'message': 'Invalid password', 'authenticated': False}), 401
-            
+                        # return jsonify({'token': token, 'authenticated': True}), 200 #for windows user
+    
     return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
 
 
@@ -116,16 +120,49 @@ def signup():
     # Check if user already exists
     if users_instance.find_user_by_email(email):
         return make_response(jsonify({'message': 'User already exists'}), 409)
-    
+    # Check if university is in the database
+    if universities_instance.get_university_by_name(college) is None:
+        return make_response(jsonify({'message': 'College does not exists in our database'}), 409)
+
     # Hash the user's password
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     # Create user
-    user = {'id': users_instance.count_users() + 1, 'username': username, 'email': email, 'college': college, 'password': hashed_password.decode('utf-8')}
+    user = {'id': users_instance.count_users() + 1, 'username': username, 'email': email, 'college': college, 'password': hashed_password}
     users_instance.add_user(user)
 
     # Return success response
     return make_response(jsonify({'message': 'User created successfully'}), 201)
+
+
+@app.route('/api/change-password', methods=['OPTIONS'])
+@cross_origin()
+def handle_preflight_change_pswd():
+    return '', 200
+
+@app.route('/api/change-password', methods=['PUT'])
+def change_password():
+    try:
+        user_id = request.json.get('user_id')
+        username = request.json.get('user_name')
+        email = request.json.get('user_email')
+        college = request.json.get('university_name')
+        password = request.json.get('password')
+        
+
+        new_hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        # Update the user's data in the database
+        user = users_instance.update_user_pswd(user_id, username, email, college, new_hashed_password)
+        if user:
+            # User data updated successfully
+            return jsonify({'status': True})
+
+        # If the user does not exist or the update failed
+        return jsonify({'status': False}), 404
+
+    except Exception as e:
+        # Handle any exceptions (e.g., database errors)
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/user/<string:user_name>', methods=['GET'])
 def get_user(user_name):
@@ -167,7 +204,7 @@ def get_user_by_email():
 @app.route('/api/update-user', methods=['OPTIONS'])
 @cross_origin()  # Allow cross-origin requests for this route
 def handle_preflight():
-    return '', 200 # Return success for OPTIONS request
+    return '', 200 
 
 @app.route('/api/check-username', methods=['OPTIONS'])
 def handle_preflight_username():
@@ -189,10 +226,12 @@ def update_user():
         user_id = int(data.get('user_id'))
         new_username = data.get('username')
         new_email = data.get('email')
-        new_college = data.get('college')
+        new_college = data.get('university')
 
+        print(user_id, new_username, new_email, new_college)
         # Update the user's data in the database
         user = users_instance.update_user(user_id, new_username, new_email, new_college)
+        print("User->>>>>>>>>>>>>>",user)
         if user:
             # User data updated successfully
             return jsonify({'message': 'User data updated successfully'})

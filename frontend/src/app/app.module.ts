@@ -14,6 +14,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule }   from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatChipsModule } from '@angular/material/chips'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -41,6 +43,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { UserratingComponent } from './userrating/userrating.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -64,7 +69,9 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
     FavoritesComponent,
     ResetPasswordComponent,
     ConfirmationDialogComponent,
-    SearchFilterComponent
+    SearchFilterComponent,
+    ChangePasswordComponent,
+    UserratingComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +93,8 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
     MatTooltipModule,
     MatMenuModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

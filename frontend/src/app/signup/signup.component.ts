@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmationDialogService } from '../confirmation-dialog.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -13,7 +14,8 @@ export class SignupComponent {
   signup!: FormGroup;
   errorMessage: string = '';
   
-  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient, private userService: UserService, private snackBar: MatSnackBar) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient, 
+    private userService: UserService, private snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService) { }
   
   ngOnInit(): void {
     this.signup = this.formBuilder.group({
@@ -50,6 +52,7 @@ export class SignupComponent {
               .subscribe(
                 (response) => {
                   this.router.navigate(['/login']);
+                  this.confirmationDialogService.openAccountCreatedConfirmation();
                 },
                 (error) => {
                   if (error.status === 409) {

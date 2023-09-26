@@ -1,1 +1,65 @@
-<p>studyspot-view works!</p>
+<app-header></app-header>
+<div class="spots-container">
+  <!-- Div for the study spot component using hard coded data-->
+  <div class="studyspotCard">
+    <app-studyspot [ngStyle]="" name="{{ studySpot.name }}" rating="{{ studySpot.rating }}" imageUrl="{{ studySpot.imageUrl }}"></app-studyspot>
+  </div>
+  <!-- Div for details 1 (bottom left) -->
+  <div class="details-1">
+    <p id="detail-p">Location:{{ studySpot.location }}</p>
+    <!-- Dropdown for Features, will be iteration once we have all in db -->
+    <div class="select-features">
+        <label for="features">Features</label>
+        <select id="features" name="features">
+        <option value="powerOutlets">Power Outlets</option>
+        <option value="strongWifi">Strong Wi-Fi Signal</option>
+        </select>
+    </div>
+    <p id="detail-p">Noise Level: Moderate</p>
+    <p id="detail-p">Availablity: Available</p>
+  </div>
+
+  <!-- Div for details 2 (right side) -->
+  <div class="details-2">
+    <div class="detail-item-button">
+      <button id = "special-button" (click)="checkIn()">Check-In</button>
+    </div>
+    <div class="detail-item-button">
+      <button id = "special-button" (click)="rateMe()">Rate Me</button>
+    </div>
+    <div class="detail-item">
+      <p id="detail-t">Traffic Status: Moderate</p>
+    </div>
+    <div class="user-reviews">
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
+        <div class="detail-item-review">
+            <app-userrating></app-userrating>
+        </div>
+    </div>
+  </div>
+
+  <div class="top-right-more">
+    <button mat-icon-button matTooltip="More" [matMenuTriggerFor]="reportSpotMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #reportSpotMenu [overlapTrigger]="false" yPosition="below" class="customize">
+        <button id="more-on-spot" mat-menu-item>
+            <span>Report</span>
+        </button>
+        <button id="more-on-spot" mat-menu-item>
+            <span>Feedback</span>
+        </button>
+    </mat-menu>
+  </div>
+</div>

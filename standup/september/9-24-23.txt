@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly - Finished working on university api
+Deep -
+Sal - 
+Tony -
+Ben -
+Jose - Working on Profile Page
+
+What will you do today?
+
+Amanuel -
+Holly - I will work on creating parameter validations for api
+Deep - 
+Sal -
+Tony -
+Ben -
+Jose - Finish Profile Page
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben -
+Jose -

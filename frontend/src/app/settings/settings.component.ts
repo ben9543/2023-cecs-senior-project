@@ -104,7 +104,7 @@ initializeForm(): void {
         user_id: this.userData.user_id,
         username: this.edit.value.username,
         email: this.edit.value.email,
-        university: this.edit.value.university,
+        university: this.edit.value.college,
       };
   
       const usernameChanged = updatedUserData.username !== this.userData.user_name;
