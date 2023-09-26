@@ -132,7 +132,7 @@ initializeForm(): void {
           this.checkEmailAndUpdate(updatedUserData);
         } else {
           // No changes to username or email, check university if it has changed
-          const universityChanged = updatedUserData.university !== this.userData.university;
+          const universityChanged = updatedUserData.university !== this.userData.university_name;
           if (universityChanged) {
             // University has changed, update the user data
             this.updateUser(updatedUserData);
