@@ -1,0 +1,71 @@
+.container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: flex-end;
+    padding-top: 16%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.change-college{
+    position: absolute;
+    top: 10px; 
+    margin-top: 12%;
+    right: 5%;
+    width: 100px;
+    padding: 5px;
+    border: rgb(2, 35, 36) 2px solid;
+    background-color: cadetblue;
+    color: black; 
+    cursor: pointer; 
+  }
+ 
+#features {
+    padding: 5px; 
+    border: cadetblue 2px solid;
+    background-color: cadetblue;
+    color: black; 
+    cursor: pointer; 
+    width: 100px;
+}
+  
+#features:hover {
+    background-color: goldenrod;
+    border: none;
+}
+  
+#features option {
+    background-color: cadetblue; 
+    color: #007bff; 
+}
+
+.container-title
+{   
+    height: 35px;
+    margin-bottom: 10px;
+    background-color: cadetblue;
+}
+.container-objects
+{
+    display: flex;
+    margin-bottom: 50px;
+    background-color: cadetblue;
+    justify-content: space-between;
+    padding: 20px 20px 20px 20px;
+}
+.container-recent
+{
+    display: inline-block;
+    flex-direction: column;
+}
+.container-ymlt
+{
+    display: inline-block;
+    flex-direction: column;
+}
+app-studyspot
+{
+    flex-shrink: 10;
+}
