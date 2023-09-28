@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel - Complete the profile setting implementation [Frontend]. Profile setting has been completed and pushed to the dev branch. Commit ea388fb
 Holly - Created SQL tables
-Deep -
+Deep - Coded API to search study spot by ID
 Sal - 
 Tony -
 Ben - Completed the base SQL table
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel - Organize and assign tickets
 Holly - create studyspot sql table
-Deep -
+Deep - Worked on SQL Statements for the database
 Sal - assign homescreen story and create branch
 Tony -
 Ben - I am going to test our table catch errors before we convert it into Python codes using SQLAlchemy
@@ -22,7 +22,7 @@ What is blocking your progress?
 
 Amanuel -
 Holly -
-Deep -
+Deep - N/A
 Sal -
 Tony -
 Ben - Testing in local DB

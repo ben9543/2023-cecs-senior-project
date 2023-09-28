@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly -
-Deep -
+Deep - Wrote functionality of the user Api file 
 Sal - Added search bar to homepage
 Tony -
 Ben -
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel -
 Holly -
-Deep -
+Deep - Connecting database and determining functionality requirements
 Sal - Fix div to be appropriate for content
 Tony -
 Ben -
@@ -22,7 +22,7 @@ What is blocking your progress?
 
 Amanuel -
 Holly -
-Deep -
+Deep - establishing connecting to local database
 Sal - Technical experience with angular
 Tony -
 Ben -

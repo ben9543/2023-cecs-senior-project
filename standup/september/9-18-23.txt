@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly -
-Deep -
+Deep - Fixed the required libraries issue and setting up database in local environment
 Sal - Made home divs, search bar and started the content div
 Tony -
 Ben -
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel -
 Holly -
-Deep -
+Deep - finish wrapping up functionality for user 
 Sal - Determine how to store and display study spot content on homepage
 Tony -
 Ben - I will create a GitHub contribution tracker
@@ -22,7 +22,7 @@ What is blocking your progress?
 
 Amanuel -
 Holly -
-Deep -
+Deep - N/A
 Sal -
 Tony -
 Ben - Finding documentation for GitHub API
