@@ -18,6 +18,9 @@ class Studyspots(Base):
 
     studyspot_id = Column(Integer)
     studyspot_name = Column(String(254), primary_key=True, unique=True)
+    university_name = Column(String(200))
+    is_indoor = Column(Boolean),
+    image_url = Column(String(3000)),
 
 class Users(Base):
     __tablename__ = 'users'
