@@ -334,7 +334,12 @@ def main_studyspot():
 @app.route('/api/studyspots/reviews', methods=['GET'])
 def get_studyspot_with_reviews():
     try:
-        data = reviews_instance.get_reviews_by_university()
+        data = None
+        studyspot_name = request.args.get('name')
+        if not studyspot_name:
+            data = studyspots_instance.get_studyspots_with_reviews()
+        else:
+            data = studyspots_instance.get_studyspot_by_name_with_reviews(studyspot_name)
         print(data)
         return make_response(jsonify({
             'message': 'OK', 
@@ -343,7 +348,7 @@ def get_studyspot_with_reviews():
     except Exception as e:
         print(e)
         return make_response(jsonify({
-            'message': 'OK', 
+            'message': 'FAILED', 
             'data': None
         }), 400)
 
