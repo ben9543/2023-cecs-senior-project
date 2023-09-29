@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly -
-Deep -
+Deep - finished writing the functionality for reviews
 Sal - tried removing the header from reset password page
 Tony -
 Ben -
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel -
 Holly -
-Deep -
+Deep - start writing api routes for the reviews (which uses review functionality)
 Sal - Make reset password form
 Tony -
 Ben -
@@ -22,7 +22,7 @@ What is blocking your progress?
 
 Amanuel -
 Holly -
-Deep -
+Deep - testing the routes with the database
 Sal -
 Tony -
 Ben -

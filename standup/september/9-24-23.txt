@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly - Finished working on university api
-Deep -
+Deep - Finished writing api routes for reviews
 Sal - 
 Tony -
 Ben -
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel -
 Holly - I will work on creating parameter validations for api
-Deep - 
+Deep - established connection to database and test the api routes
 Sal -
 Tony -
 Ben -
@@ -22,7 +22,7 @@ What is blocking your progress?
 
 Amanuel -
 Holly -
-Deep -
+Deep - establishing the connection to local database
 Sal -
 Tony -
 Ben -

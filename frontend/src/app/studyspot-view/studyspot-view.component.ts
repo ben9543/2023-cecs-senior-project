@@ -8,7 +8,6 @@ import { Subscriber } from 'rxjs';
   styleUrls: ['./studyspot-view.component.css']
 })
 export class StudyspotViewComponent {
-
   studySpot: any;
   
   constructor(private route: ActivatedRoute, private router: Router) { }

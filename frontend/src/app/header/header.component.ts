@@ -21,9 +21,10 @@ export class HeaderComponent {
 
 
   ngOnInit(): void {
-
-    console.log('Username from header', this.username);
-    console.log('HeaderComponent initialized!');
+    this.authService.userData$.subscribe((userData) => {
+      this.username = userData.user_name;
+      console.log("userData in header", userData);
+    });
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
@@ -31,11 +32,6 @@ export class HeaderComponent {
       this.isSignUpPage = event.urlAfterRedirects.includes('/signup');
       this.isResetPasswordPage = event.urlAfterRedirects.includes('/reset-password');
       this.isResetLinkPage = event.urlAfterRedirects.includes('/reset-link');
-      console.log('isLoginPage:', this.isLoginPage);
-      console.log('isSignUpPage:', this.isSignUpPage);
-      console.log('isResetPasswordPage:', this.isResetPasswordPage);
-      console.log('isResetLinkPage:', this.isResetLinkPage);
-      console.log('Event:', event);
     });
   }
   toggleMainNav() {
