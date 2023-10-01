@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly -
+Deep -
+Sal - Made home divs, search bar and started the content div
+Tony -
+Ben -
+Jose - Polishing Recent tab on Profile homepage and starting "you might like these" tab
+
+What will you do today?
+
+Amanuel -
+Holly -
+Deep -
+Sal - Determine how to store and display study spot content on homepage
+Tony -
+Ben - I will create a GitHub contribution tracker
+Jose - Aligning and creating the "you might like these" tab
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben - Finding documentation for GitHub API
+Jose -

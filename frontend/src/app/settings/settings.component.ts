@@ -1,25 +1,11 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
+import { ConfirmationDialogService } from '../confirmation-dialog.service';
 
-// validator to check if the username is taken
-const usernameTakenValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  const username = control.value;
-
-  const isUsernameTaken = checkIfUsernameIsTaken(username);
-
-  if (isUsernameTaken) {
-    return { usernameTaken: true };
-  }
-
-  return null;
-};
-
-function checkIfUsernameIsTaken(username: string): boolean {
-  // logic to check if the username is taken here goes here
-  // HTTP request to your server to check
-  return false;
-}
 
 // validator to check if the username is empty
 const usernameEmptyValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -74,24 +60,115 @@ const collegeEmptyValidator: ValidatorFn = (control: AbstractControl): Validatio
 })
 export class SettingsComponent {
   edit!: FormGroup;
+  user: any = {}; // Initialize user object
+  userData: any | null = null;
+
+  constructor(private router: Router, private formBuilder: FormBuilder, private activeroute: ActivatedRoute,
+    private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar, 
+    private confirmationDialogService: ConfirmationDialogService) { }
   
-  constructor(private router: Router, private formBuilder: FormBuilder) { }
-  
-  ngOnInit(): void {
+ngOnInit(): void {
+  // Subscribe to userData$ and wait for it to emit data
+  this.authService.userData$.subscribe((userData) => {
+    this.userData = userData;
+
+    // Once userData is available, initialize the form
+    this.initializeForm();
+  });
+}
+
+initializeForm(): void {
+  // Check if userData is available before initializing the form
+  if (this.userData) {
     this.edit = this.formBuilder.group({
       username: [
-        '',
-        [Validators.required, usernameTakenValidator, usernameEmptyValidator],
+        this.userData.user_name,
+        [Validators.required, usernameEmptyValidator],
       ],
       email: [
-        '',
+        this.userData.user_email,
         [Validators.required, emailEmptyValidator, emailFormatValidator],
       ],
-      college: ['', [Validators.required, collegeEmptyValidator]],
+      college: [
+        this.userData.university_name,
+        [Validators.required, collegeEmptyValidator],
+      ],
+    });
+  }
+}
+
+  
+  onSubmit(): void {
+    if (this.edit.valid) {
+      const updatedUserData = {
+        user_id: this.userData.user_id,
+        username: this.edit.value.username,
+        email: this.edit.value.email,
+        university: this.edit.value.college,
+      };
+  
+      const usernameChanged = updatedUserData.username !== this.userData.user_name;
+      const emailChanged = updatedUserData.email !== this.userData.user_email;
+  
+      // Check if the new username already exists
+      if (usernameChanged) {
+        this.userService.checkUsername(updatedUserData.username, updatedUserData.user_id).subscribe((usernameResponse: any) => {
+          if (usernameResponse.taken) {
+            this.snackBar.open('Username is already taken', 'Close', { duration: 3000 });
+            return;
+          } else {
+            // Username is not taken, continue checking email if it has changed
+            if (emailChanged) {
+              this.checkEmailAndUpdate(updatedUserData);
+            } else {
+              // No email change, update the user data
+              this.updateUser(updatedUserData);
+            }
+          }
+        });
+      } else {
+        // Username has not changed, check email if it has changed
+        if (emailChanged) {
+          this.checkEmailAndUpdate(updatedUserData);
+        } else {
+          // No changes to username or email, check university if it has changed
+          const universityChanged = updatedUserData.university !== this.userData.university_name;
+          if (universityChanged) {
+            // University has changed, update the user data
+            this.updateUser(updatedUserData);
+          } else {
+            // No changes made
+            this.snackBar.open('No changes made', 'Close', { duration: 3000 });
+          }
+        }
+      }
+    }
+  }
+  
+  checkEmailAndUpdate(updatedUserData: any): void {
+    // Check if the new email already exists
+    this.userService.checkEmail(updatedUserData.email, updatedUserData.user_id).subscribe((emailResponse: any) => {
+      if (emailResponse.taken) {
+        this.snackBar.open('Email is already taken', 'Close', { duration: 3000 });
+        return;
+      } else {
+        // Email is not taken, update the user data
+        this.updateUser(updatedUserData);
+      }
     });
   }
   
-  onSubmit(): void {
-    this.router.navigate(['/home']);
+  updateUser(updatedUserData: any): void {
+    this.userService.updateUser(updatedUserData).subscribe(
+      (response) => {
+        this.router.navigate(['/login']);
+        // Open the confirmation dialog
+        this.confirmationDialogService.openSettingUpdateConfirmation();
+      },
+      (error) => {
+        console.error('Error updating user data:', error);
+      }
+    );
   }
+  
 }

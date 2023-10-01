@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
@@ -13,6 +14,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule }   from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatChipsModule } from '@angular/material/chips'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,6 +39,13 @@ import { SignupComponent } from './signup/signup.component';
 import { StudyspotViewComponent } from './studyspot-view/studyspot-view.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { UserratingComponent } from './userrating/userrating.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -56,7 +66,12 @@ import { HttpClientModule } from '@angular/common/http';
     HelpsComponent,
     SignupComponent,
     StudyspotViewComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    ResetPasswordComponent,
+    ConfirmationDialogComponent,
+    SearchFilterComponent,
+    ChangePasswordComponent,
+    UserratingComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +79,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -76,7 +92,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatExpansionModule,
     MatTooltipModule,
     MatMenuModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

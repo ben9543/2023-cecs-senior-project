@@ -63,6 +63,11 @@ form {
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     align-self: center;
+    background-color: rgb(6, 59, 61);
+  }
+
+  .forgot-password-button{
+    background-color: rgb(6, 59, 61);
   }
 
   .signin{

@@ -8,7 +8,7 @@
     >
     <mat-form-field>
         <mat-label>Change Username</mat-label>
-        <input matInput formControlName="username" placeholder="Username" />
+        <input matInput formControlName="username" required />
         <mat-error *ngIf="edit.get('username')!.hasError('required')">
           Please enter a username
         </mat-error>
@@ -21,7 +21,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Change Email</mat-label>
-        <input matInput formControlName="email" placeholder="Email" />
+        <input matInput formControlName="email" />
         <mat-error *ngIf="edit.get('email')!.hasError('required')">
           Please enter an email address
         </mat-error>
@@ -34,7 +34,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Change College</mat-label>
-        <input matInput formControlName="college" placeholder="College" />
+        <input matInput formControlName="college" />
         <mat-error *ngIf="edit.get('college')!.hasError('required')">
           Please enter your college
         </mat-error>
@@ -44,11 +44,12 @@
     </mat-form-field>
       
       <div class="row">
-        <div class = 'btn-secondary'>
+        <div class = 'btn-primary'>
             <button
                 mat-raised-button
                 type="submit"
                 color="primary"
+                style="background-color: rgb(6, 59, 61);"
             >
             Save
             </button>
@@ -58,6 +59,7 @@
                 mat-raised-button
                 color="primary"
                 routerLink="/change-password"
+                style="background-color: rgb(6, 59, 61);"
             >
             Change Password
             </button>

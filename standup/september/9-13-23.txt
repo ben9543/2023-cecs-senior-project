@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel - Organize and assigned tickets
+Holly - 
+Deep -
+Sal - created branch for SS-27
+Tony - 
+Ben - Finalized big SQLTables: User, Review, Survey, University
+Jose - created branch for SS-45 and planned/researched on the implmentation of scrollable horizontal menu for Recent tab.
+
+What will you do today?
+
+Amanuel - oversee what has been completed
+Holly -
+Deep -
+Sal - create homepage component and determine neccessry functionality
+Tony -
+Ben - Learn how to utilize PostgreSQL with Flask-SQLAlchemy.
+Jose - created toggle button for user to able to switch unversity pages. Implenting the scrollable horizontal menu. All implmenting last tab.
+
+What is blocking your progress?
+
+Amanuel - waiting for apis for profile setting details update
+Holly -
+Deep -
+Sal -
+Tony -
+Ben - Learning curve with PostgreSQL and SQLAlchemy.
+Jose - alligning the menus and having them scrollable on a fixed position

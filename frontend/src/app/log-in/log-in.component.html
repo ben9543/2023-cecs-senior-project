@@ -38,15 +38,13 @@
           >Please enter a password</mat-error
         >
       </mat-form-field>
-      <div style="display: flex; justify-content: center; align-items: center; height: 100%">
-        <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
-      </div>
       <div class = "row">
         <div class = 'btn-primary'>
             <button
                 mat-raised-button
                 color="primary"
                 routerLink="/signup"
+                style="background-color: rgb(6, 59, 61);"
             >
             Sign Up
             </button>
@@ -63,7 +61,14 @@
         </div>
       </div>
       <div class="forgot-password">
-        <a>Forgot Password?</a>
+        <button
+        mat-raised-button
+        color="primary"
+        routerLink="/reset-password"
+        style="background-color: rgb(6, 59, 61);"
+        >
+          Forgot Password?
+        </button>
       </div>
     </form>
   </div>

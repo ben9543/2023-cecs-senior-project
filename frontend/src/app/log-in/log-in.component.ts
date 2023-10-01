@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-log-in',
@@ -13,7 +16,8 @@ export class LogInComponent {
   login!: FormGroup;
   errorMessage: string = '';
   
-  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient ) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient,
+     private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
     this.login = this.formBuilder.group({
@@ -24,17 +28,28 @@ export class LogInComponent {
 
   onSubmit(): void {
     if (this.login.valid) {
-        console.log(this.login.value)
         const { email, password } = this.login.value;
         this.http.post<any>('http://127.0.0.1:5000/api/login', { email: email, password: password }).subscribe(response => {
           localStorage.setItem('access_token', response.token);
+          // Fetch the username based on the email from UserService
+          this.userService.getUserByEmail(email).subscribe(
+            (userData) => {
+              const user = userData; 
+              this.authService.setUserData(user); // Set userData
+
+            },
+            (userError) => {
+              console.error('Error fetching username:', userError); 
+            }
+          );
+          // Navigate to home
           this.router.navigate(['/home']);
         },
         error => {
           if (error.status === 401) {
-            this.errorMessage = 'Invalid credentials';
+            this.snackBar.open('Invalid email or password', 'Close', { duration: 5000 });
           } else {
-            this.errorMessage = 'An unknown error occurred';
+            this.snackBar.open('Login failed! Unknown Error', 'Close', { duration: 5000 });
           }
         }
         ); 

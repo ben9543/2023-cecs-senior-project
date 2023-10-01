@@ -1,0 +1,44 @@
+/* Style the dialog container */
+.custom-dialog-container {
+    width: 80%; 
+    max-width: 400px; 
+    background-color: cadetblue; 
+    border-radius: 8px; 
+    padding: 16px;
+  }
+  
+  /* Style the dialog title */
+  .custom-dialog-title {
+    font-size: 20px; 
+    color: goldenrod; 
+  }
+  
+  /* Style the dialog content */
+  .custom-dialog-content {
+    font-size: 16px; 
+    color: black; 
+  }
+  
+  /* Style the dialog actions (buttons) */
+  .custom-dialog-actions {
+    text-align: right;
+  }
+/* Responsive styles for screens with a maximum width of 768px (adjust as needed) */
+@media (max-width: 768px) {
+    .custom-dialog-container {
+      width: 90%; 
+    }
+  
+    .custom-dialog-title {
+      font-size: 18px;
+    }
+  
+    .custom-dialog-content {
+      font-size: 14px;
+    }
+  
+    .custom-dialog-actions {
+      text-align: center;
+    }
+  }
+  

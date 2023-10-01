@@ -1,1 +1,15 @@
-<p>search-bar works!</p>
+<div class="search-wrapper">
+    <button mat-icon-button (click)="showOverlay()" id="filterIcon">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    <div class="search">
+      <mat-form-field>
+        <input matInput type="text" [(ngModel)]="searchTerm" placeholder="Search CSULB...">
+      </mat-form-field>
+    </div>
+  </div>
+  
+  <div id="overlayContainer" *ngIf="showingOverlay">
+    <app-search-filter [customWidth]="'200px'"></app-search-filter>
+  </div>
+  

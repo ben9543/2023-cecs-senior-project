@@ -62,17 +62,19 @@
           matInput
           formControlName="password"
           placeholder="Password"
+          type="password"
         />
         <mat-error
           >Please enter a password</mat-error
         >
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Conform Password</mat-label>
+        <mat-label>Confirm Password</mat-label>
         <input
           matInput
           formControlName="confirmPassword"
           placeholder="Confirm Password"
+          type="password"
         />
         <mat-error
           >Please enter a password</mat-error
@@ -92,6 +94,7 @@
                 mat-raised-button
                 color="primary"
                 routerLink="/login"
+                style="background-color: rgb(6, 59, 61);"
             >
             Sign In
             </button>
@@ -101,6 +104,7 @@
             mat-raised-button
             type="submit"
             color="primary"
+            style="background-color: rgb(6, 59, 61);"
           >
           Sign Up
           </button>
