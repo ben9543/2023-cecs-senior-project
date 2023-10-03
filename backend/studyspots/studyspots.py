@@ -140,3 +140,14 @@ class StudySpots_API():
         self.db.session.add(new_studyspot)
         self.db.session.commit()
         return new_studyspot.as_dict()
+    
+    def search_studyspot(self, args):
+
+        # is_indoor
+        # noise_level
+        # crowdness_level
+        # is_outlet
+        # wifi
+        # ADA
+        # easy_to_find
+        pass
