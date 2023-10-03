@@ -90,4 +90,31 @@
         margin-right: 0; 
       }
   }
-  
+ 
+  /* Responsive styles for larger screens */
+@media screen and (min-width: 2000px) {
+  .card-container {
+    width: 400px; 
+  }
+
+  .card-image {
+    height: 250px; 
+  }
+
+  .card-name {
+    width: 400px; 
+    font-size: 36px; 
+  }
+
+  .card-rating {
+    font-size: 40px; 
+  }
+
+  .like-button {
+    font-size: 30px; 
+  }
+}
+
+
+
+

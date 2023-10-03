@@ -191,6 +191,7 @@ span {
   border: rgb(30, 157, 163) 2px solid;
   border-right: none;
   height: fit-content;
+  border-radius: 10px;
 }
 
 .username{

@@ -41,13 +41,9 @@
     
     #overlayContainer {
       position: absolute;
-      right: 0;
-      z-index: 1;
-      display: none;
+      left: 0;
+      height: 50%;
     }
     
-    #overlayContainer.show {
-      display: flex;
-    }
   }
   

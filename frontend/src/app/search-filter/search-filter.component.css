@@ -35,7 +35,7 @@
   
   /* Style for radio inputs */
   .temperature-range input[type="radio"] {
-    display: none; /* Hide the default radio input */
+    display: none; 
   }
   
   /* Style for labels of radio inputs */
@@ -54,4 +54,33 @@
     border: 1px solid #007bff; 
   }
   
+  /* Mobile responsive styles using media queries */
+@media screen and (max-width: 768px) {
+  .search-filter {
+      width: 100%; 
+  }
   
+  .filter-group {
+      margin-bottom: 12px; 
+  }
+  
+  .checkbox {
+      flex-direction: row; 
+  }
+  
+  .checkbox label {
+      font-size: 14px;
+  }
+  
+  .temperature-range {
+      flex-direction: row;
+  }
+  
+  .temperature-range label {
+      text-align: center;
+      padding: 8px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      margin-bottom: 4px;
+  }
+}
