@@ -367,7 +367,98 @@ def get_studyspot_by_id(studyspot_id):
         return jsonify(studyspot)
     else:
         return jsonify({'message': 'Study spot not found'}), 404
+
+'''
+REVIEWS API 
+'''
+
+# Get review by id
+@app.route('/review/<int:review_id>', methods=['GET'])
+def get_review_id(review_id):
+    review = reviews_instance.get_review_by_id(review_id)
+    if review:
+        serialized_review = review.serialize()
+        return jsonify({"review": serialized_review}), 200
+    else:
+        return jsonify({'message': 'Review not found'}), 404
+
+# Adding a new review 
+@app.route('/review/add-user', methods=['POST'])
+def add_new_user():
+    review_id = request.json.get('review_id')
+    user_id= request.json.get('user_id')
+    studyspot_id = request.json.get('studyspot_id')
+    review_comments = request.json.get('review_comments')
+    review_indoor = request.json.get('review_indoor')
+    review_wifi = request.json.get('review_wifi')
+    review_temp = request.json.get('review_temp')
+    review_rate = request.json.get('review_rate')
+    review_ada = request.json.get('review_ada')
+    review_power_outlets = request.json.get('review_poer_outlets')
+    review_easy_to_find = request.json.get('review_easy_to_find')
+    
+    if reviews_instance.add_review(review_id):
+        return make_response(jsonify({'message': 'Review already exists'})), 404
+    else:
+        new_review = {'review_id': review_id, 'user_id': user_id, 'studyspot_id': studyspot_id, 'review_comments': review_comments,
+                      'review_indoor': review_indoor, 'review_wifi': review_wifi, 'review_temp': review_temp, 'review_rate': review_rate,
+                      'review_ada': review_ada, 'review_power_outlets': review_power_outlets, 'review_easy_to_find': review_easy_to_find}
+        reviews_instance.add_review(new_review)
+    return make_response(jsonify({'message': 'Review created successfully'}), 201)
+
+# Updating a review by id    
+@app.route('/reviews/<int:review_id>', methods=['PUT'])
+def update_review(review_id):
+    try:
+        # Parse the JSON data from the request
+        data = request.get_json()
+
+        # Extract the fields for the review update
+        new_review_comments = data.get("review_comments")
+        new_review_indoor = data.get("review_indoor")
+        new_review_wifi = data.get("review_wifi")
+        new_review_temp = data.get("review_temp")
+        new_review_rate = data.get("review_rate")
+        new_review_ada = data.get("review_ada")
+        new_review_power_outlets = data.get("review_power_outlets")
+        new_review_easy_to_find = data.get("review_easy_to_find")
         
+        result = reviews_instance.update_review(
+                review_id,
+                new_review_comments,
+                new_review_indoor,
+                new_review_wifi,
+                new_review_temp,
+                new_review_rate,
+                new_review_ada,
+                new_review_power_outlets,
+                new_review_easy_to_find
+            )
+
+        # Check if the result is a review object or a message
+        if result:
+            return jsonify({"message": result}), 404
+        else:
+            return jsonify({"message": "Review updated successfully.", "review": result.serialize()}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Deleting a review 
+@app.route('/reviews/<int:review_id>', methods=['DELETE'])
+def delete_review(review_id):
+    try:
+        # Call the delete_review method
+        result = reviews_instance.delete_review(review_id)
+
+        # Check if the result is a success message or an error message
+        if result:
+            return jsonify({"message": "Review deleted successfully."}), 200
+        else:
+            return jsonify({"message": "Review not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run()
