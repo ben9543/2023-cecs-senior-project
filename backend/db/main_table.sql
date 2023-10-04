@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS Universities (
     university_name VARCHAR(200),
     university_state VARCHAR(2),
-    university_zip INT NOT NULL
-    UNIQUE (university_name),
+    university_zip INT NOT NULL,
+    UNIQUE (university_name)
 );
 
 CREATE TABLE IF NOT EXISTS Studyspots (
@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS Studyspots (
     university_name VARCHAR(200),
     studyspot_is_indoor BOOLEAN, 
     studyspot_ada BOOLEAN, /*ADA accommodation: TRUE, NO ADA: FALSE*/
-    studyspot_wifi BOOLEAN,
     studyspot_power_outlets BOOLEAN,
     studyspot_easy_to_find BOOLEAN,
     studyspot_image_url VARCHAR(3000),
@@ -32,19 +31,20 @@ CREATE TABLE IF NOT EXISTS Users (
 
 CREATE TABLE IF NOT EXISTS Surveys (
     survey_id INT NOT NULL,
-    studyspot_id INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
 	user_id INT NOT NULL,
     survey_crowdednes_level INT NOT NULL, 
     survey_noise_level INT NOT NULL,
+    survey_wifi INT NOT NULL,
     UNIQUE (survey_id),
-	CONSTRAINT FK_survey_studyspot FOREIGN KEY (studyspot_id) REFERENCES Studyspots(studyspot_id),
+	CONSTRAINT FK_survey_studyspot FOREIGN KEY (studyspot_name) REFERENCES Studyspots(studyspot_name),
     CONSTRAINT FK_survey_user FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE IF NOT EXISTS Reviews (
 	review_id INT NOT NULL,
     user_id INT NOT NULL,
-    studyspot_name INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
     review_comments VARCHAR(500),
     review_rate FLOAT NOT NULL, /*1, 2, 3, 4, 5 range*/
     UNIQUE(review_id),
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Reviews (
 
 CREATE TABLE IF NOT EXISTS Favorites (
     user_id INT NOT NULL,
-    studyspot_name INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
     CONSTRAINT PK_fav PRIMARY KEY (user_id, studyspot_name), 
 	CONSTRAINT FK_review_studyspot FOREIGN KEY (studyspot_name) REFERENCES Studyspots(studyspot_name),
     CONSTRAINT FK_review_user FOREIGN KEY (user_id) REFERENCES Users(user_id)
@@ -62,4 +62,4 @@ CREATE TABLE IF NOT EXISTS Favorites (
 
 -- Default Values
 INSERT INTO Universities(university_name, university_state, university_zip)
-VALUES('CSULB', 'CA', 90840)
+VALUES('CSULB', 'CA', 90840);
