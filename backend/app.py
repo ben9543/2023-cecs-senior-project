@@ -10,7 +10,7 @@ from reviews.reviews import Reviews_API
 
 # Create a SQLAlchemy engine and connect to your database
 user = "postgres"
-password = "hhds4343"
+password = "****"
 hostname = "127.0.0.1:5432"
 database_name = "test3"
 port = "5432"
@@ -91,21 +91,20 @@ def alive():
 def login():
     email = request.json.get('email')
     password = request.json.get('password')
-    
     user = users_instance.find_user_by_email(email)
     if user:
         stored_hashed_password = user.password.encode('utf-8')
-        input_password = bcrypt.hashpw(password.encode('utf-8'), stored_hashed_password)
-
-        if input_password == stored_hashed_password:
-            token = auth_instance.generate_jwt(email, input_password)
+        password_check = bcrypt.check_password_hash(stored_hashed_password, password)
+        if password_check:
+            token = auth_instance.generate_jwt(email)
             if token:
                 # return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
                 return jsonify({'token': token, 'authenticated': True}), 200
+            else:
+                return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
         else:
             return jsonify({'message': 'Invalid password', 'authenticated': False}), 401
                         # return jsonify({'token': token, 'authenticated': True}), 200 #for windows user
-    
     return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
 
 
