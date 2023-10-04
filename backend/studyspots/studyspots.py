@@ -6,11 +6,11 @@ from sqlalchemy.sql import func
 
 def create_studyspot_and_review_object(data):
     return {
-        'studyspot': data.Studyspots.as_dict(),
-        'wifi': data.wifi,
-        'rating': data.rating,
-        'temperature': data.temperature
+        'studyspot_name': data.Studyspots.as_dict()['studyspot_name'],
+        'studyspot_image_url': data.Studyspots.as_dict()['studyspot_image_url'],
+        'studyspot_rating': data.rating,
     }
+
 
 class StudySpots_API():
 
@@ -42,9 +42,7 @@ class StudySpots_API():
             # Define the subquery to calculate the aggregates
             subquery = self.db.session.query(
                 Reviews.studyspot_name,
-                func.round(func.avg(Reviews.review_wifi)).label('wifi'),
                 func.avg(Reviews.review_rate).label('rating'),
-                func.round(func.avg(Reviews.review_temp)).label('temperature')
             ).group_by(Reviews.studyspot_name).subquery()
 
             # Join the subquery with the Studyspots table
@@ -90,28 +88,30 @@ class StudySpots_API():
         INNER JOIN Studyspots as s ON s.studyspot_name = n.studyspot_name;
         """
         try:
-            # Define the subquery to calculate the aggregates
-            subquery = self.db.session.query(
-                Reviews.studyspot_name,
-                func.round(func.avg(Reviews.review_wifi)).label('wifi'),
-                func.avg(Reviews.review_rate).label('rating'),
-                func.round(func.avg(Reviews.review_temp)).label('temperature')
-            ).group_by(Reviews.studyspot_name).having(Reviews.studyspot_name==name).subquery()
-
-            # Construct python list & dict as a result and return it.
-            # Perform the main query with a join
+            # Group reviews by studyspot nmame
             query = self.db.session.query(
-                subquery.c.studyspot_name,
-                subquery.c.wifi,
-                subquery.c.rating,
-                subquery.c.temperature,
-                Studyspots  # Include the Studyspots table in the query
-            ).join(Studyspots, subquery.c.studyspot_name == Studyspots.studyspot_name)
+                Reviews.studyspot_name,
+                func.avg(Reviews.review_rate).label('rating'),
+            ).group_by(Reviews.studyspot_name).having(Reviews.studyspot_name==name)
 
-            # Execute the query and retrieve the results
-            result = query.first()
-            data_dict = create_studyspot_and_review_object(result)
-            return data_dict
+            # Get list of reivews that has the studyspot name
+            studyspot_result = query.first()
+            query = self.db.session.query(
+                Reviews.studyspot_name,
+                func.avg(Reviews.review_rate).label('rating'),
+            ).group_by(Reviews.studyspot_name).having(Reviews.studyspot_name==name)
+            review_results = self.db.session.query(Reviews).filter(Reviews.studyspot_name == studyspot_result.studyspot_name).all()
+            
+            # Construct data
+            results = {
+                "studyspot_name":studyspot_result.studyspot_name,
+                "studyspot_rating":studyspot_result.rating,
+                "reviews":[]
+            }
+            for review in review_results:
+                results["reviews"].append(review.as_dict())
+            
+            return results
             # Print the results
         except Exception as e:
             raise e
