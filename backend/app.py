@@ -372,7 +372,7 @@ REVIEWS API
 '''
 
 # Get review by id
-@app.route('/review/<int:review_id>', methods=['GET'])
+@app.route('/api/review/<int:review_id>', methods=['GET'])
 def get_review_id(review_id):
     review = reviews_instance.get_review_by_id(review_id)
     if review:
@@ -382,7 +382,7 @@ def get_review_id(review_id):
         return jsonify({'message': 'Review not found'}), 404
 
 # Adding a new review 
-@app.route('/review/add-user', methods=['POST'])
+@app.route('/api/review/add-user', methods=['POST'])
 def add_new_user():
     review_id = request.json.get('review_id')
     user_id= request.json.get('user_id')
@@ -406,7 +406,7 @@ def add_new_user():
     return make_response(jsonify({'message': 'Review created successfully'}), 201)
 
 # Updating a review by id    
-@app.route('/reviews/<int:review_id>', methods=['PUT'])
+@app.route('/api/reviews/<int:review_id>', methods=['PUT'])
 def update_review(review_id):
     try:
         # Parse the JSON data from the request
@@ -444,7 +444,7 @@ def update_review(review_id):
         return jsonify({"error": str(e)}), 500
 
 # Deleting a review 
-@app.route('/reviews/<int:review_id>', methods=['DELETE'])
+@app.route('/api/reviews/<int:review_id>', methods=['DELETE'])
 def delete_review(review_id):
     try:
         # Call the delete_review method
