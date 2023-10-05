@@ -44,3 +44,5 @@ Thumbs.db
 
 # Ben
 frontend/backend/*
+
+../frontend/dist/*
