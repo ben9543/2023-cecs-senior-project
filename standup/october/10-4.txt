@@ -1,6 +1,6 @@
 What did you do yesterday?
 
-Amanuel -
+Amanuel - Assign tickets, and start reseaching on AWS
 Holly -
 Deep -
 Sal - Chose the check in tickets for frontend
@@ -10,7 +10,7 @@ Jose -
 
 What will you do today?
 
-Amanuel -
+Amanuel - Create 2 EC2 instances for hosting backend and frontend
 Holly -
 Deep -
 Sal - clarifiry details for my tickets with team
@@ -20,7 +20,7 @@ Jose -
 
 What is blocking your progress?
 
-Amanuel -
+Amanuel - Porting issues
 Holly -
 Deep -
 Sal -
