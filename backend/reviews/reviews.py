@@ -13,7 +13,7 @@ class Reviews_API():
     """
     SELECT * FROM Reviews WHERE user_id = 123;
     """
-    def get_review(self, id):
+    def get_review_by_id(self, id):
         review = self.db.session.query(Reviews).filter(Reviews.review_id == id).first()
         if review:
             return review
