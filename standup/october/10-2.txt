@@ -5,7 +5,7 @@ Holly -
 Deep -
 Sal - 
 Tony -
-Ben -
+Ben - Organized main_table.sql
 Jose -
 
 What will you do today?
@@ -15,7 +15,7 @@ Holly -
 Deep -
 Sal - Choose and assign tickets for sprint 3
 Tony -
-Ben -
+Ben - Organized main_table.sql
 Jose -
 
 What is blocking your progress?
