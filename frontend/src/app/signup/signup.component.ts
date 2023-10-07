@@ -48,7 +48,7 @@ export class SignupComponent {
             this.snackBar.open('Email is already taken', 'Close', { duration: 3000 });
           } else {
             // No username or email conflict, proceed with the signup
-            this.http.post('http://127.0.0.1:5000/api/signup', { username, college, email, password })
+            this.http.post('ec2-13-57-233-1.us-west-1.compute.amazonaws.com:5000/api/signup', { username, college, email, password })
               .subscribe(
                 (response) => {
                   this.router.navigate(['/login']);

@@ -9,10 +9,10 @@ from universities.universities import Universities_API
 from reviews.reviews import Reviews_API
 
 # Create a SQLAlchemy engine and connect to your database
-user = "postgres"
-password = "****"
-hostname = "127.0.0.1:5432"
-database_name = "test"
+user = "amanuel_reda"
+password = "Imma473923"
+hostname = "studyspot.cpudrqditw4f.us-west-1.rds.amazonaws.com:5432"
+database_name = "studyspot"
 port = "5432"
 DATABASE_URI = f"postgresql://{user}:{password}@{hostname}/{database_name}"
 
@@ -460,4 +460,4 @@ def delete_review(review_id):
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)

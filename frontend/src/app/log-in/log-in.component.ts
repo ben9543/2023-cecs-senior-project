@@ -29,7 +29,7 @@ export class LogInComponent {
   onSubmit(): void {
     if (this.login.valid) {
         const { email, password } = this.login.value;
-        this.http.post<any>('http://127.0.0.1:5000/api/login', { email: email, password: password }).subscribe(response => {
+        this.http.post<any>('ec2-13-57-233-1.us-west-1.compute.amazonaws.com:5000/api/login', { email: email, password: password }).subscribe(response => {
           localStorage.setItem('access_token', response.token);
           // Fetch the username based on the email from UserService
           this.userService.getUserByEmail(email).subscribe(
