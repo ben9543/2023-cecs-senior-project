@@ -111,8 +111,8 @@ def login():
         if password_check:
             token = auth_instance.generate_jwt(email)
             if token:
-                return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-                # return jsonify({'token': token, 'authenticated': True}), 200
+                #return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
+                return jsonify({'token': token, 'authenticated': True}), 200
             else:
                 return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
         else:
