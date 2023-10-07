@@ -23,7 +23,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # Allow Cross Origin from anywhere (will be restricted in prod)
-CORS(app, resources={r"/api/*": {"origins": "ec2-18-144-51-212.us-west-1.compute.amazonaws.com:4200"}})
+CORS(app, resources={r"/api/*": {"origins": "http://ec2-18-144-51-212.us-west-1.compute.amazonaws.com:4200"}})
 
 # Create Users instance
 users_instance = User_API(db)

@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'ec2-13-57-233-1.us-west-1.compute.amazonaws.com:5000/api'; // Replace with your actual API endpoint
+  private apiUrl = 'http://ec2-13-57-233-1.us-west-1.compute.amazonaws.com:5000/api'; // Replace with your actual API endpoint
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
