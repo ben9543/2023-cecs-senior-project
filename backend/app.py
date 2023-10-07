@@ -43,6 +43,19 @@ auth_instance = Auth(db, users_instance)
 # Constants
 AUTH_HEADER_KEY  = 'Authorization'
 
+# Define a function to set CORS headers
+def add_cors_headers(response):
+    # Replace with the actual origin of your Angular application
+    response.headers['Access-Control-Allow-Origin'] = 'http://ec2-18-144-51-212.us-west-1.compute.amazonaws.com:4200'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
+
+# Register the add_cors_headers function to run after each request
+@app.after_request
+def after_request(response):
+    return add_cors_headers(response)
+
 # Protect routes
 def login_required(func):
     def secure_function(*args, **kwargs):
