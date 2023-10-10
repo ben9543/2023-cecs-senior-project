@@ -46,6 +46,7 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { UserratingComponent } from './userrating/userrating.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { CheckInComponent } from './check-in/check-in.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     ConfirmationDialogComponent,
     SearchFilterComponent,
     ChangePasswordComponent,
-    UserratingComponent
+    UserratingComponent,
+    CheckInComponent
   ],
   imports: [
     BrowserModule,
