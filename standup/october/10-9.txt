@@ -3,7 +3,7 @@ What did you do yesterday?
 Amanuel -
 Holly - Research on sqlalchemy
 Deep -
-Sal - 
+Sal - figured out deliverabes
 Tony -
 Ben -
 Jose -
@@ -13,7 +13,7 @@ What will you do today?
 Amanuel -
 Holly - Create /get-university-list 
 Deep -
-Sal -
+Sal - Create ss-12 branch to start working on the check-in page
 Tony -
 Ben -
 Jose -
