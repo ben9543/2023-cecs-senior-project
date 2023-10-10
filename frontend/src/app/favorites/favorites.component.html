@@ -1,1 +1,9 @@
-<p>favorites works!</p>
+<app-header></app-header>
+<div class = "page-title">
+    <p>Favorites</p>
+</div>
+<div class = "spots-container">
+    <div *ngFor="let spot of spots">
+        <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+    </div>
+</div>
