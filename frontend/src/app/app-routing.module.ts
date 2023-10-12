@@ -13,6 +13,7 @@ import { StudyspotViewComponent } from './studyspot-view/studyspot-view.componen
 import { FavoritesComponent } from './favorites/favorites.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CheckInComponent } from './check-in/check-in.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'studyspot-view', component: StudyspotViewComponent},
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'change-password', component: ChangePasswordComponent},
+  { path: 'check-in', component: CheckInComponent}
 ];
 
 @NgModule({
