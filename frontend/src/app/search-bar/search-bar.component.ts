@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 
 @Component({
@@ -8,6 +8,8 @@ import { Component, ElementRef } from '@angular/core';
 })
 export class SearchBarComponent {
   searchTerm: string = '';
+  @Input() searchQuery: string | undefined;
+  @Output() searchQueryEvent = new EventEmitter<string>();
 
   showingOverlay: boolean = false;
 
@@ -25,5 +27,18 @@ export class SearchBarComponent {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.showingOverlay = false;
     }
+  }
+  @Input() filterCriteria: any;
+  @Output() filterCriteriaEvent = new EventEmitter<any>();
+  
+  // Handle the filter criteria emitted by the search-filter component
+  handleFilterCriteria(criteria: any) {
+    this.filterCriteriaEvent.emit(criteria);
+    this.showingOverlay = false;
+    console.log('Filter Criteria received in SearchBar:', criteria);
+  }
+
+  search() {
+    this.searchQueryEvent.emit(this.searchQuery);
   }
 }

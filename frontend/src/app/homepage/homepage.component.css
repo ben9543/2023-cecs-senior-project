@@ -12,14 +12,18 @@
 .spots-container{
   background-color: cadetblue;
   position: absolute;
-  width: 94.5%;
-  height: 80%;
+  width: 93%;
+  height: auto;
   left: 40px;
   margin-top: 16%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;    
-  padding-top: 20px;
+  justify-content: space-between;    
+  padding: 10px;
+}
+
+app-studyspot {
+  padding: 10px; 
 }
 
 /* Media queries for mobile devices */

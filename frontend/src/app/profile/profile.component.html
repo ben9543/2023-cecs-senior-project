@@ -15,7 +15,7 @@
 
         <div class="container-objects">
             <div *ngFor="let spot of spotsRecent">
-                    <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+                    <app-studyspot name="{{ spot.name }}"></app-studyspot>
             </div>  
         </div>
     </div>
@@ -27,7 +27,7 @@
 
         <div class="container-objects">
             <div *ngFor="let spot of spotsSuggested">
-                <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+                <app-studyspot name="{{ spot.name }}"></app-studyspot>
             </div>
         </div>
     </div>

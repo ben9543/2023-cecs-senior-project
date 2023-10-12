@@ -54,7 +54,27 @@
     border: 1px solid #007bff; 
   }
   
-  /* Mobile responsive styles using media queries */
+button{
+    background-color: cadetblue;
+    border-radius: 2px;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    align-self: center;
+}
+
+.temperature-radio {
+  display: flex;
+  align-items: center;
+}
+
+.temperature-radio label {
+  margin-right: 10px;
+}
+
+
+/* Mobile responsive styles using media queries */
 @media screen and (max-width: 768px) {
   .search-filter {
       width: 100%; 
