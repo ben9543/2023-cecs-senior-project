@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly -
+Deep -
+Sal - 
+Tony -
+Ben -
+Jose - Planned out implementation of SS-15
+
+What will you do today?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben -
+Jose - Created SS-15 Branch and starting the implementation on posting a review (frontend)
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben -
+Jose - planning the CSS
