@@ -3,9 +3,9 @@ What did you do yesterday?
 Amanuel -
 Holly - Research on sqlalchemy
 Deep -
-Sal - 
+Sal - figured out deliverabes
 Tony -
-Ben -
+Ben - Set up APIs for image upload
 Jose -
 
 What will you do today?
@@ -13,9 +13,9 @@ What will you do today?
 Amanuel -
 Holly - Create /get-university-list 
 Deep -
-Sal -
+Sal - Create ss-12 branch to start working on the check-in page
 Tony -
-Ben -
+Ben - Installing boto3 library
 Jose -
 
 What is blocking your progress?
