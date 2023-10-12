@@ -6,4 +6,20 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 11%;
+    display:flex;
+    align-content: flex-start;
+}
+.label-container
+{
+    height: 7%;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: white;
+    color: #007F7F;
+    margin-left: 20px;
+    margin-top: 20px;
 }
