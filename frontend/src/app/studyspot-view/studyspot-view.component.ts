@@ -14,7 +14,7 @@ export class StudyspotViewComponent {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.studySpot = JSON.parse(params['data']);
+      this.studySpot = params['name'];
     });
   }
 

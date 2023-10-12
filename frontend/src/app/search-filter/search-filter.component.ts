@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-search-filter',
@@ -7,13 +8,30 @@ import { Component, Input } from '@angular/core';
 })
 export class SearchFilterComponent {
   @Input() customWidth: string = '300px';
-  indoor: boolean = false;
-  outdoor: boolean = false;
-  noiseLevel: number = 1;
-  crowdednessLevel: number = 1;
-  powerOutlets: boolean = false;
-  strongWifi: boolean = false;
-  adaAccessible: boolean = false;
-  easyToFind: boolean = false;
-  temperature: string = 'Warm';
+  @Output() applyFiltersEvent = new EventEmitter<any>();
+
+  searchForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {
+    this.searchForm = this.formBuilder.group({
+      location: [''],
+      filters: this.formBuilder.group({
+        noiseLevel: [],
+        crowdednessLevel: [],
+        amenities: this.formBuilder.group({
+          powerOutlets: [],
+          strongWifi: [],
+          adaAccessible: [],
+          easyToFind: []
+        })
+      }),
+      temperature: ['']
+    });
+  }
+
+  applyFilters(filterCriteria: any) {
+    this.applyFiltersEvent.emit(filterCriteria);
+    console.log('Filter Criteria sent from SearchFilter:', filterCriteria);
+  }
+
 }

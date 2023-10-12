@@ -1,52 +1,44 @@
-<div class="search-filter" [style.width]="customWidth">
-    <!-- Indoor and Outdoor checkboxes -->
-    <div class="filter-group">
-      <div class="checkbox">
-        <label><input type="checkbox" [(ngModel)]="indoor">Indoor</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" [(ngModel)]="outdoor">Outdoor</label>
-      </div>
+<div class="search-filter">
+<form [formGroup]="searchForm" (ngSubmit)="applyFilters(searchForm.value)">
+  <!-- Indoor and Outdoor checkboxes -->
+  <mat-radio-group formControlName="location">
+    <mat-radio-button value="Indoor">Indoor</mat-radio-button>
+    <mat-radio-button value="Outdoor">Outdoor</mat-radio-button>
+  </mat-radio-group>
+
+  <!-- Group for Noise and Crowdedness Levels -->
+  <div formGroupName="filters">
+    <!-- Custom Noise Level Slider -->
+    <p>Noise Level: {{ searchForm.get('filters.noiseLevel')?.value }}</p>
+    <div class="custom-slider">
+      <input type="range" formControlName="noiseLevel" min="1" max="5" id="noiseLevel">
     </div>
-    
-    <!-- Noise Level toggle bar -->
-    <div class="filter-group">
-      <label>Noise Level</label>
-      <input type="range" [(ngModel)]="noiseLevel" min="1" max="5">
-      <span>{{ noiseLevel }}</span>
+
+    <!-- Custom Crowdedness Level Slider -->
+    <p>Crowdedness Level: {{ searchForm.get('filters.crowdednessLevel')?.value }}</p>
+    <div class="custom-slider">
+      <input type="range" formControlName="crowdednessLevel" min="1" max="5" id="crowdednessLevel">
     </div>
-    
-    <!-- Crowdedness Level toggle bar -->
-    <div class="filter-group">
-      <label>Crowdedness Level</label>
-      <input type="range" [(ngModel)]="crowdednessLevel" min="1" max="5">
-      <span>{{ crowdednessLevel }}</span>
-    </div>
-    
-    <!-- Checkboxes for additional amenities -->
-    <div class="filter-group">
-      <div class="checkbox">
-        <label><input type="checkbox" [(ngModel)]="powerOutlets">Power Outlets</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" [(ngModel)]="strongWifi">Strong Wi-Fi Signal</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" [(ngModel)]="adaAccessible">ADA Accessible</label>
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox" [(ngModel)]="easyToFind">Easy to Find</label>
-      </div>
-      <div class="temperature-range">
-        <input type="radio" name="temperature" id="cold" value="Cold" [(ngModel)]="temperature">
-        <label for="cold">Cold</label>
-        
-        <input type="radio" name="temperature" id="warm" value="Warm" [(ngModel)]="temperature">
-        <label for="warm">Warm</label>
-        
-        <input type="radio" name="temperature" id="hot" value="Hot" [(ngModel)]="temperature">
-        <label for="hot">Hot</label>
-      </div>
+
+    <!-- Group for Amenities -->
+    <div formGroupName="amenities">
+      <mat-checkbox formControlName="powerOutlets">Power Outlets</mat-checkbox>
+      <mat-checkbox formControlName="strongWifi">Strong Wi-Fi Signal</mat-checkbox>
+      <mat-checkbox formControlName="adaAccessible">ADA Accessible</mat-checkbox>
+      <mat-checkbox formControlName="easyToFind">Easy to Find</mat-checkbox>
     </div>
   </div>
-  
+
+  <div class="temperature-radio">
+    <label>Temperature:</label>
+    <mat-radio-group formControlName="temperature">
+      <mat-radio-button value="Cold">Cold</mat-radio-button>
+      <mat-radio-button value="Warm">Warm</mat-radio-button>
+      <mat-radio-button value="Hot">Hot</mat-radio-button>
+    </mat-radio-group>
+    
+  </div>
+
+  <button type="submit">Apply</button>
+</form>
+</div>

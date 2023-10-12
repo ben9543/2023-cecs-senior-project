@@ -31,12 +31,13 @@
     }
   
     .search mat-form-field{
-      width: 130%;
+      width: 110%;
+      margin-left: 0;
     }
   
     #filterIcon {
       margin-bottom: 12px;
-      margin-left: -15%;
+      margin-left: -5%;
     }
     
     #overlayContainer {

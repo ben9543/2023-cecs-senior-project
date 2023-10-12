@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'help', component: HelpsComponent},
   { path: 'submitrequest', component: SubmitRequestComponent},
   { path: 'signup', component: SignupComponent},
-  { path: 'studyspot-view', component: StudyspotViewComponent},
+  { path: 'studyspot-view', component: StudyspotViewComponent, pathMatch: 'full'},
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'change-password', component: ChangePasswordComponent},
 ];

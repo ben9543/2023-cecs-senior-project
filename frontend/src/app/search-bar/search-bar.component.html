@@ -4,12 +4,12 @@
     </button>
     <div class="search">
       <mat-form-field>
-        <input matInput type="text" [(ngModel)]="searchTerm" placeholder="Search CSULB...">
+        <input matInput type="text" [(ngModel)]="searchQuery" (input)="search()" placeholder="Search CSULB...">
       </mat-form-field>
     </div>
   </div>
   
   <div id="overlayContainer" *ngIf="showingOverlay">
-    <app-search-filter [customWidth]="'200px'"></app-search-filter>
+    <app-search-filter (applyFiltersEvent)="handleFilterCriteria($event)" [customWidth]="'200px'"></app-search-filter>
   </div>
   

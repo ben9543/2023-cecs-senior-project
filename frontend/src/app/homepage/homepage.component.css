@@ -12,16 +12,22 @@
 .spots-container{
   background-color: cadetblue;
   position: absolute;
-  width: 94.5%;
-  height: 80%;
+  width: 93%;
+  height: auto;
   left: 40px;
   margin-top: 16%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;    
-  padding-top: 20px;
+  justify-content: space-between;    
+  padding: 10px;
 }
 
+app-studyspot {
+  padding: 10px; 
+}
+button{
+  margin-top: 0.5%;
+}
 /* Media queries for mobile devices */
 @media (max-width: 768px) {
   .search {
@@ -33,12 +39,16 @@
   }
 
   .spots-container {
-      width: 90%;
+      width: 86%;
       left: 5%;
       margin-top: 50%;
       height: auto;
       border-radius: 0 0 10px 10px;
       justify-content: center;
+  }
+  button{
+    margin-left: 2%;
+    margin-top: 3%;
   }
   
 }
