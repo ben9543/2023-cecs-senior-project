@@ -7,9 +7,10 @@
     margin-top: 12%;
     display: flex;
     justify-content: left;
-    font-size: 24px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    font-family: 'Kadwa', 'Times New Roman', Times, serif;
     text-indent: 40px;
+    padding-top: 10px;
   }
   
   .spots-container{
