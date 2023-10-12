@@ -16,6 +16,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatChipsModule } from '@angular/material/chips'
+import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -100,6 +103,9 @@ import { CheckInComponent } from './check-in/check-in.component';
     MatMenuModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatDataDialogModule,
     MatButtonToggleModule,
     MatRadioModule,
     MatSliderModule,
