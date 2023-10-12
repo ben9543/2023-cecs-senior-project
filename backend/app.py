@@ -472,5 +472,15 @@ def delete_review(review_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+"""University API"""
+@app.route('/api/get-university-list', methods=['GET'])
+def get_university_list():  
+    data = universities_instance.get_university_list()
+    if data:
+        return jsonify({"message": "ok", "data": data}),200
+    else:
+        return jsonify({"message":"Universities not found"}), 404
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
