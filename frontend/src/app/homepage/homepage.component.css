@@ -25,7 +25,9 @@
 app-studyspot {
   padding: 10px; 
 }
-
+button{
+  margin-top: 0.5%;
+}
 /* Media queries for mobile devices */
 @media (max-width: 768px) {
   .search {
@@ -43,6 +45,10 @@ app-studyspot {
       height: auto;
       border-radius: 0 0 10px 10px;
       justify-content: center;
+  }
+  button{
+    margin-left: 2%;
+    margin-top: 3%;
   }
   
 }
