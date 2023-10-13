@@ -90,7 +90,7 @@ flattenObject(obj: any, parentKey = ''): { [key: string]: any } {
       }
     }
   }
-
+  console.log('Result:', result);
   return result;
 }
 
