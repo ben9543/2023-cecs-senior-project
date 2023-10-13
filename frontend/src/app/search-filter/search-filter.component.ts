@@ -14,15 +14,15 @@ export class SearchFilterComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
-      location: [''],
+      studyspot_location: [''],
       filters: this.formBuilder.group({
-        noiseLevel: [],
-        crowdednessLevel: [],
+        studyspot_noise_level: [],
+        study_spot_crowdedness_level: [],
         amenities: this.formBuilder.group({
-          powerOutlets: [],
-          strongWifi: [],
-          adaAccessible: [],
-          easyToFind: []
+          studyspot_power_outlets: [],
+          studyspot_strong_wifi: [],
+          studyspot_ada: [],
+          studyspot_easy_to_find: []
         })
       }),
       temperature: ['']
