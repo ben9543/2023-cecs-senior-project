@@ -50,7 +50,8 @@ private initializeComponent() {
               
               // Access the amenities filter criteria
               const flattenedData = this.flattenObject(this.filterCriteria);
-
+              
+              console.log('Flattened Data:', flattenedData);
               // Check if the spot meets any of the selected criteria
               for (const key in flattenedData) {
                 if (flattenedData[key] !== null) {
