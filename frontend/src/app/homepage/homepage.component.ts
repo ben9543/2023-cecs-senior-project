@@ -73,7 +73,7 @@ private initializeComponent() {
 }
 
 
-flattenObject(obj: any, parentKey = ''): { [key: string]: any } {
+private flattenObject(obj: any, parentKey = ''): { [key: string]: any } {
   const result: { [key: string]: any } = {};
 
   for (const key in obj) {
