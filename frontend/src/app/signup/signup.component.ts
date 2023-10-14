@@ -47,21 +47,19 @@ export class SignupComponent {
           if (emailResponse.taken) {
             this.snackBar.open('Email is already taken', 'Close', { duration: 3000 });
           } else {
-            // No username or email conflict, proceed with the signup
-            this.http.post('http://ec2-13-57-233-1.us-west-1.compute.amazonaws.com:5000/api/signup', { username, college, email, password })
-              .subscribe(
-                (response) => {
+            this.userService.signup(username, college, email, password).subscribe(
+              () => {
                   this.router.navigate(['/login']);
                   this.confirmationDialogService.openAccountCreatedConfirmation();
-                },
-                (error) => {
-                  if (error.status === 409) {
-                    this.errorMessage = 'User Already Exists';
-                  } else {
-                    this.errorMessage = 'An unknown error occurred';
-                  }
+              },
+              (error) => {
+                if (error.status === 409) {
+                  this.errorMessage = 'User Already Exists';
+                } else {
+                  this.errorMessage = 'An unknown error occurred';
                 }
-              );
+              }
+            );
           }
         });
       }

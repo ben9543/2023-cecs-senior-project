@@ -90,9 +90,24 @@ class StudySpots_API():
         try:
             # Group reviews by studyspot nmame
             query = self.db.session.query(
+                Studyspots.studyspot_location,
+                Studyspots.studyspot_is_indoor,
+                Studyspots.studyspot_ada,
+                Studyspots.studyspot_power_outlets,
+                Studyspots.studyspot_easy_to_find,
+                Studyspots.studyspot_noise_level,
+                Studyspots.studspot_crowdedness_level,
+                Studyspots.studyspot_strong_wifi,
                 Reviews.studyspot_name,
                 func.avg(Reviews.review_rate).label('rating'),
-            ).group_by(Reviews.studyspot_name).having(Reviews.studyspot_name==name)
+            ).group_by(Reviews.studyspot_name,Studyspots.studyspot_location,
+                Studyspots.studyspot_is_indoor,
+                Studyspots.studyspot_ada,
+                Studyspots.studyspot_power_outlets,
+                Studyspots.studyspot_easy_to_find,
+                Studyspots.studyspot_noise_level,
+                Studyspots.studspot_crowdedness_level,
+                Studyspots.studyspot_strong_wifi).having(Reviews.studyspot_name==name)
 
             # Get list of reivews that has the studyspot name
             studyspot_result = query.first()
@@ -104,6 +119,14 @@ class StudySpots_API():
             
             # Construct data
             results = {
+                "studyspot_location":studyspot_result.studyspot_location,
+                "studyspot_is_indoor":studyspot_result.studyspot_is_indoor,
+                "studyspot_ada":studyspot_result.studyspot_ada,
+                "studyspot_power_outlets":studyspot_result.studyspot_power_outlets,
+                "studyspot_easy_to_find":studyspot_result.studyspot_easy_to_find,
+                "studyspot_noise_level":studyspot_result.studyspot_noise_level,
+                "studspot_crowdedness_level":studyspot_result.studspot_crowdedness_level,
+                "studyspot_strong_wifi":studyspot_result.studyspot_strong_wifi,
                 "studyspot_name":studyspot_result.studyspot_name,
                 "studyspot_rating":studyspot_result.rating,
                 "reviews":[]
