@@ -85,4 +85,8 @@ login(email: string, password: string) {
   // Send a POST request to your API for login
   return this.http.post(`${this.apiUrl}/login`, loginData);
 }
+
+getUniversityList() {
+  return this.http.get(`${this.apiUrl}/get-university-list`);
+}
 }

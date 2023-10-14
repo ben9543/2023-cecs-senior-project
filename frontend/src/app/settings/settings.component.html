@@ -33,8 +33,9 @@
         </mat-error>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Change College</mat-label>
-        <input matInput formControlName="college" />
+        <mat-select formControlName="college" placeholder="Select College">
+          <mat-option *ngFor="let university of universities" [value]="university">{{ university }}</mat-option>
+        </mat-select>
         <mat-error *ngIf="edit.get('college')!.hasError('required')">
           Please enter your college
         </mat-error>

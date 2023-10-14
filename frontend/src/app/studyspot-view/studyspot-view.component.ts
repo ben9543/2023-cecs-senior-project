@@ -42,8 +42,9 @@ export class StudyspotViewComponent {
     // Route to the Rate Me survey component
     this.router.navigate(['/rate-me']);
   }
+  
   // Use HostBinding to update the custom property
   @HostBinding('style.--number-of-reviews') get numberOfReviewsProperty() {
-    return this.lengthOfReviews <=2? 4: this.lengthOfReviews;
+    return this.lengthOfReviews <=2? 5: this.lengthOfReviews + 3;
   }
 }

@@ -13,7 +13,7 @@ import { ConfirmationDialogService } from '../confirmation-dialog.service';
 export class SignupComponent {
   signup!: FormGroup;
   errorMessage: string = '';
-  
+  universities: any;
   constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient, 
     private userService: UserService, private snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService) { }
   
@@ -24,6 +24,10 @@ export class SignupComponent {
       college: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
+    });
+
+    this.userService.getUniversityList().subscribe((universities: any) => {
+      this.universities = universities.data;
     });
   }
   

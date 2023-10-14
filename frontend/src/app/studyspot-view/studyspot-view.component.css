@@ -29,13 +29,13 @@
   }
   
   :root {
-    --number-of-reviews: 0; 
+    --number-of-reviews: 5; 
   }
   .details-1 {
     width: max-content;
     flex: 1;
     position: absolute;
-    top: calc(var(--number-of-reviews) * 10%);
+    top: calc(var(--number-of-reviews ) * 10%);
     left: 2.2%; 
     padding: 20px 45px; 
     border: none;
@@ -193,7 +193,6 @@
         width: 100%;
         position: static;
         padding: 10px;
-        top: calc(var(--number-of-reviews + 3) * 10%);
     }
     .top-right-more {
         position: absolute;
