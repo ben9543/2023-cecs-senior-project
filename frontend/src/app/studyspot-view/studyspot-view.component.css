@@ -193,6 +193,7 @@
         width: 100%;
         position: static;
         padding: 10px;
+        top: calc(var(--number-of-reviews + 3) * 10%);
     }
     .top-right-more {
         position: absolute;
