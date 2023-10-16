@@ -31,6 +31,24 @@
     margin-left: auto;
     margin-right: auto;
     width: 1209px;
-    height: 226px;
-    margin-top: 30px;
+    height: auto;
+}
+
+.spot
+{
+    padding-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.star-uc-container
+{
+    margin-left: 20px;
+}
+
+.uc-container
+{
+    background-color: white;
+    width: 860px;
+    height: 139px;
 }
