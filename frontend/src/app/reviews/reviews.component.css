@@ -8,6 +8,7 @@
     margin-top: 11%;
     display:flex;
     align-content: flex-start;
+    flex-wrap: wrap;
 }
 .label-container
 {
@@ -22,4 +23,14 @@
     color: #007F7F;
     margin-left: 20px;
     margin-top: 20px;
+}
+.spot-container
+{
+    border: black;
+    border-style: dotted;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1209px;
+    height: 226px;
+    margin-top: 30px;
 }

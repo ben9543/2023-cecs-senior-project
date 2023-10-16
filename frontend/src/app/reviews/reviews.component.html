@@ -2,4 +2,22 @@
     <div class="label-container"> 
         <h1 class="label">Previous Reviews</h1>
     </div>
+    <div class="spot-container">
+        <button (click)="selectPreviousTab()" [disabled]="selectedTabIndex === 0" class="previous">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+      
+        <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
+            <mat-tab *ngFor="let spot of spotsReview">
+                <ng-template mat-tab-label>
+                  {{ spot.name }}
+                </ng-template>
+                <app-studyspot [name]="spot.name"></app-studyspot>
+            </mat-tab>
+        </mat-tab-group>
+      
+        <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spotsReview.length - 1" class="next">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+    </div>
 </div>
