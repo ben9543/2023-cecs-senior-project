@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly - Research on sqlalchemy
-Deep -
+Deep - completed fucntionality for studyspot api
 Sal - figured out deliverabes
 Tony -
 Ben - Set up APIs for image upload
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel -
 Holly - Create /get-university-list 
-Deep -
+Deep - To write API routes for the study spot API
 Sal - Create ss-12 branch to start working on the check-in page
 Tony -
 Ben - Installing boto3 library

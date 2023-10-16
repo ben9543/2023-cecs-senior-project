@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly -
-Deep -
+Deep - Started working on the Favourite api
 Sal - created branch and set up check in component for testing 
 Tony -
 Ben -
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel -
 Holly -
-Deep -
+Deep - write functionality for the Favourite api
 Sal - looked at example pop up forms and imported neccessary modules
 Tony -
 Ben -
