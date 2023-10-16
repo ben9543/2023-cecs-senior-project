@@ -6,6 +6,7 @@ from auth.auth import Auth
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
 from universities.universities import Universities_API
+from favourite.favourite import Favorites_API
 from reviews.reviews import Reviews_API
 
 # Create a SQLAlchemy engine and connect to your database
@@ -36,6 +37,9 @@ reviews_instance = Reviews_API(db)
 
 # Create University instance
 universities_instance = Universities_API(db)
+
+# Create Favourite API
+favourite_instance = Favorites_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -480,7 +484,53 @@ def get_university_list():
         return jsonify({"message": "ok", "data": data}),200
     else:
         return jsonify({"message":"Universities not found"}), 404
+    
+'''
+Favourtie API
+'''
+@app.route('/users/favorites/like-card', methods=['POST'])
+def like_card():
+    try:
+        data = request.get_json()
+        studyspot_name = data.get("studyspot_name")
+        user_id = data.get("user_id")
 
+        # Call the like_studyspot method
+        favourite_instance.like_studyspot(studyspot_name, user_id)
+
+        return jsonify({"message": "Study spot liked successfully."}), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/users/favorites/unlike-card', methods=['POST'])
+def unlike_card():
+    try:
+        data = request.get_json()
+        studyspot_name = data.get("studyspot_name")
+        user_id = data.get("user_id")
+
+        # Call the unlike_studyspot method
+        favourite_instance.unlike_studyspot(studyspot_name, user_id)
+
+        return jsonify({"message": "Study spot unliked successfully."}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/users/favorites/get-liked-state', methods=['GET'])
+def get_liked_state():
+    try:
+        studyspot_name = request.args.get("studyspot_name")
+        user_id = request.args.get("user_id")
+
+        # Call the get_liked_state method
+        liked_state = favourite_instance.get_liked_state(studyspot_name, user_id)
+
+        return jsonify(liked_state), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
