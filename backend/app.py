@@ -7,6 +7,7 @@ from users.users import User_API
 from studyspots.studyspots import StudySpots_API
 from universities.universities import Universities_API
 from reviews.reviews import Reviews_API
+from aws.s3 import S3_API
 
 # Create a SQLAlchemy engine and connect to your database
 user = "amanuel_reda"
@@ -39,6 +40,17 @@ universities_instance = Universities_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
+
+# S3 Object (Sample code)
+# Make sure to replace "****" accordingly to your bucket settings for testing.
+# access_key = "****"
+# secret_key = "****"
+# #region = "****" 
+# bucket_name = "****"
+# s3_instance = S3_API(access_key, secret_key, region, bucket_name)
+# objects = s3_instance.list_bucket()
+# for o in objects:
+#     print(o)
 
 # Constants
 AUTH_HEADER_KEY  = 'Authorization'
