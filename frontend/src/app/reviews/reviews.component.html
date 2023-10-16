@@ -23,10 +23,11 @@
             </mat-tab-group>
             -->
             <div>
-                <div *ngFor="let spot of spotsReview">
+                <div *ngFor="let spot of spots;let i = index">
                     <div class="spot">
                         <app-studyspot [name]="spot.name"></app-studyspot>
                         <div class="star-uc-container">
+                            <!-- **********************ngFor="let review of spotsReview"
                             <div class="prof-star">
                                 <button mat-icon-button class="button_header" matTooltip="user account">
                                     <mat-icon>account_circle</mat-icon>
@@ -36,6 +37,8 @@
                             <div class="uc-container">
                                 <h2>user comment</h2>
                             </div>
+                            -->
+                            <app-userrating userID="{{ spotsReview[i].userId }}" rating="{{ spotsReview[i].rating }}" comment="{{ spotsReview[i].comment }}"></app-userrating>
                         </div>
                     </div>
                     <!--

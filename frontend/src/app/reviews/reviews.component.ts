@@ -6,17 +6,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./reviews.component.css']
 })
 export class ReviewsComponent {
-  spotsReview: Spot = [
+  spots: Spot = [
     { name: "Horn Center", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
     { name: "VEC Squad", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"}
   ]
+
+  spotsReview: Userrating = [
+    { userId: "John Smith", rating: "1", comment:"Horrible Place!"},
+    { userId: "Karen White", rating: "2", comment:"giberish"}
+  ]
+
+
 
   constructor() {}
 
   ngOnInit() {}
 
   selectedTabIndex: number = 0; // Initial selected tab index
-  tabs: number = this.spotsReview.length; // Replace with your tab data
+  tabs: number = this.spots.length; // Replace with your tab data
 
   // Function to handle tab changes
   tabChanged(event: number): void {
@@ -39,3 +46,4 @@ export class ReviewsComponent {
 }
 
 type Spot = Array<{ name: string; rating: string; imageUrl: string; }>;
+type Userrating = Array<{ userId: string; rating: string; comment: string; }>;
