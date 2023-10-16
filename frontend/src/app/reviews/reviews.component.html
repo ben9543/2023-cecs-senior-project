@@ -3,41 +3,48 @@
         <h1 class="label">Previous Reviews</h1>
     </div>
 
-    <button (click)="selectPreviousTab()" [disabled]="selectedTabIndex === 0" class="previous">
-        <mat-icon>keyboard_arrow_left</mat-icon>
-    </button>
+    <div class="align-button">
 
-    <div class="spot-container">
-        
-        <!--
-        <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
-            <mat-tab *ngFor="let spot of spotsReview">
-                <ng-template mat-tab-label>
-                  {{ spot.name }}
-                </ng-template>
-                <app-studyspot [name]="spot.name"></app-studyspot>
-            </mat-tab>
-        </mat-tab-group>
-        -->
         <div>
-            <div *ngFor="let spot of spotsReview">
-                <div class="spot">
+            <button (click)="selectPreviousTab()" [disabled]="selectedTabIndex === 0" class="previous">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+        </div>
+    
+        <div class="spot-container">
+            <!--
+            <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
+                <mat-tab *ngFor="let spot of spotsReview">
+                    <ng-template mat-tab-label>
+                      {{ spot.name }}
+                    </ng-template>
                     <app-studyspot [name]="spot.name"></app-studyspot>
-                    <div class="star-uc-container">
-                        <h2>***Input Stars***</h2>
-                        <div class="uc-container">
-                            <h2>user comment</h2>
+                </mat-tab>
+            </mat-tab-group>
+            -->
+            <div>
+                <div *ngFor="let spot of spotsReview">
+                    <div class="spot">
+                        <app-studyspot [name]="spot.name"></app-studyspot>
+                        <div class="star-uc-container">
+                            <h2>***Input Stars***</h2>
+                            <div class="uc-container">
+                                <h2>user comment</h2>
+                            </div>
                         </div>
                     </div>
+                    <!--
+                    <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+                    -->
                 </div>
-                <!--
-                <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
-                -->
             </div>
         </div>
+        
+        <div>
+            <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spotsReview.length - 1" class="next">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
     </div>
-
-    <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spotsReview.length - 1" class="next">
-        <mat-icon>keyboard_arrow_right</mat-icon>
-    </button>
+    
 </div>

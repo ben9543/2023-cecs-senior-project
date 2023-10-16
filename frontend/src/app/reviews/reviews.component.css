@@ -24,10 +24,15 @@
     margin-left: 20px;
     margin-top: 20px;
 }
+
+.align-button
+{
+    display: flex;
+    justify-content: space-between;
+}
+
 .spot-container
 {
-    border: black;
-    border-style: dotted;
     margin-left: auto;
     margin-right: auto;
     width: 1209px;
@@ -36,9 +41,8 @@
 
 .spot
 {
-    padding-top: 20px;
+    padding-top: 40px;
     display: flex;
-    justify-content: flex-start;
 }
 
 .star-uc-container
@@ -51,4 +55,9 @@
     background-color: white;
     width: 860px;
     height: 139px;
+}
+
+.previous
+{
+    margin-left: 10px;
 }
