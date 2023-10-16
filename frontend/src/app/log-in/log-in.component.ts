@@ -28,31 +28,34 @@ export class LogInComponent {
 
   onSubmit(): void {
     if (this.login.valid) {
-        const { email, password } = this.login.value;
-        this.http.post<any>('http://ec2-13-57-233-1.us-west-1.compute.amazonaws.com:5000/api/login', { email: email, password: password }).subscribe(response => {
+      const { email, password } = this.login.value;
+
+      this.userService.login(email, password).subscribe(
+        (response: any) => {
           localStorage.setItem('access_token', response.token);
-          // Fetch the username based on the email from UserService
+
+          // Fetch the user data based on the email from UserService
           this.userService.getUserByEmail(email).subscribe(
             (userData) => {
-              const user = userData; 
+              const user = userData;
               this.authService.setUserData(user); // Set userData
-
             },
             (userError) => {
-              console.error('Error fetching username:', userError); 
+              console.error('Error fetching user data:', userError);
             }
           );
+
           // Navigate to home
           this.router.navigate(['/home']);
         },
-        error => {
+        (error) => {
           if (error.status === 401) {
             this.snackBar.open('Invalid email or password', 'Close', { duration: 5000 });
           } else {
             this.snackBar.open('Login failed! Unknown Error', 'Close', { duration: 5000 });
           }
         }
-        ); 
+      );
     }
   }
 }

@@ -19,6 +19,7 @@ import { MatChipsModule } from '@angular/material/chips'
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -100,7 +101,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatRadioModule,
     MatSliderModule,
     MatCheckboxModule,
-    HammerModule
+    HammerModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

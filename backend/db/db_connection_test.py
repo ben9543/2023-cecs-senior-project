@@ -69,3 +69,12 @@ class Reviews(Base):
 
     studyspot = relationship("Studyspots")
     user = relationship("Users")
+
+class Favorites(Base):
+    __tablename__ = 'favorites'
+    
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False, primary_key=True)
+    studyspot_name = Column(String(254), ForeignKey('studyspots.studyspot_name'), nullable=False, primary_key=True)
+    studyspot = relationship("Studyspots")
+    user = relationship("Users")
+    

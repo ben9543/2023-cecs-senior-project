@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-
+import { API_URL } from './config';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'http://ec2-13-57-233-1.us-west-1.compute.amazonaws.com:5000/api'; // Replace with your actual API endpoint
+  private apiUrl = API_URL;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -62,5 +62,31 @@ checkEmail(email: string, currentUserId: number | null = null) {
 
   // Send a POST request to the API endpoint
   return this.http.post(apiUrl, requestData);
+}
+
+signup(username: string, college: string, email: string, password: string) {
+  const signUpData = {
+    username,
+    college,
+    email,
+    password,
+  };
+
+  // Send a POST request to your API for user registration
+  return this.http.post(`${this.apiUrl}/signup`, signUpData);
+}
+
+login(email: string, password: string) {
+  const loginData = {
+    email,
+    password,
+  };
+
+  // Send a POST request to your API for login
+  return this.http.post(`${this.apiUrl}/login`, loginData);
+}
+
+getUniversityList() {
+  return this.http.get(`${this.apiUrl}/get-university-list`);
 }
 }

@@ -59,6 +59,15 @@
     font-size: 75%; 
     margin-right: 5px;
   }
+
+  .liked mat-icon {
+    color: red;
+  }
+  
+  /* Unliked state */
+  .not-liked mat-icon {
+    color: inherit;
+  }
   
   @media only screen and (max-width: 600px) {
     .card-container {

@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly -
-Deep -
+Deep - write the fucntionality for the Favourite api
 Sal - 
 Tony -
 Ben -
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel -
 Holly -
-Deep -
+Deep - write api routes for the Favourite api
 Sal -
 Tony -
 Ben -
