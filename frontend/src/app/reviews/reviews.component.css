@@ -50,6 +50,12 @@
     margin-left: 20px;
 }
 
+.prof-star
+{
+    display: flex;
+    justify-content: flex-start;
+}
+
 .uc-container
 {
     background-color: white;
