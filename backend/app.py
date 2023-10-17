@@ -544,6 +544,20 @@ def get_liked_state():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/api/users/favorites/get-favorites-list/<int:user_id>', methods=['GET'])
+def get_favorites_by_user(user_id):
+    user = users_instance.get_user_by_id(user_id)
+    if user:
+        fav_list = favourite_instance.get_favorites_by_user(user_id)
+        if fav_list:
+            return jsonify({"message": "ok", "data": fav_list}),200
+        else:
+            return jsonify({"error": "User has no favorites"}), 404
+    else:
+        return jsonify({"error": "User not found"}), 404 
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

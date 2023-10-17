@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly - Wrote the SQL for getting study spot reviews using the favorites table
+Deep -
+Sal - 
+Tony -
+Ben -
+Jose -
+
+What will you do today?
+
+Amanuel -
+Holly - Convert the SQL code into python
+Deep -
+Sal - 
+Tony -
+Ben -
+Jose -
+
+What is blocking your progress?
+
+Amanuel -
+Holly - 
+Deep -
+Sal -
+Tony -
+Ben -
+Jose -
