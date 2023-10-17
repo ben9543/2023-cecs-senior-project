@@ -85,13 +85,13 @@ app-studyspot
 /* Media Query for Small Screens */
 @media (max-width: 768px) {
     .container {
-        margin-top: 25%;
+        margin-top: 30%;
         padding: 10% 5%;
     }
     
     .change-college {
-        top: 0;
-        right: 0;
+        top: 10%;
+        right: 5%;
         width: 80px;
     }
 

@@ -12,7 +12,7 @@ export class StudyspotComponent {
   @Input() rating: number = 0;
   @Input() imageUrl: string = '../assets/spots/Spot1.jpeg';
   
-  username: string = '';
+  userID: number = -1;
   
   liked: boolean = false;
 
@@ -37,33 +37,44 @@ export class StudyspotComponent {
         console.error('Error fetching StudySpot details:', error);
       }
     );
+
     this.authService.userData$.subscribe((userData) => {
-      this.username = userData.user_name;
+      this.userID = userData.user_id;
       console.log("userData in studyspot", userData);
     });
-    this.fetchLikedState();
+
+    this.studyspotService.getLikedState(this.name, this.userID).subscribe((response) => {
+      this.liked = response.liked; 
+    });
   }
 
   onCardClick(data: any) {
     this.router.navigate(['/studyspot-view'], { queryParams: { name: data.name } });
   }
 
+  likeCard() {
+    this.studyspotService.likeCard(this.name, this.userID).subscribe(() => {
+      this.liked = true;
+    });
+  }
+  
+  unlikeCard() {
+    this.studyspotService.unlikeCard(this.name, this.userID).subscribe(() => {
+      this.liked = false;
+    });
+  }
+
   toggleLike() {
     if (this.liked) {
       // User has already liked it, so remove the like
+      console.log("User ID -->", this.userID)
       this.liked = false;
-      this.studyspotService.unlikeCard(this.name, this.username); 
+      this.unlikeCard();
     } else {
       // User liked it for the first time
+      console.log("User liked it");
       this.liked = true;
-      this.studyspotService.likeCard(this.name, this.username);
+      this.likeCard();
     }
-  }
-
-  fetchLikedState() {
-    // Use your API service to fetch the liked state from the API
-    this.studyspotService.getLikedState(this.name, this.username).subscribe((response) => {
-      this.liked = response.liked; 
-    });
   }
 }
