@@ -1,7 +1,7 @@
 What did you do yesterday?
 
 Amanuel -
-Holly -
+Holly - Added a function to get favorite list by user id
 Deep -
 Sal - 
 Tony -
@@ -11,7 +11,7 @@ Jose -
 What will you do today?
 
 Amanuel -
-Holly -
+Holly - Creating api link for getting favorite list by user id
 Deep -
 Sal -
 Tony -
@@ -21,7 +21,7 @@ Jose - Finishing Frontend SS-15
 What is blocking your progress?
 
 Amanuel -
-Holly -
+Holly - 
 Deep -
 Sal -
 Tony -
