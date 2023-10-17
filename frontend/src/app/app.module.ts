@@ -20,6 +20,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +50,7 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { UserratingComponent } from './userrating/userrating.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { RateMeComponent } from './rate-me/rate-me.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     ConfirmationDialogComponent,
     SearchFilterComponent,
     ChangePasswordComponent,
-    UserratingComponent
+    UserratingComponent,
+    RateMeComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +105,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatSliderModule,
     MatCheckboxModule,
     HammerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

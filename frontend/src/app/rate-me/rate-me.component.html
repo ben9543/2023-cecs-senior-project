@@ -1,0 +1,20 @@
+<div class="spots-container">
+    <div class="spot">
+        <app-studyspot [ngStyle]="" name="{{ name }}"></app-studyspot>
+    </div>
+    <div class="question">
+
+    </div>
+    <div class="comment">
+        <mat-card>
+            <mat-card-content>
+              <mat-form-field>
+                <textarea matInput [(ngModel)]="comment" placeholder="Add a comment"></textarea>
+              </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" (click)="postComment()">Post</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
