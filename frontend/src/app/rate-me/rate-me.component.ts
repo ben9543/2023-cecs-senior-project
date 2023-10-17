@@ -9,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 export class RateMeComponent {
   comment: string = '';
   name: string='';
+  sliderValue: number = 50;
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -17,9 +19,18 @@ export class RateMeComponent {
     });
   }
 
+  stepIndex: number = 1;
+  steps: number[] = [1,2,3,4,5];
+  finalValue: number = 1;
+  onInputChange($event: any) {
+    this.stepIndex = +$event.value;
+    this.finalValue = this.steps[this.stepIndex];
+  }
+
   postComment() {
     // handle the comment submission logic here
     console.log('Comment:', this.comment);
     this.comment = '';
+    
   }
 }
