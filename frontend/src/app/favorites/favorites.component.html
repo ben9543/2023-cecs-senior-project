@@ -1,14 +1,7 @@
-<app-header></app-header>
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kadwa&display=swap" rel="stylesheet">
-</head>
-<div class = "page-title">
-    <p>Favorites</p>
+<div class = "search">
 </div>
 <div class = "spots-container">
-    <div *ngFor="let spot of spots">
-        <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+    <div *ngFor="let spot of favspotnames">
+        <app-studyspot name="{{ spot.name }}"></app-studyspot>
     </div>
 </div>
