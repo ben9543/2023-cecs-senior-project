@@ -47,6 +47,7 @@
   
   /* Styles for user comment */
   .user-comment {
+    padding-left: 15%;
     padding-bottom: 20px;
     font-size: 14px;
   }

@@ -14,6 +14,10 @@ CREATE TABLE IF NOT EXISTS Studyspots (
     studyspot_power_outlets BOOLEAN,
     studyspot_easy_to_find BOOLEAN,
     studyspot_image_url VARCHAR(3000),
+    studyspot_location VARCHAR(3000),
+    studyspot_noise_level INT NOT NULL,
+    studspot_crowdedness_level INT NOT NULL,
+    studyspot_strong_wifi BOOLEAN,
     UNIQUE(studyspot_name),
     CONSTRAINT FK_studyspot_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
 );

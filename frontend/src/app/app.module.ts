@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerModule} from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,7 +16,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatChipsModule } from '@angular/material/chips'
-
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSliderModule } from '@angular/material/slider';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,6 +51,7 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { UserratingComponent } from './userrating/userrating.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { RateMeComponent } from './rate-me/rate-me.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +77,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     ConfirmationDialogComponent,
     SearchFilterComponent,
     ChangePasswordComponent,
-    UserratingComponent
+    UserratingComponent,
+    RateMeComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +101,14 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatMenuModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatRadioModule,
+    MatSliderModule,
+    MatCheckboxModule,
+    HammerModule,
+    MatTabsModule,
+    MatCardModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

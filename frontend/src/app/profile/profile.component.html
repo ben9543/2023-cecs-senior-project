@@ -14,9 +14,22 @@
         </mat-toolbar>
 
         <div class="container-objects">
-            <div *ngFor="let spot of spotsRecent">
-                    <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
-            </div>  
+            <button (click)="selectPreviousTab()" [disabled]="selectedTabIndex === 0" class="previous">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+          
+            <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
+                <mat-tab *ngFor="let spot of spotsRecent">
+                    <ng-template mat-tab-label>
+                      {{ spot.name }}
+                    </ng-template>
+                    <app-studyspot [name]="spot.name"></app-studyspot>
+                </mat-tab>
+            </mat-tab-group>
+          
+            <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spotsRecent.length - 1" class="next">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
         </div>
     </div>
 
@@ -26,9 +39,22 @@
         </mat-toolbar>
 
         <div class="container-objects">
-            <div *ngFor="let spot of spotsSuggested">
-                <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
-            </div>
+            <button (click)="selectPreviousTabmight()" [disabled]="selectedMightTabIndex === 0" class="previous">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+          
+            <mat-tab-group [selectedIndex]="selectedMightTabIndex" (selectedIndexChange)="tabChangedmight($event)">
+                <mat-tab *ngFor="let spot of spotsSuggested">
+                    <ng-template mat-tab-label>
+                      {{ spot.name }}
+                    </ng-template>
+                    <app-studyspot [name]="spot.name"></app-studyspot>
+                </mat-tab>
+            </mat-tab-group>
+          
+            <button (click)="selectNextTabmight()" [disabled]="selectedMightTabIndex === spotsSuggested.length - 1" class="next">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
         </div>
     </div>
 </div>

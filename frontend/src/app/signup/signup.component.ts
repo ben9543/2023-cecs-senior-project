@@ -13,7 +13,7 @@ import { ConfirmationDialogService } from '../confirmation-dialog.service';
 export class SignupComponent {
   signup!: FormGroup;
   errorMessage: string = '';
-  
+  universities: any;
   constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient, 
     private userService: UserService, private snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService) { }
   
@@ -24,6 +24,10 @@ export class SignupComponent {
       college: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
+    });
+
+    this.userService.getUniversityList().subscribe((universities: any) => {
+      this.universities = universities.data;
     });
   }
   
@@ -47,21 +51,19 @@ export class SignupComponent {
           if (emailResponse.taken) {
             this.snackBar.open('Email is already taken', 'Close', { duration: 3000 });
           } else {
-            // No username or email conflict, proceed with the signup
-            this.http.post('http://ec2-13-57-233-1.us-west-1.compute.amazonaws.com:5000/api/signup', { username, college, email, password })
-              .subscribe(
-                (response) => {
+            this.userService.signup(username, college, email, password).subscribe(
+              () => {
                   this.router.navigate(['/login']);
                   this.confirmationDialogService.openAccountCreatedConfirmation();
-                },
-                (error) => {
-                  if (error.status === 409) {
-                    this.errorMessage = 'User Already Exists';
-                  } else {
-                    this.errorMessage = 'An unknown error occurred';
-                  }
+              },
+              (error) => {
+                if (error.status === 409) {
+                  this.errorMessage = 'User Already Exists';
+                } else {
+                  this.errorMessage = 'An unknown error occurred';
                 }
-              );
+              }
+            );
           }
         });
       }

@@ -28,11 +28,14 @@
     padding: 10px; 
   }
   
+  :root {
+    --number-of-reviews: 5; 
+  }
   .details-1 {
     width: max-content;
     flex: 1;
     position: absolute;
-    top: 25%;
+    top: calc(var(--number-of-reviews ) * 10%);
     left: 2.2%; 
     padding: 20px 45px; 
     border: none;
@@ -166,6 +169,7 @@
     padding-left: 3%;
 }
 
+
 /* Media queries for mobile responsiveness */
 @media screen and (max-width: 768px) {
     .spots-container {
@@ -189,7 +193,6 @@
         width: 100%;
         position: static;
         padding: 10px;
-        margin-top: 10px;
     }
     .top-right-more {
         position: absolute;

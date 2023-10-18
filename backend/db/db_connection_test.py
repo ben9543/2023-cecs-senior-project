@@ -26,6 +26,10 @@ class Studyspots(Base):
     studyspot_power_outlets = Column(Boolean)
     studyspot_easy_to_find = Column(Boolean)
     studyspot_image_url = Column(String(3000))
+    studyspot_location = Column(String(3000))
+    studyspot_noise_level = Column(Integer)
+    studspot_crowdedness_level = Column(Integer)
+    studyspot_strong_wifi = Column(Boolean)
 
     university = relationship("Universities")
 
@@ -65,3 +69,12 @@ class Reviews(Base):
 
     studyspot = relationship("Studyspots")
     user = relationship("Users")
+
+class Favorites(Base):
+    __tablename__ = 'favorites'
+    
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False, primary_key=True)
+    studyspot_name = Column(String(254), ForeignKey('studyspots.studyspot_name'), nullable=False, primary_key=True)
+    studyspot = relationship("Studyspots")
+    user = relationship("Users")
+    
