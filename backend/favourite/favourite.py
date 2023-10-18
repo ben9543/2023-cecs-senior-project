@@ -33,19 +33,15 @@ class Favourites_API:
         return {"liked": like is not None}
     
     def get_favorites_by_user(self, user_id):
+        favlist = self.db.session.execute(self.db.select(Favorites.studyspot_name).filter(Favorites.user_id == user_id))
+        results = []
+        for x in favlist:
+            results.append(x.studyspot_name)
+        return results
+    
+    def get_favorites_studyspots_info_by_user(self, user_id):
         """
             SQL for getting studyspot reviews from favorites.user_id
-
-            Without images
-            Select f.studyspot_name, rating from (
-                Select 
-                    studyspot_name, 
-                    avg(review_rate) as rating
-                from Reviews as r
-                Group by r.studyspot_name
-            ) as n
-            INNER JOIN Favorites as f ON f.studyspot_name = n.studyspot_name 
-            where f.user_id = 1
 
             With images
             Select f.studyspot_name, rating, s.studyspot_image_url from (
