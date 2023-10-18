@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly - Wrote the SQL for getting study spot reviews using the favorites table
-Deep -
+Deep - Tested the favorite api
 Sal - 
 Tony -
 Ben -

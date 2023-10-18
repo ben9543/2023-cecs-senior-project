@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly - Added a function to get favorite list by user id
-Deep -
+Deep - completes api routes for the favorite api
 Sal - 
 Tony -
 Ben -
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel -
 Holly - Creating api link for getting favorite list by user id
-Deep -
+Deep - wrote sql for the favorite table
 Sal -
 Tony -
 Ben -
