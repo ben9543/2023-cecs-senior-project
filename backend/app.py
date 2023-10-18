@@ -25,7 +25,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # Allow Cross Origin from anywhere (will be restricted in prod)
-CORS(app, resources={r"/api/*": {"origins": "http://ec2-54-193-3-232.us-west-1.compute.amazonaws.com"}})
+CORS(app, resources={r"/api/*": {"origins": "http://studyspot.info"}})
 
 # Create Users instance
 users_instance = User_API(db)
@@ -62,7 +62,7 @@ AUTH_HEADER_KEY  = 'Authorization'
 # Define a function to set CORS headers
 def add_cors_headers(response):
     # Replace with the actual origin of your Angular application
-    response.headers['Access-Control-Allow-Origin'] = 'http://ec2-54-193-3-232.us-west-1.compute.amazonaws.com'
+    response.headers['Access-Control-Allow-Origin'] = 'http://studyspot.info'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
     return response
