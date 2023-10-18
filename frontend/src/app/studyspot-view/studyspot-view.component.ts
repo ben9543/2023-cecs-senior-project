@@ -40,7 +40,7 @@ export class StudyspotViewComponent {
 
   rateMe() {
     // Route to the Rate Me survey component
-    this.router.navigate(['/rate-me']);
+    this.router.navigate(['/rate-me'], { queryParams: { name: this.name} });
   }
   
   // Use HostBinding to update the custom property

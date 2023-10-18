@@ -1,0 +1,22 @@
+<div class="spots-container">
+    <div class="spot">
+        <app-studyspot [ngStyle]="" name="{{ name }}"></app-studyspot>
+    </div>
+    <div class="question">
+        <p> How Would You Rate This Study Spot Out Of 5?</p>
+        <mat-slider [min]="0" [max]="3" [step]="1" (change)="onInputChange($event)"></mat-slider>
+        <span >{{finalValue}}</span>
+    </div>
+    <div class="comment">
+        <mat-card>
+            <mat-card-content>
+              <mat-form-field>
+                <textarea matInput [(ngModel)]="comment" placeholder="Add a comment" class="custom-textarea"></textarea>
+              </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" (click)="postComment()">Post</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

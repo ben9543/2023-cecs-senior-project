@@ -6,7 +6,7 @@ from auth.auth import Auth
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
 from universities.universities import Universities_API
-from favourite.favourite import Favorites_API
+from favourite.favourite import Favourites_API
 from reviews.reviews import Reviews_API
 from aws.s3 import S3_API
 
@@ -40,7 +40,7 @@ reviews_instance = Reviews_API(db)
 universities_instance = Universities_API(db)
 
 # Create Favourite API
-favourite_instance = Favorites_API(db)
+favourite_instance = Favourites_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -256,10 +256,10 @@ def update_user():
         new_email = data.get('email')
         new_college = data.get('university')
 
-        print(user_id, new_username, new_email, new_college)
+        # print(user_id, new_username, new_email, new_college)
         # Update the user's data in the database
         user = users_instance.update_user(user_id, new_username, new_email, new_college)
-        print("User->>>>>>>>>>>>>>",user)
+        # print("User->>>>>>>>>>>>>>",user)
         if user:
             # User data updated successfully
             return jsonify({'message': 'User data updated successfully'})
@@ -324,7 +324,7 @@ def main_studyspot():
     if request.method == 'GET':
         try:
             data = studyspots_instance.get_studyspots()
-            print(data)
+            # print(data)
             return make_response(jsonify({
                     'message': 'OK', 
                     'data': data
@@ -368,13 +368,13 @@ def get_studyspot_with_reviews():
             data = studyspots_instance.get_studyspots_with_reviews()
         else:
             data = studyspots_instance.get_studyspot_by_name_with_reviews(studyspot_name)
-        print(data)
+        # print(data)
         return make_response(jsonify({
             'message': 'OK', 
             'data': data
         }), 200)
     except Exception as e:
-        print(e)
+        # print(e)
         return make_response(jsonify({
             'message': 'FAILED', 
             'data': None
@@ -500,13 +500,13 @@ def get_university_list():
 '''
 Favourtie API
 '''
-@app.route('/users/favorites/like-card', methods=['POST'])
+@app.route('/api/like-card', methods=['POST'])
 def like_card():
     try:
         data = request.get_json()
         studyspot_name = data.get("studyspot_name")
         user_id = data.get("user_id")
-
+        # print("User Like message received")
         # Call the like_studyspot method
         favourite_instance.like_studyspot(studyspot_name, user_id)
 
@@ -515,7 +515,7 @@ def like_card():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/users/favorites/unlike-card', methods=['POST'])
+@app.route('/api/unlike-card', methods=['POST'])
 def unlike_card():
     try:
         data = request.get_json()
@@ -530,7 +530,7 @@ def unlike_card():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/users/favorites/get-liked-state', methods=['GET'])
+@app.route('/api/get-liked-state', methods=['GET'])
 def get_liked_state():
     try:
         studyspot_name = request.args.get("studyspot_name")
@@ -538,11 +538,26 @@ def get_liked_state():
 
         # Call the get_liked_state method
         liked_state = favourite_instance.get_liked_state(studyspot_name, user_id)
-
+        # print("Liked State ---->>>>>>>>", jsonify(liked_state))
+        
         return jsonify(liked_state), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/api/users/favorites/get-favorites-list/<int:user_id>', methods=['GET'])
+def get_favorites_by_user(user_id):
+    user = users_instance.get_user_by_id(user_id)
+    if user:
+        fav_list = favourite_instance.get_favorites_by_user(user_id)
+        if fav_list:
+            return jsonify({"message": "ok", "data": fav_list}),200
+        else:
+            return jsonify({"error": "User has no favorites"}), 404
+    else:
+        return jsonify({"error": "User not found"}), 404 
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
