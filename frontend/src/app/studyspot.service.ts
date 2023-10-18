@@ -48,7 +48,8 @@ export class StudyspotService {
     });
   }
 
-  getAllLikedStudySpotsByUser(studyspotName: string, userID: number){
-
+  getAllLikedStudySpotsByUser(userID: number): Observable<any> {
+    const url = `${this.apiUrl}/users/favorites/get-favorites-list/${userID}`;
+    return this.http.get(url);
   }
 }
