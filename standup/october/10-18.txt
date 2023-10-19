@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly -
+Deep -
+Sal - Merged my branch with dev to attemp to fix my errors
+Tony -
+Ben -
+Jose -
+
+What will you do today?
+
+Amanuel -
+Holly -
+Deep -
+Sal - Try to fix errors from branch so I can develop and test the pop up functionality
+Tony -
+Ben -
+Jose -
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal - I tried reverting to a previous commit and that didn't work, still debugging
+Tony -
+Ben -
+Jose -
