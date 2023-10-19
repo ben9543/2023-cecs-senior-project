@@ -1,12 +1,18 @@
-.search{
+.title{
     background-color: cadetblue;
     position: absolute;
     width: 94.5%;
-    height: 6.5%;
+    height: 5%;
     left: 40px;
     margin-top: 12%;
     display: flex;
-    justify-content: center;
+    justify-content: left;
+  }
+  
+  p{
+      padding: 10px;
+      font-size: larger;
+      font-weight: bolder;
   }
   
   .spots-container{
@@ -55,7 +61,7 @@
   
     /* Responsive styles for larger screens */
     @media screen and (min-width: 2000px) {
-      .search {
+      .title {
         left: 40px; 
         margin-top: 8%; 
         margin-top: 12%;
