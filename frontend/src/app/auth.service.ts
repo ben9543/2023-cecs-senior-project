@@ -21,4 +21,15 @@ export class AuthService {
   getUserData(): Observable<any | null> {
     return this.userData$;
   }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    this.loggedInUsernameSubject.next(null);
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    console.log("Token-->>", token)
+    return !!token;
+  }
 }
