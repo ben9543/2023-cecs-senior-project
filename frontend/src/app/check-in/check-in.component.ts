@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
+import { CheckIndialogComponent } from '../check-indialog/check-indialog.component';
 
 @Component({
   selector: 'app-check-in',
@@ -10,10 +11,11 @@ export class CheckInComponent {
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    this.dialog.open(AppCheckInDialog, {
-      data: {
-        animal: 'panda'
-      }
+    let dialogRef = this.dialog.open(CheckIndialogComponent,
+      {data: {name: 'test'}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 }

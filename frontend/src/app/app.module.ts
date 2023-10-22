@@ -18,8 +18,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatChipsModule } from '@angular/material/chips'
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialog } from '@angular/material/dialog';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
@@ -57,6 +55,7 @@ import { UserratingComponent } from './userrating/userrating.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { RateMeComponent } from './rate-me/rate-me.component';
 import { CheckInComponent } from './check-in/check-in.component';
+import { CheckIndialogComponent } from './check-indialog/check-indialog.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +83,11 @@ import { CheckInComponent } from './check-in/check-in.component';
     ChangePasswordComponent,
     UserratingComponent,
     RateMeComponent,
-    CheckInComponent
+    CheckInComponent,
+    CheckIndialogComponent
+  ],
+  entryComponents: [ 
+    CheckIndialogComponent
   ],
   imports: [
     BrowserModule,
@@ -109,14 +112,13 @@ import { CheckInComponent } from './check-in/check-in.component';
     MatSnackBarModule,
     MatButtonToggleModule,
     MatDialogModule,
-    MatDataDialogModule,
     MatButtonToggleModule,
     MatRadioModule,
     MatSliderModule,
     MatCheckboxModule,
     HammerModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
