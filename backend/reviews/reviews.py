@@ -63,24 +63,13 @@ class Reviews_API():
             raise e
         
     # Add a new review
-    def add_review(self, review_data):
+    def add_review(self, user_id, studyspot_name, review_comments, review_rate):
         try:
-            review = Reviews(
-                review_id = review_data["review_id"],
-                user_id=review_data["user_id"],
-                studyspot_id = review_data["studyspot_id"],
-                review_comments = review_data["review_comments"],
-                review_indoor = review_data["review_indoor"],
-                review_wifi = review_data["review_wifi"],
-                review_temp = review_data["review_temp"],
-                review_rate = review_data["review_rate"],
-                review_ada = review_data["review_ada"],
-                review_power_outlets = review_data["review_poer_outlets"],
-                review_easy_to_find = review_data["review_easy_to_find"]
-                
-            )
-            self.db.session.add(review)
+            review_id =self.db.session.query(Reviews).count() + 1
+            new_review = Reviews(review_id=review_id, user_id=user_id, studyspot_name=studyspot_name, review_comments=review_comments, review_rate=review_rate)
+            self.db.session.add(new_review)
             self.db.session.commit()
             print("Your review has been added")
         except Exception as e:
             print("Unable to add your review", e)
+        

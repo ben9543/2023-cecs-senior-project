@@ -52,4 +52,12 @@ export class StudyspotService {
     const url = `${this.apiUrl}/users/favorites/get-favorites-list/${userID}`;
     return this.http.get(url);
   }
+
+  add_review(user_id: number, studyspot_name: string, review_comments: string, review_rate: number): Observable<any>{
+    const addReview = `${this.apiUrl}/add_review`; 
+    // Include both the studyspot name and username in the request body
+    const requestPayload = { user_id: user_id, studyspot_name: studyspot_name, review_comments: review_comments, review_rate: review_rate };
+    return this.http.post(addReview, requestPayload);
+  }
+
 }

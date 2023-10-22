@@ -43,50 +43,55 @@ export class UserService {
   }
 
   // check if username is available
-checkUsername(username: string, currentUserId: number | null = null) {
-  // Define the API endpoint URL
-  const apiUrl = `${this.apiUrl}/check-username`;
+  checkUsername(username: string, currentUserId: number | null = null) {
+    // Define the API endpoint URL
+    const apiUrl = `${this.apiUrl}/check-username`;
 
-  const requestData = { username, currentUserId };
+    const requestData = { username, currentUserId };
 
-  // Send a POST request to the API endpoint
-  return this.http.post(apiUrl, requestData);
-}
+    // Send a POST request to the API endpoint
+    return this.http.post(apiUrl, requestData);
+  }
 
-// check if email is available
-checkEmail(email: string, currentUserId: number | null = null) {
-  // Define the API endpoint URL
-  const apiUrl = `${this.apiUrl}/check-email`;
+  // check if email is available
+  checkEmail(email: string, currentUserId: number | null = null) {
+    // Define the API endpoint URL
+    const apiUrl = `${this.apiUrl}/check-email`;
 
-  const requestData = { email, currentUserId };
+    const requestData = { email, currentUserId };
 
-  // Send a POST request to the API endpoint
-  return this.http.post(apiUrl, requestData);
-}
+    // Send a POST request to the API endpoint
+    return this.http.post(apiUrl, requestData);
+  }
 
-signup(username: string, college: string, email: string, password: string) {
-  const signUpData = {
-    username,
-    college,
-    email,
-    password,
-  };
+  signup(username: string, college: string, email: string, password: string) {
+    const signUpData = {
+      username,
+      college,
+      email,
+      password,
+    };
 
-  // Send a POST request to your API for user registration
-  return this.http.post(`${this.apiUrl}/signup`, signUpData);
-}
+    // Send a POST request to your API for user registration
+    return this.http.post(`${this.apiUrl}/signup`, signUpData);
+  }
 
-login(email: string, password: string) {
-  const loginData = {
-    email,
-    password,
-  };
+  login(email: string, password: string) {
+    const loginData = {
+      email,
+      password,
+    };
 
-  // Send a POST request to your API for login
-  return this.http.post(`${this.apiUrl}/login`, loginData);
-}
+    // Send a POST request to your API for login
+    return this.http.post(`${this.apiUrl}/login`, loginData);
+  }
 
-getUniversityList() {
-  return this.http.get(`${this.apiUrl}/get-university-list`);
-}
+  getUniversityList() {
+    return this.http.get(`${this.apiUrl}/get-university-list`);
+  }
+
+  getUsernameById(userID: number): Observable<any> {
+    const url = `${this.apiUrl}/users/${userID}`;
+    return this.http.get(url);
+  }
 }

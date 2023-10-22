@@ -34,6 +34,10 @@ mat-card{
     align-items: center;
 }
 
+mat-form-field{
+    width: 320px;
+}
+
 mat-slider{
     width: 210px;
 }
@@ -74,10 +78,14 @@ p {
     }
 
     mat-slider {
-        width: 100%;
+        width: 98%;
     }
     
     p {
         font-size: 14px;
+    }
+
+    mat-form-field{
+        width: 320px;
     }
 }

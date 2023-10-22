@@ -310,13 +310,18 @@ def check_email_availability():
     else:
         return jsonify({'taken': False})
 
-@app.route('/api/users/<int:user_id>', methods=['PUT'])
-def edit_user(user_id):
-    pass
+@app.route('/api/users/<int:user_id>', methods=['GET'])
+def get_username_by_id(user_id):
+    user = users_instance.get_user_by_id(user_id)
+    print(user.user_name)
+    if user:
+        return jsonify(user.user_name), 200
+    else:
+        return None
 
-@app.route('/api/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    pass
+# @app.route('/api/users/<int:user_id>', methods=['DELETE'])
+# def delete_user(user_id):
+#     pass
 
 """ StudySpot API """
 @app.route('/api/studyspots', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -400,6 +405,19 @@ def get_studyspot_by_id(studyspot_id):
 REVIEWS API 
 '''
 
+@app.route('/api/add_review', methods=['POST'])
+def add_new_review():
+    if request.method == 'POST':
+        data = request.get_json()
+        user_id = data.get('user_id')
+        studyspot_name = data.get('studyspot_name')
+        review_comments = data.get('review_comments')
+        review_rate = data.get('review_rate')
+        
+        reviews_instance.add_review(user_id,studyspot_name,review_comments,review_rate)
+        
+        return jsonify({'message': 'Review added successfully'})
+    
 # Get review by id
 @app.route('/api/review/<int:review_id>', methods=['GET'])
 def get_review_id(review_id):

@@ -1,4 +1,4 @@
-<div class="spots-container" (onSubmit) = "onSubmit()">
+<div class="spots-container">
     <div class="spot">
         <app-studyspot [ngStyle]="" name="{{ name }}"></app-studyspot>
     </div>
@@ -12,20 +12,21 @@
     </div>
 
     <div class="comment">
+
+      <form [formGroup]="rate" (ngSubmit)="onSubmit()" #formDirective="ngForm">
         <mat-card>
             <mat-card-content>
-              <form [formGroup]="rate" (ngSubmit)="onSubmit()" #formDirective="ngForm">
                 <mat-form-field>
                   <textarea matInput formControlName="comment" placeholder="Add a comment" class="custom-textarea"></textarea>
                   <mat-error>
                     Please enter a comment
                   </mat-error>
                 </mat-form-field>
-              </form>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!rate.valid">Post</button>
+              <button mat-raised-button type="submit" color="primary" style="background-color: rgb(6, 59, 61);">Post</button>
             </mat-card-actions>
         </mat-card>
+      </form>
     </div> 
 </div>

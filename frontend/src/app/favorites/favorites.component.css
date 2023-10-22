@@ -36,7 +36,7 @@ button{
 }
 /* Media queries for mobile devices */
 @media (max-width: 768px) {
-  .search {
+  .title {
       width: 90%;
       left: 5%;
       margin-top: 30%;
@@ -47,7 +47,7 @@ button{
   .spots-container {
       width: 86%;
       left: 5%;
-      margin-top: 50%;
+      margin-top: 45%;
       height: auto;
       border-radius: 0 0 10px 10px;
       justify-content: center;
