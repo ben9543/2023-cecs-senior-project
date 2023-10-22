@@ -18,8 +18,8 @@
 
 .question{
     padding: 5%;
-    border-left: 5px solid rgb(20, 47, 48);
-    border-right: 5px solid rgb(20, 47, 48);
+    border-left: 2px solid #007F7F;
+    border-right: 2px solid #007F7F;
 
 }
 
