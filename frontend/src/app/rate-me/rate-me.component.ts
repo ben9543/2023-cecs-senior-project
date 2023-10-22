@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-rate-me',
@@ -7,29 +8,32 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./rate-me.component.css']
 })
 export class RateMeComponent {
-  comment: string = '';
+  //comment: string = '';
   name: string = '';
 
-  constructor(private route: ActivatedRoute) { }
+  rate!:FormGroup;
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.name = params['name'];
     });
+    this.rate = this.formBuilder.group({
+      comment: ['', Validators.required]
+    })
   }
 
-  stepIndex: number = 1;
-  steps: number[] = [1,2,3,4,5];
+  min: number = 0;
+  max: number = 5;
+  step: number = 1;
   finalValue: number = 0;
-  onInputChange($event: any) {
-    this.stepIndex = +$event.value;
-    this.finalValue = this.steps[this.stepIndex];
-  }
 
-  postComment() {
-    // handle the comment submission logic here
-    console.log('Comment:', this.comment);
-    this.comment = '';
-    
+  onSubmit(){
+    if (this.rate.valid && this.finalValue) {
+      const { comment } = this.rate.value;
+      this.rate.reset()
+      this.finalValue = 0
+      this.router.navigate(['/home']);
+    }
   }
 }

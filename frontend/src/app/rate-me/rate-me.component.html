@@ -1,24 +1,31 @@
-<div class="spots-container">
+<div class="spots-container" (onSubmit) = "onSubmit()">
     <div class="spot">
         <app-studyspot [ngStyle]="" name="{{ name }}"></app-studyspot>
     </div>
+    
     <div class="question">
         <p> How Would You Rate This Study Spot Out Of 5?</p>
-        <mat-slider [min]="0" [max]="5" [step]="stepIndex" (change)="onInputChange($event)">
+        <mat-slider [min]="min" [max]="max" [step]="step"> <!--(change)="onInputChange($event)"-->
           <input matSliderThumb [(ngModel)]="finalValue" #slider>
         </mat-slider>
         <span >{{finalValue}}</span>
     </div>
+
     <div class="comment">
         <mat-card>
             <mat-card-content>
-              <mat-form-field>
-                <textarea matInput [(ngModel)]="comment" placeholder="Add a comment" class="custom-textarea"></textarea>
-              </mat-form-field>
+              <form [formGroup]="rate" (ngSubmit)="onSubmit()" #formDirective="ngForm">
+                <mat-form-field>
+                  <textarea matInput formControlName="comment" placeholder="Add a comment" class="custom-textarea"></textarea>
+                  <mat-error>
+                    Please enter a comment
+                  </mat-error>
+                </mat-form-field>
+              </form>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button color="primary" (click)="postComment()">Post</button>
+              <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!rate.valid">Post</button>
             </mat-card-actions>
         </mat-card>
-    </div>
+    </div> 
 </div>
