@@ -4,7 +4,9 @@
     </div>
     <div class="question">
         <p> How Would You Rate This Study Spot Out Of 5?</p>
-        <mat-slider [min]="0" [max]="3" [step]="1" (change)="onInputChange($event)"></mat-slider>
+        <mat-slider [min]="0" [max]="5" [step]="stepIndex" (change)="onInputChange($event)">
+          <input matSliderThumb [(ngModel)]="finalValue" #slider>
+        </mat-slider>
         <span >{{finalValue}}</span>
     </div>
     <div class="comment">

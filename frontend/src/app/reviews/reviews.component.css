@@ -1,6 +1,6 @@
 .main-container
 {
-    background-color:aliceblue;
+    background-color:cadetblue;
     width: 1308px;
     height: 617px;
     margin-left: auto;
@@ -37,6 +37,10 @@
     margin-right: auto;
     width: 1209px;
     height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .spot
@@ -50,22 +54,22 @@
     margin-left: 20px;
 }
 
-/**
-.prof-star
-{
-    display: flex;
-    justify-content: flex-start;
-}
-
-.uc-container
-{
-    background-color: white;
-    width: 860px;
-    height: 139px;
-}
-*/
-
 .previous
 {
+    margin-top: 20px;
     margin-left: 10px;
+    height:500px
+}
+
+.next
+{
+    margin-top: 20px;
+    margin-right: 20px;
+    height:500px
+}
+
+button
+{
+    background-color: cadetblue;
+    border: black;
 }

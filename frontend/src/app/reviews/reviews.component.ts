@@ -7,16 +7,9 @@ import { Component } from '@angular/core';
 })
 export class ReviewsComponent {
   spots: Spot = [
-    { name: "Horn Center", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "VEC Squad", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"}
+    { name: "Horn Center", rating: "1", imageUrl: "assets/spots/Spot1.jpeg", userId: "John Smith", comment:"Horrible Place!"},
+    { name: "VEC Squad", rating: "2", imageUrl: "assets/spots/Spot1.jpeg", userId: "Karen White", comment:"giberish"}
   ]
-
-  spotsReview: Userrating = [
-    { userId: "John Smith", rating: "1", comment:"Horrible Place!"},
-    { userId: "Karen White", rating: "2", comment:"giberish"}
-  ]
-
-
 
   constructor() {}
 
@@ -45,5 +38,4 @@ export class ReviewsComponent {
   }
 }
 
-type Spot = Array<{ name: string; rating: string; imageUrl: string; }>;
-type Userrating = Array<{ userId: string; rating: string; comment: string; }>;
+type Spot = Array<{ name: string; rating: string; imageUrl: string; userId: string; comment: string; }>;

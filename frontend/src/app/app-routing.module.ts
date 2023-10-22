@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'studyspot-view', component: StudyspotViewComponent, pathMatch: 'full', canActivate: [AuthGuard]},
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [AuthGuard]},
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]},
-  { path: 'rate-me', component: RateMeComponent, canActivate: [AuthGuard]}
+  { path: 'rate-me', component: RateMeComponent}/**, canActivate: [AuthGuard] */
 ];
 
 @NgModule({

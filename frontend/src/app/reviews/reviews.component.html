@@ -12,47 +12,18 @@
         </div>
     
         <div class="spot-container">
-            <!--
-            <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
-                <mat-tab *ngFor="let spot of spotsReview">
-                    <ng-template mat-tab-label>
-                      {{ spot.name }}
-                    </ng-template>
-                    <app-studyspot [name]="spot.name"></app-studyspot>
-                </mat-tab>
-            </mat-tab-group>
-            -->
-            <div>
-                <div *ngFor="let spot of spots;let i = index">
-                    <div class="spot">
-                        <app-studyspot [name]="spot.name"></app-studyspot>
-                        <div class="star-uc-container">
-                            <!-- **********************ngFor="let review of spotsReview"
-                            <div class="prof-star">
-                                <button mat-icon-button class="button_header" matTooltip="user account">
-                                    <mat-icon>account_circle</mat-icon>
-                                </button>
-                                <h2>***Input Stars***</h2>
-                            </div>
-                            <div class="uc-container">
-                                <h2>user comment</h2>
-                            </div>
-                            -->
-                            <app-userrating userID="{{ spotsReview[i].userId }}" rating="{{ spotsReview[i].rating }}" comment="{{ spotsReview[i].comment }}"></app-userrating>
-                        </div>
-                    </div>
-                    <!--
-                    <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
-                    -->
+            <div class="spot">
+                <app-studyspot [name]="spots[selectedTabIndex].name"></app-studyspot>
+                <div class="star-uc-container">
+                    <app-userrating userID="{{ spots[selectedTabIndex].userId }}" rating="{{ spots[selectedTabIndex].rating }}" comment="{{ spots[selectedTabIndex].comment }}"></app-userrating>
                 </div>
             </div>
         </div>
-        
+
         <div>
-            <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spotsReview.length - 1" class="next">
+            <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spots.length - 1" class="next">
                 <mat-icon>keyboard_arrow_right</mat-icon>
             </button>
         </div>
     </div>
-    
 </div>
