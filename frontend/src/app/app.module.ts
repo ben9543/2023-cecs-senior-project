@@ -50,6 +50,7 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { UserratingComponent } from './userrating/userrating.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { RateMeComponent } from './rate-me/rate-me.component';
 import { CheckInComponent } from './check-in/check-in.component';
 
 @NgModule({
@@ -77,6 +78,7 @@ import { CheckInComponent } from './check-in/check-in.component';
     SearchFilterComponent,
     ChangePasswordComponent,
     UserratingComponent,
+    RateMeComponent,
     CheckInComponent
   ],
   imports: [
