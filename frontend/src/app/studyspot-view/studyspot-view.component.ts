@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscriber } from 'rxjs';
 import { StudyspotService } from '../studyspot.service';
 import { UserService } from '../user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CheckIndialogComponent } from '../check-indialog/check-indialog.component';
 
 @Component({
   selector: 'app-studyspot-view',
@@ -14,7 +16,8 @@ export class StudyspotViewComponent {
   name: string = '';
   reviews: any[] = [];
   lengthOfReviews: number = 4;
-  constructor(private route: ActivatedRoute, private router: Router, private studyspotService: StudyspotService, private userService: UserService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private studyspotService: StudyspotService, private userService: UserService,
+    private dialog: MatDialog ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -34,9 +37,13 @@ export class StudyspotViewComponent {
       });
   }
 
-  checkIn() {
-    // Route to the Check-In survey component
-    this.router.navigate(['/check-in']);
+  openDialog() {
+    let dialogRef = this.dialog.open(CheckIndialogComponent,
+      {data: {name: 'test'}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   rateMe() {

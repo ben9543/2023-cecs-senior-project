@@ -1,13 +1,10 @@
 .spots-container{
     background-color: cadetblue;
     position: relative;
-    width: 900px;
+    width: max-content;
     height: fit-content;
     margin: 230px auto;
-    display: flex;
-    flex-wrap: wrap;
     justify-content: space-evenly;
-    padding: 20px;
     font-family: 'Chalkduster, fantasy';
     font-size: larger;
     display: flex;

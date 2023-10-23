@@ -16,6 +16,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatChipsModule } from '@angular/material/chips'
+import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -52,6 +55,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { UserratingComponent } from './userrating/userrating.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { RateMeComponent } from './rate-me/rate-me.component';
+import { CheckInComponent } from './check-in/check-in.component';
+import { CheckIndialogComponent } from './check-indialog/check-indialog.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +83,12 @@ import { RateMeComponent } from './rate-me/rate-me.component';
     SearchFilterComponent,
     ChangePasswordComponent,
     UserratingComponent,
-    RateMeComponent
+    RateMeComponent,
+    CheckInComponent,
+    CheckIndialogComponent
+  ],
+  entryComponents: [ 
+    CheckIndialogComponent
   ],
   imports: [
     BrowserModule,
@@ -101,6 +111,8 @@ import { RateMeComponent } from './rate-me/rate-me.component';
     MatMenuModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatButtonToggleModule,
+    MatDialogModule,
     MatButtonToggleModule,
     MatRadioModule,
     MatSliderModule,
