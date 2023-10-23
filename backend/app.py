@@ -25,7 +25,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # Allow Cross Origin from anywhere (will be restricted in prod)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "http://www.studyspot.info"}})
 
 # Create Users instance
 users_instance = User_API(db)
@@ -60,17 +60,17 @@ auth_instance = Auth(db, users_instance)
 AUTH_HEADER_KEY  = 'Authorization'
 
 # Define a function to set CORS headers
-# def add_cors_headers(response):
-#     # Replace with the actual origin of your Angular application
-#     response.headers['Access-Control-Allow-Origin'] = 'http://ec2-54-193-3-232.us-west-1.compute.amazonaws.com'
-#     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
-#     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-#     return response
+def add_cors_headers(response):
+    # Replace with the actual origin of your Angular application
+    response.headers['Access-Control-Allow-Origin'] = 'http://www.studyspot.info'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
 
-# # Register the add_cors_headers function to run after each request
-# @app.after_request
-# def after_request(response):
-#     return add_cors_headers(response)
+# Register the add_cors_headers function to run after each request
+@app.after_request
+def after_request(response):
+    return add_cors_headers(response)
 
 # Protect routes
 def login_required(func):
@@ -127,8 +127,8 @@ def login():
         if password_check:
             token = auth_instance.generate_jwt(email)
             if token:
-                return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-                #return jsonify({'token': token, 'authenticated': True}), 200
+                #return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
+                return jsonify({'token': token, 'authenticated': True}), 200
             else:
                 return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
         else:
@@ -310,13 +310,18 @@ def check_email_availability():
     else:
         return jsonify({'taken': False})
 
-@app.route('/api/users/<int:user_id>', methods=['PUT'])
-def edit_user(user_id):
-    pass
+@app.route('/api/users/<int:user_id>', methods=['GET'])
+def get_username_by_id(user_id):
+    user = users_instance.get_user_by_id(user_id)
+    print(user.user_name)
+    if user:
+        return jsonify(user.user_name), 200
+    else:
+        return None
 
-@app.route('/api/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    pass
+# @app.route('/api/users/<int:user_id>', methods=['DELETE'])
+# def delete_user(user_id):
+#     pass
 
 """ StudySpot API """
 @app.route('/api/studyspots', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -400,6 +405,19 @@ def get_studyspot_by_id(studyspot_id):
 REVIEWS API 
 '''
 
+@app.route('/api/add_review', methods=['POST'])
+def add_new_review():
+    if request.method == 'POST':
+        data = request.get_json()
+        user_id = data.get('user_id')
+        studyspot_name = data.get('studyspot_name')
+        review_comments = data.get('review_comments')
+        review_rate = data.get('review_rate')
+        
+        reviews_instance.add_review(user_id,studyspot_name,review_comments,review_rate)
+        
+        return jsonify({'message': 'Review added successfully'})
+    
 # Get review by id
 @app.route('/api/review/<int:review_id>', methods=['GET'])
 def get_review_id(review_id):
@@ -544,6 +562,20 @@ def get_liked_state():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/api/users/favorites/get-favorites-list/<int:user_id>', methods=['GET'])
+def get_favorites_by_user(user_id):
+    user = users_instance.get_user_by_id(user_id)
+    if user:
+        fav_list = favourite_instance.get_favorites_by_user(user_id)
+        if fav_list:
+            return jsonify({"message": "ok", "data": fav_list}),200
+        else:
+            return jsonify({"error": "User has no favorites"}), 404
+    else:
+        return jsonify({"error": "User not found"}), 404 
+
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)

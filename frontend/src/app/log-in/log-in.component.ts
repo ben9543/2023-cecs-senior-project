@@ -24,6 +24,7 @@ export class LogInComponent {
       email: ['', [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")]],
       password: ['', Validators.required],
     });
+    this.authService.logout();
   }
 
   onSubmit(): void {

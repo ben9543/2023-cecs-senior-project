@@ -1,8 +1,8 @@
 What did you do yesterday?
 
 Amanuel -
-Holly -
-Deep -
+Holly - Created api link for getting favorite list by user id
+Deep - finished the functionality and routes for the study spot api
 Sal - reserached new material functions for pop up
 Tony -
 Ben -
@@ -11,8 +11,8 @@ Jose -
 What will you do today?
 
 Amanuel -
-Holly -
-Deep -
+Holly - Adding a query for getting study spot reviews using the favorites table
+Deep - testing the favorite api
 Sal - fixing material imports for pop up
 Tony -
 Ben -
@@ -21,7 +21,7 @@ Jose -
 What is blocking your progress?
 
 Amanuel -
-Holly -
+Holly - subquery is confusing
 Deep -
 Sal -
 Tony -

@@ -29,7 +29,7 @@
   }
   
   :root {
-    --number-of-reviews: 5; 
+    --number-of-reviews: 0; 
   }
   .details-1 {
     width: max-content;

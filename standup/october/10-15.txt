@@ -1,8 +1,8 @@
 What did you do yesterday?
 
 Amanuel -
-Holly -
-Deep -
+Holly - Added a function to get favorite list by user id
+Deep - completes api routes for the favorite api
 Sal - 
 Tony -
 Ben -
@@ -11,8 +11,8 @@ Jose -
 What will you do today?
 
 Amanuel -
-Holly -
-Deep -
+Holly - Creating api link for getting favorite list by user id
+Deep - wrote sql for the favorite table
 Sal -
 Tony -
 Ben -
@@ -21,7 +21,7 @@ Jose - Finishing Frontend SS-15
 What is blocking your progress?
 
 Amanuel -
-Holly -
+Holly - 
 Deep -
 Sal -
 Tony -

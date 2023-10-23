@@ -2,6 +2,7 @@ import { Component, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscriber } from 'rxjs';
 import { StudyspotService } from '../studyspot.service';
+import { UserService } from '../user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CheckIndialogComponent } from '../check-indialog/check-indialog.component';
 
@@ -15,7 +16,7 @@ export class StudyspotViewComponent {
   name: string = '';
   reviews: any[] = [];
   lengthOfReviews: number = 4;
-  constructor(private route: ActivatedRoute, private router: Router, private studyspotService: StudyspotService,
+  constructor(private route: ActivatedRoute, private router: Router, private studyspotService: StudyspotService, private userService: UserService,
     private dialog: MatDialog ) { }
 
   ngOnInit() {
@@ -52,6 +53,6 @@ export class StudyspotViewComponent {
   
   // Use HostBinding to update the custom property
   @HostBinding('style.--number-of-reviews') get numberOfReviewsProperty() {
-    return this.lengthOfReviews <=2? 5: this.lengthOfReviews + 3;
+    return this.lengthOfReviews <=2? 4: this.lengthOfReviews - 1;
   }
 }
