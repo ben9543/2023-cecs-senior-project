@@ -1,14 +1,9 @@
 .spots-container{
     background-color: cadetblue;
-    position: relative;
-    width: max-content;
-    height: fit-content;
-    margin: 230px auto;
     justify-content: space-evenly;
     font-family: 'Chalkduster, fantasy';
-    font-size: larger;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding: 4%;
 }
 
@@ -20,7 +15,7 @@
     padding: 5%;
     border-left: 2px solid #007F7F;
     border-right: 2px solid #007F7F;
-
+    align-items: center;
 }
 
 .commont{
@@ -54,23 +49,40 @@ p {
     resize: vertical;
   }
 
+#special-button{
+    width: 170px;
+    padding: 10px;
+    font-size: 15px;
+    border: rgb(5, 55, 57) 2px solid;
+    background-color: cadetblue;
+    color: black; 
+    cursor: pointer; 
+  }
+
+.action-checking{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: max-content;
+    padding-top: 2%;
+}
 /* Media query for smaller screens (e.g., mobile) */
 @media (max-width: 768px) {
     .spots-container {
-        width: 85%;
-        margin-left: 2.5%;
-        margin-top: 35%;
         padding: 5%;
         border-radius: 5px;
         flex-direction: column;
     }
-
+    mat-dialog-container{
+        margin-top: 20%;
+    }
     .spot {
         padding-right: 0;
     }
 
     .question {
-        border: none;
+        border: 2px solid rgb(16, 44, 45);
+        padding: 5%;
     }
 
     .commont {
@@ -88,4 +100,9 @@ p {
     mat-form-field{
         width: 320px;
     }
+
+    #special-button{
+        width: 120px;
+    }
+    
 }
