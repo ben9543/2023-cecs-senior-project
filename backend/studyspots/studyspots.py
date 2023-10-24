@@ -11,6 +11,11 @@ def create_studyspot_and_review_object(data):
         'studyspot_rating': data.rating,
     }
 
+bucket_name = "studyspot-123"
+region = "us-west-1"
+
+def generate_object_url_from_key(key):
+    return f"https://{bucket_name}.s3.{region}.amazonaws.com/{key}"
 
 class StudySpots_API():
 
@@ -21,7 +26,9 @@ class StudySpots_API():
         results = []
         query = self.db.session.execute(self.db.select(Studyspots).order_by(Studyspots.studyspot_name)).scalars().all()
         for q in query:
-            results.append(q.as_dict())
+            dict_result = q.as_dict()
+            dict_result['studyspot_image_url'] = generate_object_url_from_key(dict_result['studyspot_name'])
+            results.append(dict_result)
         return results
     
         # Reference: https://docs.sqlalchemy.org/en/20/orm/queryguide/query.html#sqlalchemy.orm.Query.join
