@@ -16,6 +16,7 @@ export class HeaderComponent {
   isResetLinkPage: boolean = false;
   username: string = '';
   isMainNavOpen = false;
+  isCheckInPage: boolean = false;
 
   constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
 
@@ -32,6 +33,7 @@ export class HeaderComponent {
       this.isSignUpPage = event.urlAfterRedirects.includes('/signup');
       this.isResetPasswordPage = event.urlAfterRedirects.includes('/reset-password');
       this.isResetLinkPage = event.urlAfterRedirects.includes('/reset-link');
+      this.isCheckInPage = event.urlAfterRedirects.includes('/check-in');
     });
   }
   toggleMainNav() {

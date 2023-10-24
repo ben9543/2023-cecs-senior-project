@@ -1,9 +1,13 @@
-<app-header></app-header>
 <div class = "search">
-    <app-search-bar ></app-search-bar>
+    <app-search-bar (searchQueryEvent)="handleSearchQuery($event)" [filterCriteria]="filterCriteria" (filterCriteriaEvent)="handleFilterCriteria($event)"></app-search-bar>
+    <button 
+    mat-raised-button
+    color="primary"
+    style="background-color: rgb(6, 59, 61);"
+        (click)="search()">Search</button>
 </div>
 <div class = "spots-container">
     <div *ngFor="let spot of spots">
-        <app-studyspot name="{{ spot.name }}" rating="{{ spot.rating }}" imageUrl="{{ spot.imageUrl }}"></app-studyspot>
+        <app-studyspot name="{{ spot.studyspot_name }}"></app-studyspot>
     </div>
 </div>

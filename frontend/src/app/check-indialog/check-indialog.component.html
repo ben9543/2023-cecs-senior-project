@@ -1,0 +1,30 @@
+<div class="spots-container">
+      <h2 mat-dialog-title>Check In</h2>
+      <div class="question">
+        <div class="crowdiness">
+          <p> How Would You Rate The Crowdiness Out Of 5?</p>
+          <mat-slider [min]="min" [max]="max" [step]="step">
+            <input matSliderThumb [(ngModel)]="finalValueCrowdiness" #slider>
+          </mat-slider>
+          <span >{{finalValueCrowdiness}}</span>
+        </div>
+        <div class="noise-level">
+          <p> How Would You Rate The Noise Level Out Of 5?</p>
+          <mat-slider [min]="min" [max]="max" [step]="step">
+            <input matSliderThumb [(ngModel)]="finalValueNoise" #slider>
+          </mat-slider>
+          <span >{{finalValueNoise}}</span>
+        </div>
+        <div class="wifi">
+          <p> How Would You Rate The WiFi Connection Out Of 5?</p>
+          <mat-slider [min]="min" [max]="max" [step]="step">
+            <input matSliderThumb [(ngModel)]="finalValueWifi" #slider>
+          </mat-slider>
+          <span >{{finalValueWifi}}</span>
+        </div>
+      </div>
+      <div class="action-checking">
+        <button mat-button mat-dialog-close id = "special-button">Cancel</button>
+        <button mat-button [mat-dialog-close]="true" id = "special-button">Check in</button>
+      </div>
+</div>

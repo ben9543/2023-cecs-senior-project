@@ -6,12 +6,15 @@ from auth.auth import Auth
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
 from universities.universities import Universities_API
+from favourite.favourite import Favourites_API
+from reviews.reviews import Reviews_API
+from aws.s3 import S3_API
 
 # Create a SQLAlchemy engine and connect to your database
-user = "postgres"
-password = "1234"
-hostname = "127.0.0.1:5432"
-database_name = "test"
+user = "amanuel_reda"
+password = "Imma473923"
+hostname = "studyspot.cpudrqditw4f.us-west-1.rds.amazonaws.com:5432"
+database_name = "studyspot"
 port = "5432"
 DATABASE_URI = f"postgresql://{user}:{password}@{hostname}/{database_name}"
 
@@ -22,7 +25,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # Allow Cross Origin from anywhere (will be restricted in prod)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "http://www.studyspot.info"}})
 
 # Create Users instance
 users_instance = User_API(db)
@@ -30,14 +33,44 @@ users_instance = User_API(db)
 # Create Studyspot instance
 studyspots_instance = StudySpots_API(db)
 
+# Create Review instance
+reviews_instance = Reviews_API(db)
+
 # Create University instance
 universities_instance = Universities_API(db)
+
+# Create Favourite API
+favourite_instance = Favourites_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
 
+# S3 Object (Sample code)
+# Make sure to replace "****" accordingly to your bucket settings for testing.
+# access_key = "****"
+# secret_key = "****"
+# #region = "****" 
+# bucket_name = "****"
+# s3_instance = S3_API(access_key, secret_key, region, bucket_name)
+# objects = s3_instance.list_bucket()
+# for o in objects:
+#     print(o)
+
 # Constants
 AUTH_HEADER_KEY  = 'Authorization'
+
+# Define a function to set CORS headers
+def add_cors_headers(response):
+    # Replace with the actual origin of your Angular application
+    response.headers['Access-Control-Allow-Origin'] = 'http://www.studyspot.info'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
+
+# Register the add_cors_headers function to run after each request
+@app.after_request
+def after_request(response):
+    return add_cors_headers(response)
 
 # Protect routes
 def login_required(func):
@@ -87,16 +120,21 @@ def alive():
 def login():
     email = request.json.get('email')
     password = request.json.get('password')
-    
     user = users_instance.find_user_by_email(email)
     if user:
-        if bcrypt.check_password_hash(user.password, password):
+        stored_hashed_password = user.password.encode('utf-8')
+        password_check = bcrypt.check_password_hash(stored_hashed_password, password)
+        if password_check:
             token = auth_instance.generate_jwt(email)
             if token:
-                return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-                # return jsonify({'token': token, 'authenticated': True}), 200 #for windows user
-    
-    return jsonify({'message': 'Invalid credentials', 'authenticated': False}), 401
+                #return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
+                return jsonify({'token': token, 'authenticated': True}), 200
+            else:
+                return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
+        else:
+            return jsonify({'message': 'Invalid password', 'authenticated': False}), 401
+                        # return jsonify({'token': token, 'authenticated': True}), 200 #for windows user
+    return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
 
 
 
@@ -218,10 +256,10 @@ def update_user():
         new_email = data.get('email')
         new_college = data.get('university')
 
-        print(user_id, new_username, new_email, new_college)
+        # print(user_id, new_username, new_email, new_college)
         # Update the user's data in the database
         user = users_instance.update_user(user_id, new_username, new_email, new_college)
-        print("User->>>>>>>>>>>>>>",user)
+        # print("User->>>>>>>>>>>>>>",user)
         if user:
             # User data updated successfully
             return jsonify({'message': 'User data updated successfully'})
@@ -272,13 +310,18 @@ def check_email_availability():
     else:
         return jsonify({'taken': False})
 
-@app.route('/api/users/<int:user_id>', methods=['PUT'])
-def edit_user(user_id):
-    pass
+@app.route('/api/users/<int:user_id>', methods=['GET'])
+def get_username_by_id(user_id):
+    user = users_instance.get_user_by_id(user_id)
+    print(user.user_name)
+    if user:
+        return jsonify(user.user_name), 200
+    else:
+        return None
 
-@app.route('/api/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    pass
+# @app.route('/api/users/<int:user_id>', methods=['DELETE'])
+# def delete_user(user_id):
+#     pass
 
 """ StudySpot API """
 @app.route('/api/studyspots', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -286,7 +329,7 @@ def main_studyspot():
     if request.method == 'GET':
         try:
             data = studyspots_instance.get_studyspots()
-            print(data)
+            # print(data)
             return make_response(jsonify({
                     'message': 'OK', 
                     'data': data
@@ -320,6 +363,28 @@ def main_studyspot():
                 'data': True
             }), 201)
 
+# Studyspot aggregation API
+@app.route('/api/studyspots/reviews', methods=['GET'])
+def get_studyspot_with_reviews():
+    try:
+        data = None
+        studyspot_name = request.args.get('name')
+        if not studyspot_name:
+            data = studyspots_instance.get_studyspots_with_reviews()
+        else:
+            data = studyspots_instance.get_studyspot_by_name_with_reviews(studyspot_name)
+        # print(data)
+        return make_response(jsonify({
+            'message': 'OK', 
+            'data': data
+        }), 200)
+    except Exception as e:
+        # print(e)
+        return make_response(jsonify({
+            'message': 'FAILED', 
+            'data': None
+        }), 400)
+    
 
 # Studyspot search API
 @app.route('/api/studyspots/serach', methods=['POST'])
@@ -336,7 +401,182 @@ def get_studyspot_by_id(studyspot_id):
         return jsonify(studyspot)
     else:
         return jsonify({'message': 'Study spot not found'}), 404
+
+'''
+REVIEWS API 
+'''
+
+@app.route('/api/add_review', methods=['POST'])
+def add_new_review():
+    if request.method == 'POST':
+        data = request.get_json()
+        user_id = data.get('user_id')
+        studyspot_name = data.get('studyspot_name')
+        review_comments = data.get('review_comments')
+        review_rate = data.get('review_rate')
         
+        reviews_instance.add_review(user_id,studyspot_name,review_comments,review_rate)
+        
+        return jsonify({'message': 'Review added successfully'})
+    
+# Get review by id
+@app.route('/api/review/<int:review_id>', methods=['GET'])
+def get_review_id(review_id):
+    review = reviews_instance.get_review_by_id(review_id)
+    if review:
+        serialized_review = review.serialize()
+        return jsonify({"review": serialized_review}), 200
+    else:
+        return jsonify({'message': 'Review not found'}), 404
+
+# Adding a new review 
+@app.route('/api/review/add-user', methods=['POST'])
+def add_new_user():
+    review_id = request.json.get('review_id')
+    user_id= request.json.get('user_id')
+    studyspot_id = request.json.get('studyspot_id')
+    review_comments = request.json.get('review_comments')
+    review_indoor = request.json.get('review_indoor')
+    review_wifi = request.json.get('review_wifi')
+    review_temp = request.json.get('review_temp')
+    review_rate = request.json.get('review_rate')
+    review_ada = request.json.get('review_ada')
+    review_power_outlets = request.json.get('review_poer_outlets')
+    review_easy_to_find = request.json.get('review_easy_to_find')
+    
+    if reviews_instance.add_review(review_id):
+        return make_response(jsonify({'message': 'Review already exists'})), 404
+    else:
+        new_review = {'review_id': review_id, 'user_id': user_id, 'studyspot_id': studyspot_id, 'review_comments': review_comments,
+                      'review_indoor': review_indoor, 'review_wifi': review_wifi, 'review_temp': review_temp, 'review_rate': review_rate,
+                      'review_ada': review_ada, 'review_power_outlets': review_power_outlets, 'review_easy_to_find': review_easy_to_find}
+        reviews_instance.add_review(new_review)
+    return make_response(jsonify({'message': 'Review created successfully'}), 201)
+
+# Updating a review by id    
+@app.route('/api/reviews/<int:review_id>', methods=['PUT'])
+def update_review(review_id):
+    try:
+        # Parse the JSON data from the request
+        data = request.get_json()
+
+        # Extract the fields for the review update
+        new_review_comments = data.get("review_comments")
+        new_review_indoor = data.get("review_indoor")
+        new_review_wifi = data.get("review_wifi")
+        new_review_temp = data.get("review_temp")
+        new_review_rate = data.get("review_rate")
+        new_review_ada = data.get("review_ada")
+        new_review_power_outlets = data.get("review_power_outlets")
+        new_review_easy_to_find = data.get("review_easy_to_find")
+        
+        result = reviews_instance.update_review(
+                review_id,
+                new_review_comments,
+                new_review_indoor,
+                new_review_wifi,
+                new_review_temp,
+                new_review_rate,
+                new_review_ada,
+                new_review_power_outlets,
+                new_review_easy_to_find
+            )
+
+        # Check if the result is a review object or a message
+        if result:
+            return jsonify({"message": result}), 404
+        else:
+            return jsonify({"message": "Review updated successfully.", "review": result.serialize()}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Deleting a review 
+@app.route('/api/reviews/<int:review_id>', methods=['DELETE'])
+def delete_review(review_id):
+    try:
+        # Call the delete_review method
+        result = reviews_instance.delete_review(review_id)
+
+        # Check if the result is a success message or an error message
+        if result:
+            return jsonify({"message": "Review deleted successfully."}), 200
+        else:
+            return jsonify({"message": "Review not found."}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+"""University API"""
+@app.route('/api/get-university-list', methods=['GET'])
+def get_university_list():  
+    data = universities_instance.get_university_list()
+    if data:
+        return jsonify({"message": "ok", "data": data}),200
+    else:
+        return jsonify({"message":"Universities not found"}), 404
+    
+'''
+Favourtie API
+'''
+@app.route('/api/like-card', methods=['POST'])
+def like_card():
+    try:
+        data = request.get_json()
+        studyspot_name = data.get("studyspot_name")
+        user_id = data.get("user_id")
+        # print("User Like message received")
+        # Call the like_studyspot method
+        favourite_instance.like_studyspot(studyspot_name, user_id)
+
+        return jsonify({"message": "Study spot liked successfully."}), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/unlike-card', methods=['POST'])
+def unlike_card():
+    try:
+        data = request.get_json()
+        studyspot_name = data.get("studyspot_name")
+        user_id = data.get("user_id")
+
+        # Call the unlike_studyspot method
+        favourite_instance.unlike_studyspot(studyspot_name, user_id)
+
+        return jsonify({"message": "Study spot unliked successfully."}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/get-liked-state', methods=['GET'])
+def get_liked_state():
+    try:
+        studyspot_name = request.args.get("studyspot_name")
+        user_id = request.args.get("user_id")
+
+        # Call the get_liked_state method
+        liked_state = favourite_instance.get_liked_state(studyspot_name, user_id)
+        # print("Liked State ---->>>>>>>>", jsonify(liked_state))
+        
+        return jsonify(liked_state), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/api/users/favorites/get-favorites-list/<int:user_id>', methods=['GET'])
+def get_favorites_by_user(user_id):
+    user = users_instance.get_user_by_id(user_id)
+    if user:
+        fav_list = favourite_instance.get_favorites_by_user(user_id)
+        if fav_list:
+            return jsonify({"message": "ok", "data": fav_list}),200
+        else:
+            return jsonify({"error": "User has no favorites"}), 404
+    else:
+        return jsonify({"error": "User not found"}), 404 
+
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)

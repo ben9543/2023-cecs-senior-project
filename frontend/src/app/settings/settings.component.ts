@@ -62,7 +62,7 @@ export class SettingsComponent {
   edit!: FormGroup;
   user: any = {}; // Initialize user object
   userData: any | null = null;
-
+  universities: any;
   constructor(private router: Router, private formBuilder: FormBuilder, private activeroute: ActivatedRoute,
     private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar, 
     private confirmationDialogService: ConfirmationDialogService) { }
@@ -79,6 +79,9 @@ ngOnInit(): void {
 
 initializeForm(): void {
   // Check if userData is available before initializing the form
+   this.userService.getUniversityList().subscribe((universities: any) => {
+      this.universities = universities.data;
+    });
   if (this.userData) {
     this.edit = this.formBuilder.group({
       username: [

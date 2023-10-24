@@ -13,22 +13,26 @@ import { StudyspotViewComponent } from './studyspot-view/studyspot-view.componen
 import { FavoritesComponent } from './favorites/favorites.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { CheckInComponent } from './check-in/check-in.component';
+import { RateMeComponent } from './rate-me/rate-me.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LogInComponent },
-  { path: 'home', component: HomepageComponent },
-  { path: 'favorites', component: FavoritesComponent },
-  { path: 'history', component: HistoryComponent},
-  { path: 'profile', component: ProfileComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: 'reviews', component: ReviewsComponent},
-  { path: 'help', component: HelpsComponent},
-  { path: 'submitrequest', component: SubmitRequestComponent},
+  { path: 'home', component: HomepageComponent, canActivate: [AuthGuard]},
+  { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] },
+  { path: 'history', component: HistoryComponent, canActivate: [AuthGuard]},
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+  { path: 'reviews', component: ReviewsComponent, canActivate: [AuthGuard]},
+  { path: 'help', component: HelpsComponent, canActivate: [AuthGuard]},
+  { path: 'submitrequest', component: SubmitRequestComponent, canActivate: [AuthGuard]},
   { path: 'signup', component: SignupComponent},
-  { path: 'studyspot-view', component: StudyspotViewComponent},
-  { path: 'reset-password', component: ResetPasswordComponent},
-  { path: 'change-password', component: ChangePasswordComponent},
+  { path: 'studyspot-view', component: StudyspotViewComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+  { path: 'reset-password', component: ResetPasswordComponent, canActivate: [AuthGuard]},
+  { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]},
+  { path: 'rate-me', component: RateMeComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

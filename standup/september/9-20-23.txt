@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel -
 Holly -
-Deep -
+Deep - Started with functionality for reviews
 Sal - improved the review stars overlay
 Tony -
 Ben -
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel -
 Holly -
-Deep -
+Deep - Finish writing up the functionality for the reviews
 Sal - start working on the reset password ticket
 Tony -
 Ben -
@@ -22,7 +22,7 @@ What is blocking your progress?
 
 Amanuel -
 Holly -
-Deep -
+Deep - testing the routes
 Sal -
 Tony -
 Ben -

@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly -
+Deep - write the fucntionality for the Favourite api
+Sal - 
+Tony -
+Ben -
+Jose - Created the container and some CSS for Reviews
+
+What will you do today?
+
+Amanuel -
+Holly - Adding a function to get favorite list by user id
+Deep - write api routes for the Favourite api
+Sal -
+Tony -
+Ben -
+Jose - Finishing up the front end of the website SS-15
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben -
+Jose -

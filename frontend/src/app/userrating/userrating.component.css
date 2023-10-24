@@ -47,6 +47,7 @@
   
   /* Styles for user comment */
   .user-comment {
+    padding-left: 15%;
     padding-bottom: 20px;
     font-size: 14px;
   }
@@ -66,4 +67,29 @@
     height: fit-content;
   }
   
+  /* Mobile responsive styles using media queries */
+@media screen and (max-width: 768px) {
+    .user-rating-card {
+        padding: 15px; 
+    }
+    
+    .user-info {
+        flex-direction: row; 
+        justify-content: space-between; 
+        align-items: center;
+    }
+
+    .user-details {
+        text-align: left;
+    }
+
+    .rating {
+        margin-top: 0; 
+    }
+
+    .user-comment {
+        margin-top: 0; 
+        text-align: left;
+    }
+}
   

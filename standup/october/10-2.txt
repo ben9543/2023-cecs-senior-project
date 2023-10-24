@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel - Prepare for sprint 3
+Holly -
+Deep - Worked on finalizing review.py
+Sal - 
+Tony -
+Ben - Organized main_table.sql
+Jose -
+
+What will you do today?
+
+Amanuel - breakdown the sprint
+Holly -
+Deep - working on single study spot api
+Sal - Choose and assign tickets for sprint 3
+Tony -
+Ben - Organized main_table.sql
+Jose -
+
+What is blocking your progress?
+
+Amanuel - none
+Holly -
+Deep - Local connection with database
+Sal -
+Tony -
+Ben -
+Jose -

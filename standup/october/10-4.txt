@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel - Assign tickets, and start reseaching on AWS
+Holly -
+Deep - Worked on studyspot API
+Sal - Chose the check in tickets for frontend
+Tony -
+Ben -
+Jose -
+
+What will you do today?
+
+Amanuel - Create 2 EC2 instances for hosting backend and frontend
+Holly -
+Deep - Functionality for studyspot api
+Sal - clarifiry details for my tickets with team
+Tony -
+Ben -
+Jose -
+
+What is blocking your progress?
+
+Amanuel - Porting issues
+Holly -
+Deep -
+Sal -
+Tony -
+Ben -
+Jose -

@@ -2,7 +2,7 @@ What did you do yesterday?
 
 Amanuel - Organize and assigned tickets
 Holly - 
-Deep -
+Deep - Worked in SQL statements for the database
 Sal - created branch for SS-27
 Tony - 
 Ben - Finalized big SQLTables: User, Review, Survey, University
@@ -12,7 +12,7 @@ What will you do today?
 
 Amanuel - oversee what has been completed
 Holly -
-Deep -
+Deep - Writing functionality for the user api
 Sal - create homepage component and determine neccessry functionality
 Tony -
 Ben - Learn how to utilize PostgreSQL with Flask-SQLAlchemy.
@@ -22,7 +22,7 @@ What is blocking your progress?
 
 Amanuel - waiting for apis for profile setting details update
 Holly -
-Deep -
+Deep - Importing libraries into local environment
 Sal -
 Tony -
 Ben - Learning curve with PostgreSQL and SQLAlchemy.

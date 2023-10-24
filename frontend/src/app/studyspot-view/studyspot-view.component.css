@@ -28,11 +28,14 @@
     padding: 10px; 
   }
   
+  :root {
+    --number-of-reviews: 0; 
+  }
   .details-1 {
     width: max-content;
     flex: 1;
     position: absolute;
-    top: 25%;
+    top: calc(var(--number-of-reviews ) * 10%);
     left: 2.2%; 
     padding: 20px 45px; 
     border: none;
@@ -164,4 +167,86 @@
 .studyspotCard{
     padding-top: 2%;
     padding-left: 3%;
+}
+
+
+/* Media queries for mobile responsiveness */
+@media screen and (max-width: 768px) {
+    .spots-container {
+        width: 90%;
+        margin-left: 2.5%;
+        margin-top: 35%;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .study-spot-image {
+        width: 100%;
+        padding: 10px;
+    }
+    .studyspotCard{
+        padding-top: 2%;
+        padding-left: 0;
+    }
+
+    .details-1 {
+        width: 100%;
+        position: static;
+        padding: 10px;
+    }
+    .top-right-more {
+        position: absolute;
+        top: -5px; 
+        left: 92%; 
+        color: white; 
+        border-radius: 5px; 
+    }
+
+    .btnBegin{
+        margin-top: -5%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+    }
+
+    #detail-t{
+        width: max-content;
+        margin-left: 25%;
+    }
+
+    #special-button{
+        width: 120px;
+    }
+
+    .details-2 {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .detail-item {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+    .user-reviews{
+        border-left: rgb(14, 75, 77) 2px solid;
+        margin-top: 5%;
+    }
+    .select-features{
+        font-size: 16px;
+        border-radius: 5px;
+        height: 30px;
+    }
+    label{
+        padding-right: 12%;
+        padding-left: 1.3%;
+    }
+    #features {
+        padding: 0;
+        width: 60%;
+        height: 30px;
+        border-radius: 3px;
+    }
+    #features option {
+        padding: 5px;
+    }
 }

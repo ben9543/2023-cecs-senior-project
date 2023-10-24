@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscriber } from 'rxjs';
+import { StudyspotService } from '../studyspot.service';
+import { UserService } from '../user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CheckIndialogComponent } from '../check-indialog/check-indialog.component';
 
 @Component({
   selector: 'app-studyspot-view',
@@ -8,24 +12,47 @@ import { Subscriber } from 'rxjs';
   styleUrls: ['./studyspot-view.component.css']
 })
 export class StudyspotViewComponent {
-
   studySpot: any;
-  
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  name: string = '';
+  reviews: any[] = [];
+  lengthOfReviews: number = 4;
+  constructor(private route: ActivatedRoute, private router: Router, private studyspotService: StudyspotService, private userService: UserService,
+    private dialog: MatDialog ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.studySpot = JSON.parse(params['data']);
+      this.name = params['name'];
+      this.loadStudySpotData();
     });
   }
 
-  checkIn() {
-    // Route to the Check-In survey component
-    this.router.navigate(['/check-in']);
+  private loadStudySpotData() {
+    this.studyspotService.getStudyspotByNameWithReviews(this.name)
+      .subscribe((data: any) => {
+        this.studySpot = data.data;
+        this.reviews = data.data.reviews;
+        this.lengthOfReviews = data.data.reviews.length;
+      }, (error) => {
+        console.error("Error fetching study spot data:", error);
+      });
+  }
+
+  openDialog() {
+    let dialogRef = this.dialog.open(CheckIndialogComponent,
+      {data: {name: 'test'}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   rateMe() {
     // Route to the Rate Me survey component
-    this.router.navigate(['/rate-me']);
+    this.router.navigate(['/rate-me'], { queryParams: { name: this.name} });
+  }
+  
+  // Use HostBinding to update the custom property
+  @HostBinding('style.--number-of-reviews') get numberOfReviewsProperty() {
+    return this.lengthOfReviews <=2? 4: this.lengthOfReviews - 1;
   }
 }

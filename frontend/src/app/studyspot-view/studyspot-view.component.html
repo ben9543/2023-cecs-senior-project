@@ -1,50 +1,42 @@
-<app-header></app-header>
 <div class="spots-container">
   <!-- Div for the study spot component using hard coded data-->
   <div class="studyspotCard">
-    <app-studyspot [ngStyle]="" name="{{ studySpot.name }}" rating="{{ studySpot.rating }}" imageUrl="{{ studySpot.imageUrl }}"></app-studyspot>
+    <app-studyspot [ngStyle]="" name="{{ studySpot.studyspot_name }}"></app-studyspot>
   </div>
   <!-- Div for details 1 (bottom left) -->
   <div class="details-1">
-    <p id="detail-p">Location:{{ studySpot.location }}</p>
+    <p id="detail-p">Location:{{ studySpot.studyspot_location}}</p>
     <!-- Dropdown for Features, will be iteration once we have all in db -->
     <div class="select-features">
         <label for="features">Features</label>
         <select id="features" name="features">
-        <option value="powerOutlets">Power Outlets</option>
-        <option value="strongWifi">Strong Wi-Fi Signal</option>
+        <option value="powerOutlets" *ngIf="studySpot.studyspot_power_outlets">Power Outlets</option>
+        <option value="strongWifi" *ngIf="studySpot.studyspot_strong_wifi">Strong Wi-Fi Signal</option>
+        <option value="ada" *ngIf="studySpot.studyspot_ada">ADA Accessible</option>
+        <option value="easyToFind" *ngIf="studySpot.studyspot_easy_to_find">Easy to Find</option>
         </select>
     </div>
-    <p id="detail-p">Noise Level: Moderate</p>
+    <p id="detail-p">Noise Level: {{ studySpot.studyspot_noise_level}}</p>
     <p id="detail-p">Availablity: Available</p>
   </div>
 
   <!-- Div for details 2 (right side) -->
   <div class="details-2">
-    <div class="detail-item-button">
-      <button id = "special-button" (click)="checkIn()">Check-In</button>
+    <div class="btnBegin">
+        <div class="detail-item-button">
+            <button id = "special-button" (click)="openDialog()">Check-In</button>
+          </div>
+          <div class="detail-item-button">
+            <button id = "special-button" (click)="rateMe()">Rate Me</button>
+          </div>
     </div>
-    <div class="detail-item-button">
-      <button id = "special-button" (click)="rateMe()">Rate Me</button>
-    </div>
+
     <div class="detail-item">
-      <p id="detail-t">Traffic Status: Moderate</p>
+      <p id="detail-t">Traffic Status: {{ studySpot.studspot_crowdedness_level}}</p>
     </div>
-    <div class="user-reviews">
-        <div class="detail-item-review">
-            <app-userrating></app-userrating>
-        </div>
-        <div class="detail-item-review">
-            <app-userrating></app-userrating>
-        </div>
-        <div class="detail-item-review">
-            <app-userrating></app-userrating>
-        </div>
-        <div class="detail-item-review">
-            <app-userrating></app-userrating>
-        </div>
-        <div class="detail-item-review">
-            <app-userrating></app-userrating>
+    <div class="user-reviews" >
+        <div class="detail-item-review" *ngFor="let review of reviews">
+            <app-userrating userID={{review.user_id}} rating={{review.review_rate}} comment={{review.review_comments}}></app-userrating>
         </div>
     </div>
   </div>

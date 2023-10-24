@@ -3,8 +3,8 @@
       <img [src]="imageUrl" alt="Card Image">
     </div>
     <div class="like-button">
-      <button mat-icon-button>
-        <mat-icon>favorite</mat-icon>
+      <button mat-icon-button (click)="toggleLike()">
+        <mat-icon [color]="liked ? 'warn' : 'white'">favorite</mat-icon>
       </button>
     </div>
     <div class="card-details">

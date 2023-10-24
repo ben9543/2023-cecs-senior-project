@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, F
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
 
+
 # Adding dictionary parsing feature
 class Base(DeclarativeBase):
     def as_dict(self):
@@ -9,6 +10,7 @@ class Base(DeclarativeBase):
 
 class Universities(Base):
     __tablename__ = 'universities'
+
     university_name = Column(String(200), primary_key=True)
     university_state = Column(String(2))
     university_zip = Column(Integer, nullable=False, unique=True)
@@ -18,6 +20,18 @@ class Studyspots(Base):
 
     studyspot_id = Column(Integer, primary_key=True)
     studyspot_name = Column(String(254), unique=True)
+    university_name = Column(String(200), ForeignKey('universities.university_name'))
+    studyspot_is_indoor = Column(Boolean)
+    studyspot_ada = Column(Boolean)
+    studyspot_power_outlets = Column(Boolean)
+    studyspot_easy_to_find = Column(Boolean)
+    studyspot_image_url = Column(String(3000))
+    studyspot_location = Column(String(3000))
+    studyspot_noise_level = Column(Integer)
+    studspot_crowdedness_level = Column(Integer)
+    studyspot_strong_wifi = Column(Boolean)
+
+    university = relationship("Universities")
 
 class Users(Base):
     __tablename__ = 'users'
@@ -26,7 +40,7 @@ class Users(Base):
     user_email = Column(String(254))
     user_name = Column(String(200))
     password = Column(String(512))
-    university_name = Column(Integer, ForeignKey('universities.university_name'), nullable=False)
+    university_name = Column(String(200), ForeignKey('universities.university_name'), nullable=False)
     user_photo = Column(String(250))
 
     university = relationship("Universities")
@@ -35,10 +49,11 @@ class Surveys(Base):
     __tablename__ = 'surveys'
 
     survey_id = Column(Integer, primary_key=True)
-    studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
+    studyspot_name = Column(String(254), ForeignKey('studyspots.studyspot_name'), nullable=False)
     user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
     survey_crowdednes_level = Column(Integer, nullable=False)
     survey_noise_level = Column(Integer, nullable=False)
+    survey_wifi = Column(Integer, nullable=False)
 
     studyspot = relationship("Studyspots")
     user = relationship("Users")
@@ -48,25 +63,18 @@ class Reviews(Base):
 
     review_id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
-    studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
-    review_comments = Column(String(200))
-    review_indoor = Column(Boolean)
-    review_wifi = Column(Integer, nullable=False)
-    review_temp = Column(Integer, nullable=False)
+    studyspot_name = Column(String(254), ForeignKey('studyspots.studyspot_name'), nullable=False)
+    review_comments = Column(String(500))
     review_rate = Column(Float, nullable=False)
-    review_ada = Column(Boolean)
-    review_power_outlets = Column(Boolean)
-    review_easy_to_find = Column(Boolean)
+
     studyspot = relationship("Studyspots")
     user = relationship("Users")
 
-# class Favorites(Base):
-#     __tablename__ = 'favorites'
-
-#     user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
-#     studyspot_id = Column(Integer, ForeignKey('studyspots.studyspot_id'), nullable=False)
-
-#     UniqueConstraint('user_id', 'studyspot_id', name='pk_fav')
+class Favorites(Base):
+    __tablename__ = 'favorites'
     
-#     studyspot = relationship("Studyspots")
-#     user = relationship("Users")
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False, primary_key=True)
+    studyspot_name = Column(String(254), ForeignKey('studyspots.studyspot_name'), nullable=False, primary_key=True)
+    studyspot = relationship("Studyspots")
+    user = relationship("Users")
+    

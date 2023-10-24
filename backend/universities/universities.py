@@ -8,8 +8,11 @@ class Universities_API():
         self.db = db
 
     def get_university_list(self):
-        uni = self.db.session.execute(self.db.select(Universities).order_by(Universities.university_name)).scalars()
-        return uni
+        uni = self.db.session.execute(self.db.select(Universities.university_name).order_by(Universities.university_name))
+        results = []
+        for x in uni:
+            results.append(x[0])
+        return results
     
     def get_university_by_name(self, name):
         uni =  self.db.session.query(Universities).filter(Universities.university_name == name).first()
@@ -31,7 +34,7 @@ class Universities_API():
         uni = self.get_university_by_name(name)
         if uni:
             try:
-                self.db.session.execute(update(Universities).where(Universities.university_name==name).value(
+                self.db.session.execute(self.db.session.update(Universities).where(Universities.university_name==name).value(
                     university_zip = zip,
                     university_state = state
                 ))

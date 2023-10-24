@@ -1,1 +1,8 @@
-<p>favorites works!</p>
+<div class = "title">
+    <p>Favorites</p>
+</div>
+<div class = "spots-container">
+    <div *ngFor="let spot of favspotnames">
+        <app-studyspot name="{{ spot }}"></app-studyspot>
+    </div>
+</div>

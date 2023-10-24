@@ -69,3 +69,46 @@ app-studyspot
 {
     flex-shrink: 10;
 }
+
+.no-tab-header .mat-tab-label-content {
+    display: none;
+  }
+
+  .previous, .next {
+    border: rgb(2, 35, 36) 2px solid;
+    background-color: cadetblue;
+    border: 2px solid your-border-color; 
+    cursor: pointer;
+
+  }
+  
+/* Media Query for Small Screens */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 30%;
+        padding: 10% 5%;
+    }
+    
+    .change-college {
+        top: 10%;
+        right: 5%;
+        width: 80px;
+    }
+
+    #features {
+        width: 80px;
+    }
+    
+    .container-objects {
+        padding: 10px;
+    }
+    
+    .container-recent,
+    .container-ymlt {
+        margin-bottom: 20px;
+    }
+
+    .previous, .next {
+        display: none;
+    }
+}

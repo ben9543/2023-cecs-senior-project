@@ -2,6 +2,8 @@
 flask
 flask-cors
 flask_sqlalchemy
+flask_bcrypt
 pyjwt
 psycopg2
 flask_login
+boto3

@@ -2,14 +2,10 @@
     <div class="user-info">
       <img class="user-avatar" src="assets/useravator/useravator.png" alt="User Avatar">
       <div class="user-details">
-        <p class="username">Username</p>
-        <div class="rating">
+        <p class="username">{{user_name}}</p>
+        <span class="rating" *ngFor="let star of getStars(rating)">
           <mat-icon class="star">stars</mat-icon>
-          <mat-icon class="star">stars</mat-icon>
-          <mat-icon class="star">stars</mat-icon>
-          <mat-icon class="star">stars</mat-icon>
-          <mat-icon class="star">stars</mat-icon>
-        </div>
+        </span>
       </div>
       <button mat-icon-button matTooltip="Action" [matMenuTriggerFor]="reportMenu">
         <mat-icon class="report-icon">report</mat-icon> 
@@ -20,6 +16,6 @@
             </button>
         </mat-menu>
     </div>
-    <p class="user-comment">User's comment goes here.</p>
+    <p class="user-comment">{{comment}}</p>
   </div>
   
