@@ -1,0 +1,22 @@
+<div>
+    <mat-toolbar>
+        <div class="middle">
+            <img src="assets/Logo/ssl.png" alt="Logo">
+        </div>
+        <div class="user">
+            <div class="username">
+                <!-- {{username}} -->
+            </div>
+            <button mat-icon-button class="button_header" matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
+                <mat-icon>account_circle</mat-icon>
+            </button>
+        </div>
+        
+        <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below" class="customize">
+            <mat-divider></mat-divider>
+            <button mat-menu-item routerLink="/adminonlylogin">
+                <mat-icon>exit_to_app</mat-icon>Logout
+            </button>
+        </mat-menu>
+    </mat-toolbar>
+</div>

@@ -57,6 +57,10 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { RateMeComponent } from './rate-me/rate-me.component';
 import { CheckInComponent } from './check-in/check-in.component';
 import { CheckIndialogComponent } from './check-indialog/check-indialog.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
+import { AdminDecisionPageComponent } from './admin-decision-page/admin-decision-page.component';
+import { AdminHeaderComponent } from './admin-header/admin-header.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +89,11 @@ import { CheckIndialogComponent } from './check-indialog/check-indialog.componen
     UserratingComponent,
     RateMeComponent,
     CheckInComponent,
-    CheckIndialogComponent
+    CheckIndialogComponent,
+    AdminLoginComponent,
+    AdminHomepageComponent,
+    AdminDecisionPageComponent,
+    AdminHeaderComponent
   ],
   entryComponents: [ 
     CheckIndialogComponent
