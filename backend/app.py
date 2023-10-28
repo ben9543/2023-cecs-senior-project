@@ -25,7 +25,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # Allow Cross Origin from anywhere (will be restricted in prod)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "http://www.studyspot.info"}})
 
 # Create Users instance
 users_instance = User_API(db)
@@ -60,17 +60,17 @@ auth_instance = Auth(db, users_instance)
 AUTH_HEADER_KEY  = 'Authorization'
 
 # Define a function to set CORS headers
-# def add_cors_headers(response):
-#     # Replace with the actual origin of your Angular application
-#     response.headers['Access-Control-Allow-Origin'] = 'http://www.studyspot.info'
-#     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
-#     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-#     return response
+def add_cors_headers(response):
+    # Replace with the actual origin of your Angular application
+    response.headers['Access-Control-Allow-Origin'] = 'http://www.studyspot.info'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
 
-# # Register the add_cors_headers function to run after each request
-# @app.after_request
-# def after_request(response):
-#     return add_cors_headers(response)
+# Register the add_cors_headers function to run after each request
+@app.after_request
+def after_request(response):
+    return add_cors_headers(response)
 
 # Protect routes
 def login_required(func):
@@ -127,8 +127,8 @@ def login():
         if password_check:
             token = auth_instance.generate_jwt(email)
             if token:
-                return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-                #return jsonify({'token': token, 'authenticated': True}), 200
+                #return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
+                return jsonify({'token': token, 'authenticated': True}), 200
             else:
                 return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
         else:
@@ -384,7 +384,6 @@ def get_studyspot_with_reviews():
             'message': 'FAILED', 
             'data': None
         }), 400)
-    
 
 # Studyspot search API
 @app.route('/api/studyspots/serach', methods=['POST'])
@@ -579,4 +578,4 @@ def get_favorites_by_user(user_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
