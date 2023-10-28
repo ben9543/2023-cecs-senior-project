@@ -27,12 +27,13 @@
       align-items: center;
       margin-top: 12px;
       width: 100%;
+      margin-left: 5%;
       height: fit-content;
     }
   
     .search mat-form-field{
-      width: 110%;
-      margin-left: 0;
+      width: 95%;
+      margin-left: -5%;
     }
   
     #filterIcon {

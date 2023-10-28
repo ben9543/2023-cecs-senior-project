@@ -30,6 +30,14 @@ button{
 }
 /* Media queries for mobile devices */
 @media (max-width: 768px) {
+  .spots-container {
+    width: 84.5%;
+    left: 5%;
+    margin-top: 50%;
+    height: auto;
+    border-radius: 0 0 10px 10px;
+    justify-content: center;
+}
   .search {
       width: 90%;
       left: 5%;
@@ -37,18 +45,9 @@ button{
       height: max-content;
       border-radius: 10px 10px 0 0;
   }
-
-  .spots-container {
-      width: 86%;
-      left: 5%;
-      margin-top: 50%;
-      height: auto;
-      border-radius: 0 0 10px 10px;
-      justify-content: center;
-  }
   button{
-    margin-left: 2%;
-    margin-top: 3%;
+    margin-left: -6%;
+    margin-top: 3.3%;
   }
   
 }
@@ -57,13 +56,13 @@ button{
   @media screen and (min-width: 2000px) {
     .search {
       left: 40px; 
-      margin-top: 8%; 
       margin-top: 12%;
       height: 4%;
     }
   
     .spots-container {
       left: 40px; 
+      width: 90%;
       margin-top: 14.5%; 
       height: auto;
       padding-bottom: 20px;

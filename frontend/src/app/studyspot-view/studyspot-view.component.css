@@ -11,7 +11,9 @@
     font-family: 'Chalkduster, fantasy';
     font-size: larger;
 }
-
+.spots-container-mobile{
+    display: none;
+}
 .study-spot-details {
     display: flex;
     align-items: flex-start;
@@ -173,11 +175,7 @@
 /* Media queries for mobile responsiveness */
 @media screen and (max-width: 768px) {
     .spots-container {
-        width: 90%;
-        margin-left: 2.5%;
-        margin-top: 35%;
-        padding: 10px;
-        border-radius: 5px;
+        display: none;
     }
 
     .study-spot-image {
@@ -215,7 +213,7 @@
     }
 
     #special-button{
-        width: 120px;
+        width: 100px;
     }
 
     .details-2 {
@@ -228,7 +226,8 @@
         font-size: 14px;
     }
     .user-reviews{
-        border-left: rgb(14, 75, 77) 2px solid;
+        border-left: none;
+        border-top: rgb(14, 75, 77) 2px solid;
         margin-top: 5%;
     }
     .select-features{
@@ -242,11 +241,27 @@
     }
     #features {
         padding: 0;
-        width: 60%;
+        width: 52%;
         height: 30px;
         border-radius: 3px;
     }
     #features option {
         padding: 5px;
     }
+
+    .spots-container-mobile{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin-left: 2.5%;
+        margin-top: 35%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: cadetblue;
+    }
+    .box{
+        padding: 10px;
+        margin: 5px;
+    }
+
 }
