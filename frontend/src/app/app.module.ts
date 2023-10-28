@@ -61,6 +61,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
 import { AdminDecisionPageComponent } from './admin-decision-page/admin-decision-page.component';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
+import { LandingAgeComponent } from './landing-age/landing-age.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { AdminHeaderComponent } from './admin-header/admin-header.component';
     AdminLoginComponent,
     AdminHomepageComponent,
     AdminDecisionPageComponent,
-    AdminHeaderComponent
+    AdminHeaderComponent,
+    LandingAgeComponent
   ],
   entryComponents: [ 
     CheckIndialogComponent

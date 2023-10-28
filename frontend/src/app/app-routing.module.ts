@@ -18,9 +18,11 @@ import { RateMeComponent } from './rate-me/rate-me.component';
 import { AuthGuard } from './auth.guard';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
+import { LandingAgeComponent } from './landing-age/landing-age.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: 'welcome', component: LandingAgeComponent},
   { path: 'login', component: LogInComponent },
   { path: 'home', component: HomepageComponent, canActivate: [AuthGuard]},
   { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] },
