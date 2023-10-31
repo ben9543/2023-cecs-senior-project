@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
 from auth.auth import Auth
+from admins.admins import Admin_API
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
 from universities.universities import Universities_API
@@ -29,6 +30,9 @@ CORS(app, resources={r"/api/*": {"origins": "http://www.studyspot.info"}})
 
 # Create Users instance
 users_instance = User_API(db)
+
+# Create Admins instance
+admins_instance = Admin_API(db)
 
 # Create Studyspot instance
 studyspots_instance = StudySpots_API(db)
@@ -77,6 +81,22 @@ def login_required(func):
     secure_function.__name__ = func.__name__
     return secure_function
 
+# Protect routes
+def admin_login_required(func):
+    def secure_function(*args, **kwargs):
+        if(not AUTH_HEADER_KEY in request.headers):
+            return make_response(jsonify({'error': 'Authorization header missing'}), 401)
+        token = request.headers.get(AUTH_HEADER_KEY)
+        #print("Payload->>>>>>",token)
+        if not token:
+            return make_response(jsonify({'error': 'Token is missing'}), 401)
+        if auth_instance.verify_token(token):
+            return func(*args, **kwargs)
+        else:
+            return make_response(jsonify({'error': 'Authentication failed (invalid token)'}), 401)
+    secure_function.__name__ = func.__name__
+    return secure_function
+
 """ Utility Functions """
 def parameter_check(data):
     return True
@@ -86,23 +106,35 @@ def parameter_check(data):
 def alive():
     return make_response(jsonify({"message": "Success", "response":True}), 200)
 
-""" Users Routes """
-# GET all users
-# @app.route('/api/users', methods=['GET'])
-# @login_required
-# def get_users():
-#     data = users_instance.get_users()
-#     return make_response(jsonify({"message": "Success", "response":data}), 200)
 
-# # GET user by ID
-# @app.route('/api/users/<int:user_id>', methods=['GET'])
-# @login_required
-# def get_user(user_id):
-#     user = users_instance.get_user(user_id)
-#     if(user):
-#         return make_response(jsonify({"message":"Success", "response":user}),200)
-#     else:
-#         return make_response(jsonify({"error": "No such user with the given id."}), 404)
+""" Admin Routes """
+@app.route('/api/admin/login', methods=['POST'])
+def admin_login():
+    email = request.json.get('email')
+    password = request.json.get('password')
+    admin_user = admins_instance.find_user_by_email(email)
+    if admin_user:
+        stored_hashed_password = admin_user.password.encode('utf-8')
+        password_check = bcrypt.check_password_hash(stored_hashed_password, password)
+        if password_check:
+            token = auth_instance.generate_jwt(email)
+            if token:
+                #return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
+                return jsonify({'token': token, 'authenticated': True}), 200
+            else:
+                return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
+        else:
+            return jsonify({'message': 'Invalid password', 'authenticated': False}), 401
+                        # return jsonify({'token': token, 'authenticated': True}), 200 #for windows user
+    return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
+
+""" Admin Routes """
+@app.route('/api/admin/approve', methods=['POST'])
+def admin_approve():
+    pass
+
+
+""" Users Routes """
 
 # Login route
 @app.route('/api/login', methods=['POST'])
