@@ -16,9 +16,13 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { CheckInComponent } from './check-in/check-in.component';
 import { RateMeComponent } from './rate-me/rate-me.component';
 import { AuthGuard } from './auth.guard';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
+import { LandingAgeComponent } from './landing-age/landing-age.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: 'welcome', component: LandingAgeComponent},
   { path: 'login', component: LogInComponent },
   { path: 'home', component: HomepageComponent, canActivate: [AuthGuard]},
   { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] },
@@ -32,7 +36,9 @@ const routes: Routes = [
   { path: 'studyspot-view', component: StudyspotViewComponent, pathMatch: 'full', canActivate: [AuthGuard]},
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [AuthGuard]},
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]},
-  { path: 'rate-me', component: RateMeComponent, canActivate: [AuthGuard]}
+  { path: 'rate-me', component: RateMeComponent, canActivate: [AuthGuard]},
+  { path: 'adminonlylogin', component: AdminLoginComponent},
+  { path: 'admin-home', component: AdminHomepageComponent},
 ];
 
 @NgModule({

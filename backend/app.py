@@ -373,7 +373,6 @@ def get_studyspot_with_reviews():
             'message': 'FAILED', 
             'data': None
         }), 400)
-    
 
 # Studyspot search API
 @app.route('/api/studyspots/serach', methods=['POST'])

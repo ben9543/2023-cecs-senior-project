@@ -1,0 +1,72 @@
+
+.helps-container{
+    background-color: cadetblue;
+    width: 50%;
+    height: max-content;
+    margin: 15% auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-top: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.9);
+  }
+  mat-expansion-panel{
+      padding-top: -20px;
+      background: none;
+      border: 5px solid #C8D8E4;
+  }
+  .mat-expansion-panel {
+    width: 500px;
+    margin-left: -70px;
+  }
+  
+   
+  /* For screens with width up to 768px */
+  @media (max-width: 768px) {
+    .helps-container {
+        width: 90%;
+        margin-top: 180px;
+        margin-left: 5%;
+        padding-top: 10px;
+      }
+      
+      mat-nav-list {
+        width: 90%;
+        padding-top: 10%;
+        padding-right: 2%;
+      }
+      
+      mat-expansion-panel {
+        margin-bottom: 20px;
+      }
+      
+      .mat-expansion-panel {
+       width: 100%;
+       margin-left: 0px;
+      }
+    }
+    
+    /* For screens with width greater than 768px */
+    @media (min-width: 769px) {
+      .spots-container {
+        width: 70%;
+        margin-top: 15%;
+        margin-left: 15%;
+      }
+      
+      mat-nav-list {
+        width: 50%;
+        padding-top: 5%;
+      }
+      
+      mat-expansion-panel {
+        margin-bottom: 10px;
+      }
+      
+      .container_form {
+        width: 500px;
+        margin-top: 15%;
+      }
+    }
+    
