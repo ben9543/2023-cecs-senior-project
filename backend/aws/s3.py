@@ -14,6 +14,7 @@ class S3_API():
         self.client = boto3.client('s3', aws_access_key_id=self.aws_access_key_id, aws_secret_access_key=self.aws_secret_access_key)
 
     def generate_object_url_from_key(self, key):
+        # Example url: https://studyspot-123.s3.us-west-1.amazonaws.com/BMAC_BARC_Center.jpg
         return f"https://{self.bucket_name}.s3.{self.region}.amazonaws.com/{key}"
 
     def list_bucket_all(self):
