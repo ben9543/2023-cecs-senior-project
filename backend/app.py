@@ -45,17 +45,6 @@ favourite_instance = Favourites_API(db)
 # Create auth instance
 auth_instance = Auth(db, users_instance)
 
-# S3 Object (Sample code)
-# Make sure to replace "****" accordingly to your bucket settings for testing.
-# access_key = "****"
-# secret_key = "****"
-# #region = "****" 
-# bucket_name = "****"
-# s3_instance = S3_API(access_key, secret_key, region, bucket_name)
-# objects = s3_instance.list_bucket()
-# for o in objects:
-#     print(o)
-
 # Constants
 AUTH_HEADER_KEY  = 'Authorization'
 

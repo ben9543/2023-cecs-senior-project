@@ -1,10 +1,10 @@
 -- Fake INSERT statements for Studyspots table
 INSERT INTO Studyspots (studyspot_id, studyspot_name, university_name)
 VALUES
-    (1, 'Library', 'CSULB'),
-    (2, 'Coffee House', 'CSULB'),
-    (3, 'Study Park', 'CSULB'),
-	(4, 'Coffee Shop', 'CSULB');
+    (1, 'Library', 'CSULB', false, false, false, false, "", "1250 Belflower Blvd, Long Beach, CA", ),
+    (2, 'Coffee House', 'CSULB', false, false, false, false, "", "1250 Belflower Blvd, Long Beach, CA", ),
+    (3, 'Study Park', 'CSULB', false, false, false, false, "", "1250 Belflower Blvd, Long Beach, CA", ),
+	(4, 'Coffee Shop', 'CSULB', false, false, false, false, "", "1250 Belflower Blvd, Long Beach, CA", );
 
 -- Fake INSERT statements for Survey table
 INSERT INTO Reviews (user_id, studyspot_name, review_comments, review_wifi, review_temp, review_rate, review_ada, review_power_outlets, review_easy_to_find)

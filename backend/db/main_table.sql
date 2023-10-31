@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS Studyspots (
     studyspot_noise_level INT NOT NULL,
     studspot_crowdedness_level INT NOT NULL,
     studyspot_strong_wifi BOOLEAN,
+    -- studyspot_is_approved BOOLEAN,
     UNIQUE(studyspot_name),
     CONSTRAINT FK_studyspot_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
 );
@@ -40,6 +41,7 @@ CREATE TABLE IF NOT EXISTS Surveys (
     survey_crowdednes_level INT NOT NULL, 
     survey_noise_level INT NOT NULL,
     survey_wifi INT NOT NULL,
+    -- survey_check_in_time
     UNIQUE (survey_id),
 	CONSTRAINT FK_survey_studyspot FOREIGN KEY (studyspot_name) REFERENCES Studyspots(studyspot_name),
     CONSTRAINT FK_survey_user FOREIGN KEY (user_id) REFERENCES Users(user_id)
