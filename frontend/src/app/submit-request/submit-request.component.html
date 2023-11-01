@@ -1,1 +1,53 @@
-<p>submit-request works!</p>
+<div class="container_form">
+    <h2>Submit Request</h2>
+    <form
+      [formGroup]="request"
+      (ngSubmit)="onSubmit()"
+      #formDirective="ngForm"
+    >
+    <mat-form-field>
+        <mat-label> Study Spot Request</mat-label>
+        <input matInput formControlName="title" required />
+        <mat-error *ngIf="request.get('title')!.hasError('required')">
+          Please enter a request name
+        </mat-error>
+        <mat-error *ngIf="request.get('title')!.hasError('titleTaken')">
+          Spot already exists
+        </mat-error>
+        <mat-error *ngIf="request.get('title')!.hasError('titleEmpty')">
+          Title cannot be empty
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label> Description</mat-label>
+        <input matInput formControlName="description" required />
+        <mat-error *ngIf="request.get('description')!.hasError('required')">
+          Please enter a description
+        </mat-error>
+        <mat-error *ngIf="request.get('description')!.hasError('descriptionEmpty')">
+          Description cannot be empty
+        </mat-error>
+    </mat-form-field>
+    <div class="row">
+        <div class = 'btn-primary'>
+            <button
+                mat-raised-button
+                type="submit"
+                color="primary"
+                style="background-color: rgb(6, 59, 61);"
+            >
+            Submit
+            </button>
+        </div>
+        <div class = 'btn-secondary'>
+            <button
+                mat-raised-button
+                color="primary"
+                style="background-color: rgb(6, 59, 61);"
+            >
+            Cancel
+            </button>
+        </div>
+    </div>
+    </form>
+  </div>
