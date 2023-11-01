@@ -11,7 +11,7 @@ Jose -
 What will you do today?
 
 Amanuel -
-Holly -
+Holly - Creating Requests table
 Deep -
 Sal - Discussed assigned ticket and created branch
 Tony -
