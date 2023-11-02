@@ -6,6 +6,7 @@ from auth.auth import Auth
 from admins.admins import Admin_API
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
+from surveys.surveys import Surveys_API
 from universities.universities import Universities_API
 from favourite.favourite import Favourites_API
 from reviews.reviews import Reviews_API
@@ -45,6 +46,9 @@ universities_instance = Universities_API(db)
 
 # Create Favourite API
 favourite_instance = Favourites_API(db)
+
+# Create Survey API
+survey_instance = Surveys_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -595,7 +599,19 @@ def get_favorites_by_user(user_id):
         else:
             return jsonify({"error": "User has no favorites"}), 404
     else:
-        return jsonify({"error": "User not found"}), 404 
+        return jsonify({"error": "User not found"}), 404
+
+'''
+SURVEY API
+'''
+@app.route('/api/get_checked_in_studyspots/<int:user_id>', methods=['GET'])
+def get_checked_in_studyspots(user_id):
+    checked_in_spots = survey_instance.get_checked_in_studyspots(user_id)
+
+    if checked_in_spots:
+        return jsonify({'message': 'Success', 'data': checked_in_spots}), 200
+    else:
+        return jsonify({'message': 'No checked-in study spots found for this user'}), 404
 
 
 if __name__ == '__main__':
