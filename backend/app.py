@@ -607,7 +607,6 @@ SURVEY API
 @app.route('/api/get_checked_in_studyspots/<int:user_id>', methods=['GET'])
 def get_checked_in_studyspots(user_id):
     checked_in_spots = survey_instance.get_checked_in_studyspots(user_id)
-
     if checked_in_spots:
         return jsonify({'message': 'Success', 'data': checked_in_spots}), 200
     else:
