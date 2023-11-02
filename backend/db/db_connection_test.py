@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.dialects.postgresql import TIMESTAMP
+from sqlalchemy.sql import func
 
 
 # Adding dictionary parsing feature
@@ -30,6 +32,7 @@ class Studyspots(Base):
     studyspot_noise_level = Column(Integer)
     studspot_crowdedness_level = Column(Integer)
     studyspot_strong_wifi = Column(Boolean)
+    studyspot_is_approved = Column(Boolean)
 
     university = relationship("Universities")
 
@@ -54,6 +57,7 @@ class Surveys(Base):
     survey_crowdednes_level = Column(Integer, nullable=False)
     survey_noise_level = Column(Integer, nullable=False)
     survey_wifi = Column(Integer, nullable=False)
+    survey_created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=func.now())
 
     studyspot = relationship("Studyspots")
     user = relationship("Users")

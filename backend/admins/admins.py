@@ -1,7 +1,7 @@
 from db.db_connection_test import Admins
 
 # API for CRUD Operations
-class User_API():
+class Admin_API():
     def __init__(self, db):
         self.db = db
     
