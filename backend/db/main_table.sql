@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Admins (
     admin_id INT NOT NULL, 
     admin_email VARCHAR(254),
     password VARCHAR(512),
-    UNIQUE (admin_email),
+    UNIQUE (admin_email)
 );
 
 CREATE TABLE IF NOT EXISTS Surveys (
