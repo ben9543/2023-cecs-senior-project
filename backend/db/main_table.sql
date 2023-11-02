@@ -73,6 +73,25 @@ CREATE TABLE IF NOT EXISTS Favorites (
     CONSTRAINT FK_review_user FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
+CREATE TABLE IF NOT EXISTS Requests (
+    user_id INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
+    university_name VARCHAR(200),
+    request_is_indoor BOOLEAN, 
+    request_ada BOOLEAN, /*ADA accommodation: TRUE, NO ADA: FALSE*/
+    request_power_outlets BOOLEAN,
+    request_easy_to_find BOOLEAN,
+    request_image_url VARCHAR(3000),
+    request_location VARCHAR(3000),
+    request_noise_level INT NOT NULL,
+    request_crowdedness_level INT NOT NULL,
+    request_strong_wifi BOOLEAN,
+    request_reason VARCHAR(3000),
+    CONSTRAINT PK_request PRIMARY KEY (user_id, studyspot_name), 
+    CONSTRAINT FK_request_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    CONSTRAINT FK_request_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
+);
+
 -- Default Values
 INSERT INTO Universities(university_name, university_state, university_zip)
 VALUES('CSULB', 'CA', 90840);
