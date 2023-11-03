@@ -45,6 +45,13 @@ class Users(Base):
 
     university = relationship("Universities")
 
+class Admins(Base):
+    __tablename__ = 'admins'
+
+    admin_id = Column(Integer, primary_key=True)
+    admin_email = Column(String(254))
+    password = Column(String(512))
+
 class Surveys(Base):
     __tablename__ = 'surveys'
 
