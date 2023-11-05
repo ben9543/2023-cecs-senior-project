@@ -1,4 +1,5 @@
 from db.db_connection_test import Admins
+from db.db_connection_test import Studyspots
 
 # API for CRUD Operations
 class Admin_API():
@@ -25,4 +26,15 @@ class Admin_API():
             return None
     
     def approve_studyspot(self, studyspot_name):
-        pass
+        """
+        UPDATE studyspots
+        SET column1 = true
+        WHERE studyspots.studyspot_name = f"{studyspot_name}"
+        """
+        study_spot = Studyspots.query.filter_by(studyspot_name=studyspot_name).first()
+        if study_spot:
+            study_spot.studyspot_is_approved = True
+            self.db.session.commit()
+            return True
+        else:
+            return None

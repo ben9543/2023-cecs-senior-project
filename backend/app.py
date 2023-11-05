@@ -114,8 +114,8 @@ def admin_login():
     password = request.json.get('password')
     admin_user = admins_instance.find_user_by_email(email)
     if admin_user:
-        stored_hashed_password = admin_user.password.encode('utf-8')
-        password_check = bcrypt.check_password_hash(stored_hashed_password, password)
+        stored_password = admin_user.password.encode('utf-8')
+        password_check = (password == stored_password)
         if password_check:
             token = auth_instance.generate_jwt(email)
             if token:
@@ -125,12 +125,13 @@ def admin_login():
                 return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
         else:
             return jsonify({'message': 'Invalid password', 'authenticated': False}), 401
-                        # return jsonify({'token': token, 'authenticated': True}), 200 #for windows user
     return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
 
 """ Admin Routes """
 @app.route('/api/admin/approve', methods=['POST'])
 def admin_approve():
+    studyspot_name = request.json.get('studyspot_name')
+    admins_instance.approve_studyspot(studyspot_name)
     pass
 
 
