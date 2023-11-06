@@ -1,1 +1,9 @@
 <app-admin-header></app-admin-header>
+<div class = "title">
+    <p>Requests</p>
+</div>
+<div class = "spots-container">
+    <div *ngFor="let spot of reqspotnames">
+        <app-studyspot name="{{ spot }}"></app-studyspot>
+    </div>
+</div>
