@@ -604,13 +604,30 @@ def get_favorites_by_user(user_id):
 '''
 SURVEY API
 '''
-@app.route('/api/get_checked_in_studyspots/<int:user_id>', methods=['GET'])
+@app.route('/api/users/surveys/get_checked_in_studyspots/<int:user_id>', methods=['GET'])
 def get_checked_in_studyspots(user_id):
     checked_in_spots = survey_instance.get_checked_in_studyspots(user_id)
     if checked_in_spots:
         return jsonify({'message': 'Success', 'data': checked_in_spots}), 200
     else:
         return jsonify({'message': 'No checked-in study spots found for this user'}), 404
+
+@app.route('/api/users/surveys/check_in', methods=['POST'])
+def check_in():
+    data = request.get_json()
+    studyspot_name = data.get('studyspot_name')
+    user_id = data.get('user_id')
+    crowdedness = data.get('survey_crowdednes_level')
+    noise_level = data.get('survey_noise_level')
+    wifi = data.get('survey_wifi')
+
+    if not all([studyspot_name, user_id, crowdedness, noise_level, wifi]):
+        return jsonify({'message': 'Invalid parameters'}), 400
+
+    if survey_instance.create_check_in(studyspot_name, user_id, crowdedness, noise_level, wifi):
+        return jsonify({'message': 'Check-in created successfully'}), 201
+    else:
+        return jsonify({'message': 'Failed to create a check-in'}), 500
 
 
 if __name__ == '__main__':
