@@ -1,6 +1,7 @@
 
 # https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/#installation
 from db.db_connection_test import Surveys
+from sqlalchemy.exc import SQLAlchemyError
 
 class Surveys_API():
 
@@ -29,3 +30,35 @@ class Surveys_API():
         except Exception as e:
             print("Error retrieving all surveys from the database:", e)
             return []
+
+    def get_next_survey_id(self):
+        try:
+            last_survey = self.db.query(Surveys).order_by(Surveys.survey_id.desc()).first()
+            next_survey_id = last_survey.survey_id + 1 if last_survey else 1
+            return next_survey_id
+        except SQLAlchemyError as e:
+            print("Error getting the next survey_id:", e)
+            return None
+    
+    def create_check_in(self, studyspot_name, user_id, crowdedness, noise_level, wifi):
+        try:
+            survey_id = self.get_next_survey_id()
+            if survey_id is None:
+                return False
+            
+            new_check_in = Surveys(
+                survey_id=survey_id,
+                studyspot_name=studyspot_name,
+                user_id=user_id,
+                survey_crowdednes_level=crowdedness,
+                survey_noise_level=noise_level,
+                survey_wifi=wifi,
+            )
+
+            self.db.add(new_check_in)
+            self.db.commit()
+            return True
+
+        except SQLAlchemyError as e:
+            print("Error creating a new check-in:", e)
+            return False
