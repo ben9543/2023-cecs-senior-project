@@ -33,18 +33,21 @@ class Surveys_API():
 
     def get_next_survey_id(self):
         try:
-            last_survey = self.db.query(Surveys).order_by(Surveys.survey_id.desc()).first()
-            next_survey_id = last_survey.survey_id + 1 if last_survey else 1
-            return next_survey_id
-        except SQLAlchemyError as e:
-            print("Error getting the next survey_id:", e)
-            return None
+            survey_count = self.db.session.query(Surveys).count()
+            return int(survey_count)
+
+        except Exception as e:
+            print("Error counting users in the database:", e)
+            self.db.session.rollback()
+            return 0
     
     def create_check_in(self, studyspot_name, user_id, crowdedness, noise_level, wifi):
         try:
             survey_id = self.get_next_survey_id()
-            if survey_id is None:
-                return False
+            if survey_id == 0:
+                survey_id = 1
+            else:
+                survey_id += 1
             
             new_check_in = Surveys(
                 survey_id=survey_id,
