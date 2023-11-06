@@ -1,9 +1,9 @@
 What did you do yesterday?
 
 Amanuel -
-Holly - Added request class in db_connection_test.py 
+Holly - Created api for requests table
 Deep -
-Sal - Met with team to discuss errors found in my form
+Sal - 
 Tony -
 Ben -
 Jose -
@@ -11,9 +11,9 @@ Jose -
 What will you do today?
 
 Amanuel -
-Holly - Create api for requests table
+Holly - 
 Deep -
-Sal - Redo request form to fix errors
+Sal -
 Tony -
 Ben -
 Jose -

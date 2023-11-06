@@ -84,4 +84,24 @@ class Favorites(Base):
     studyspot_name = Column(String(254), ForeignKey('studyspots.studyspot_name'), nullable=False, primary_key=True)
     studyspot = relationship("Studyspots")
     user = relationship("Users")
+
+class Requests(Base):
+    __tablename__="requests"
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False, primary_key=True)
+    studyspot_name = Column(String(254), nullable=False, primary_key=True)
+    university_name = Column(String(200), ForeignKey('universities.university_name'))
+    request_is_indoor = Column(Boolean)
+    request_ada = Column(Boolean)
+    request_power_outlets = Column(Boolean)
+    request_easy_to_find = Column(Boolean)
+    request_image_url = Column(String(3000))
+    request_location = Column(String(3000))
+    request_noise_level = Column(Integer, nullable=False)
+    request_crowdedness_level = Column(Integer, nullable=False)
+    request_strong_wifi = Column(Boolean)
+    request_reason = Column(String(3000))
+
+    university = relationship("Universities")
+    user = relationship("Users")
+
     
