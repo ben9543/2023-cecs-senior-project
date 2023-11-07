@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 })
 export class SubmitRequestComponent {
   request !: FormGroup;
+
+  attributes = new FormControl('', Validators.required);
+  attributeList: string[] = ['WiFi', 'Power', 'ADA Accessible'];
 
   constructor(private router: Router, private formBuilder: FormBuilder) { }
 

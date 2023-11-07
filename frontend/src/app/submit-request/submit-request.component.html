@@ -7,6 +7,15 @@
       #formDirective="ngForm"
     >
     <mat-form-field>
+      <mat-label>Attributes</mat-label>
+      <mat-select [formControl]="attributes" multiple>
+        <mat-option *ngFor="let attribute of attributeList" [value]="attribute">{{attribute}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="attributes.hasError('reuired')">
+        Please select an option
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
         <mat-label>University</mat-label>
         <input
           matInput
