@@ -11,7 +11,7 @@ export class SubmitRequestComponent {
   request !: FormGroup;
 
   attributes = new FormControl('', Validators.required);
-  attributeList: string[] = ['WiFi', 'Power', 'ADA Accessible'];
+  attributeList: string[] = ['WiFi', 'Power', 'ADA Accessible', 'Indoor', 'Easy to find'];
 
   constructor(private router: Router, private formBuilder: FormBuilder) { }
 
