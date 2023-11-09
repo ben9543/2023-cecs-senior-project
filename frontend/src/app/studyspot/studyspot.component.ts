@@ -49,6 +49,7 @@ export class StudyspotComponent {
   }
 
   onCardClick(data: any) {
+    this.studyspotService.addStudySpotName(this.name);
     this.router.navigate(['/studyspot-view'], { queryParams: { name: data.name } });
   }
 

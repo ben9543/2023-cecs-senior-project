@@ -62,6 +62,10 @@ import { AdminHomepageComponent } from './admin-homepage/admin-homepage.componen
 import { AdminDecisionPageComponent } from './admin-decision-page/admin-decision-page.component';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { LandingAgeComponent } from './landing-age/landing-age.component';
+import { StudyspotService } from './studyspot.service';
+import { UserService } from './user.service';
+import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -132,7 +136,7 @@ import { LandingAgeComponent } from './landing-age/landing-age.component';
     MatCardModule,
     MatSlideToggleModule
   ],
-  providers: [],
+  providers: [StudyspotService, UserService, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

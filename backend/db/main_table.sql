@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Admins (
     admin_id INT NOT NULL, 
     admin_email VARCHAR(254),
     password VARCHAR(512),
-    UNIQUE (admin_email),
+    UNIQUE (admin_email)
 );
 
 CREATE TABLE IF NOT EXISTS Surveys (
@@ -71,6 +71,25 @@ CREATE TABLE IF NOT EXISTS Favorites (
     CONSTRAINT PK_fav PRIMARY KEY (user_id, studyspot_name), 
 	CONSTRAINT FK_review_studyspot FOREIGN KEY (studyspot_name) REFERENCES Studyspots(studyspot_name),
     CONSTRAINT FK_review_user FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE IF NOT EXISTS Requests (
+    user_id INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
+    university_name VARCHAR(200),
+    request_is_indoor BOOLEAN, 
+    request_ada BOOLEAN, /*ADA accommodation: TRUE, NO ADA: FALSE*/
+    request_power_outlets BOOLEAN,
+    request_easy_to_find BOOLEAN,
+    request_image_url VARCHAR(3000),
+    request_location VARCHAR(3000),
+    request_noise_level INT NOT NULL,
+    request_crowdedness_level INT NOT NULL,
+    request_strong_wifi BOOLEAN,
+    request_reason VARCHAR(3000),
+    CONSTRAINT PK_request PRIMARY KEY (user_id, studyspot_name), 
+    CONSTRAINT FK_request_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    CONSTRAINT FK_request_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
 );
 
 -- Default Values

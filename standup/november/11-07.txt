@@ -3,7 +3,7 @@ What did you do yesterday?
 Amanuel -
 Holly -
 Deep -
-Sal - 
+Sal - Fixed the submit request form
 Tony -
 Ben -
 Jose -
@@ -11,9 +11,9 @@ Jose -
 What will you do today?
 
 Amanuel -
-Holly - Creating Requests table
+Holly -
 Deep -
-Sal - Discussed assigned ticket and created branch
+Sal - Added the attribute multi select for study spot request
 Tony -
 Ben -
 Jose -

@@ -60,4 +60,19 @@ export class StudyspotService {
     return this.http.post(addReview, requestPayload);
   }
 
+  // Function to add a unique study spot name to local storage
+  addStudySpotName(name: string): void {
+    const studySpots = this.getStudySpots();
+    if (!studySpots.includes(name)) {
+      studySpots.push(name);
+      localStorage.setItem('studySpots', JSON.stringify(studySpots));
+    }
+  }
+
+  // Function to retrieve the list of study spot names from local storage
+  getStudySpots(): string[] {
+    const studySpotsString = localStorage.getItem('studySpots');
+    return studySpotsString ? JSON.parse(studySpotsString) : [];
+  }
+
 }

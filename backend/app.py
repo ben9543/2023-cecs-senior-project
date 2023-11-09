@@ -6,9 +6,11 @@ from auth.auth import Auth
 from admins.admins import Admin_API
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
+from surveys.surveys import Surveys_API
 from universities.universities import Universities_API
 from favourite.favourite import Favourites_API
 from reviews.reviews import Reviews_API
+from requests.requests import Requests_API
 from aws.s3 import S3_API
 
 # Create a SQLAlchemy engine and connect to your database
@@ -45,6 +47,12 @@ universities_instance = Universities_API(db)
 
 # Create Favourite API
 favourite_instance = Favourites_API(db)
+
+# Create Survey API
+survey_instance = Surveys_API(db)
+
+# Create Request instance
+request_instance = Requests_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -596,8 +604,62 @@ def get_favorites_by_user(user_id):
         else:
             return jsonify({"error": "User has no favorites"}), 404
     else:
-        return jsonify({"error": "User not found"}), 404 
+        return jsonify({"error": "User not found"}), 404
 
+'''
+SURVEY API
+'''
+@app.route('/api/users/surveys/get_checked_in_studyspots/<int:user_id>', methods=['GET'])
+def get_checked_in_studyspots(user_id):
+    checked_in_spots = survey_instance.get_checked_in_studyspots(user_id)
+    if checked_in_spots:
+        return jsonify({'message': 'Success', 'data': checked_in_spots}), 200
+    else:
+        return jsonify({'message': 'No checked-in study spots found for this user'}), 404
+
+@app.route('/api/users/surveys/check_in', methods=['POST'])
+def check_in():
+    data = request.get_json()
+    studyspot_name = data.get('studyspot_name')
+    user_id = data.get('user_id')
+    crowdedness = data.get('survey_crowdednes_level')
+    noise_level = data.get('survey_noise_level')
+    wifi = data.get('survey_wifi')
+
+    if not all([studyspot_name, user_id, crowdedness, noise_level, wifi]):
+        return jsonify({'message': 'Invalid parameters'}), 400
+
+    if survey_instance.create_check_in(studyspot_name, user_id, crowdedness, noise_level, wifi):
+        return jsonify({'message': 'Check-in created successfully'}), 201
+    else:
+        return jsonify({'message': 'Failed to create a check-in'}), 500
+
+@app.route('/api/requests/create_request',methods=['PUT'])
+def create_request():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    studyspot_name = data.get('studyspot_name')
+    if request_instance.check_duplicate(user_id,studyspot_name):
+        return jsonify({"message":"Error: The request has already been submitted"}),409
+
+    university_name = data.get('university_name')
+    is_indoor = data.get('is_indoor')
+    ada = data.get('ada')
+    power_outlets = data.get('power_outlets')
+    easy_to_find = data.get('easy_to_find')
+    image_url = data.get('image_url')
+    location = data.get('location')
+    noise_level = data.get('noise_level')
+    crowdedness_level = data.get('crowdedness_level')
+    strong_wifi = data.get('strong_wifi')
+    reason = data.get('reason')
+    new_request = {"user_id":user_id,"studyspot_name":studyspot_name,"university_name":university_name,
+                   "is_indoor":is_indoor,"ada":ada,"power_outlets":power_outlets,"easy_to_find":easy_to_find,
+                   "image_url":image_url,"location":location,"noise_level":noise_level,"crowdedness_level":crowdedness_level,
+                   "strong_wifi":strong_wifi,"reason":reason} 
+    request_instance.add_requests(new_request)
+
+    return jsonify({'message': 'Requests has been submitted successfully!'}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

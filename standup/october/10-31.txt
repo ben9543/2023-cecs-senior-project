@@ -3,7 +3,7 @@ What did you do yesterday?
 Amanuel -
 Holly -
 Deep -
-Sal - 
+Sal - created branch and discussed deliverables for study spot request
 Tony -
 Ben -
 Jose -
@@ -11,9 +11,9 @@ Jose -
 What will you do today?
 
 Amanuel -
-Holly - Creating Requests table
+Holly -
 Deep -
-Sal - Discussed assigned ticket and created branch
+Sal - create study spot request form
 Tony -
 Ben -
 Jose -

@@ -1,7 +1,7 @@
 What did you do yesterday?
 
 Amanuel -
-Holly -
+Holly - Created api for requests table
 Deep -
 Sal - 
 Tony -
@@ -11,9 +11,9 @@ Jose -
 What will you do today?
 
 Amanuel -
-Holly - Creating Requests table
+Holly - 
 Deep -
-Sal - Discussed assigned ticket and created branch
+Sal -
 Tony -
 Ben -
 Jose -
