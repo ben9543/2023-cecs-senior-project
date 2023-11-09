@@ -136,10 +136,11 @@ def admin_login():
     return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
 
 """ Admin Routes """
+REQUEST_STATUS = ['in_progress', 'rejected', 'approved']
 @app.route('/api/admin/approve', methods=['POST'])
 def admin_approve():
     studyspot_name = request.json.get('studyspot_name')
-    admins_instance.approve_studyspot(studyspot_name)
+    admins_instance.approve_request(studyspot_name)
     pass
 
 
@@ -634,7 +635,7 @@ def check_in():
     else:
         return jsonify({'message': 'Failed to create a check-in'}), 500
 
-@app.route('/api/requests/create_request',methods=['PUT'])
+@app.route('/api/requests/create_request', methods=['POST'])
 def create_request():
     data = request.get_json()
     user_id = data.get('user_id')
@@ -656,7 +657,7 @@ def create_request():
     new_request = {"user_id":user_id,"studyspot_name":studyspot_name,"university_name":university_name,
                    "is_indoor":is_indoor,"ada":ada,"power_outlets":power_outlets,"easy_to_find":easy_to_find,
                    "image_url":image_url,"location":location,"noise_level":noise_level,"crowdedness_level":crowdedness_level,
-                   "strong_wifi":strong_wifi,"reason":reason} 
+                   "strong_wifi":strong_wifi,"reason":reason, "request_status":REQUEST_STATUS[0]} 
     request_instance.add_requests(new_request)
 
     return jsonify({'message': 'Requests has been submitted successfully!'}), 200

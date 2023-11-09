@@ -1,11 +1,20 @@
 from db.db_connection_test import Requests
 # https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/#installation
 
-
+REQUEST_STATUS = ['in_progress', 'rejected', 'approved']
 # API for CRUD Operations
 class Requests_API():
     def __init__(self, db):
         self.db = db
+
+    def update_requests(self, studyspot_name, request_status):
+        if request_status is None or request_status not in REQUEST_STATUS:
+            return False
+        request = self.db.session.query(Requests).filter_by(studyspot_name=studyspot_name).first()
+        if not request:
+            return False
+        # Create studyspot with the information within the request
+        return True
 
     def add_requests(self,data):
         try:
@@ -35,7 +44,3 @@ class Requests_API():
             return True
         else:
             return False
-
-            
-
-

@@ -1,3 +1,5 @@
+CREATE TYPE request_status_enum AS ENUM ('in_progress', 'rejected', 'approved');
+
 CREATE TABLE IF NOT EXISTS Universities (
     university_name VARCHAR(200),
     university_state VARCHAR(2),
@@ -87,6 +89,7 @@ CREATE TABLE IF NOT EXISTS Requests (
     request_crowdedness_level INT NOT NULL,
     request_strong_wifi BOOLEAN,
     request_reason VARCHAR(3000),
+    request_status request_stage,
     CONSTRAINT PK_request PRIMARY KEY (user_id, studyspot_name), 
     CONSTRAINT FK_request_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
     CONSTRAINT FK_request_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)

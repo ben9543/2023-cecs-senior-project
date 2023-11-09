@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, ForeignKey, UniqueConstraint
+from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, ForeignKey, Enum, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.dialects.postgresql import TIMESTAMP
@@ -104,6 +104,7 @@ class Requests(Base):
     request_crowdedness_level = Column(Integer, nullable=False)
     request_strong_wifi = Column(Boolean)
     request_reason = Column(String(3000))
+    request_status = Column(Enum('in_progress', 'rejected', 'approved'))
 
     university = relationship("Universities")
     user = relationship("Users")
