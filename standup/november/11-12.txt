@@ -1,7 +1,7 @@
 What did you do yesterday?
 
 Amanuel -
-Holly - Created reported studyspot table
+Holly - Created reported studyspot api
 Deep -
 Sal - 
 Tony -
@@ -11,7 +11,7 @@ Jose -
 What will you do today?
 
 Amanuel -
-Holly - Start working on reported studyspot api
+Holly - 
 Deep -
 Sal -
 Tony -
