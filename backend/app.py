@@ -143,6 +143,13 @@ def admin_login():
 """ Admin Routes """
 @app.route('/api/admin/approve', methods=['POST'])
 def admin_approve():
+
+    # 1. Modify request_is_approved
+    # 2. Create a new studyspot using the Request
+
+    # 1) Find the request by studyspot name
+    # 2) Modify the field
+    # 3) Use all of the information to create a new studyspot
     pass
 
 
