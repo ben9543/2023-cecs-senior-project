@@ -1,1 +1,69 @@
-<p>submit-request works!</p>
+<!-- Make sure to add attribute multiple select for study spots: ada, power, ect. -->
+<div class="container_form">
+    <h2>Submit Request</h2>
+    <form
+      [formGroup]="request"
+      (ngSubmit)="onSubmit()"
+      #formDirective="ngForm"
+    >
+    <mat-form-field>
+      <mat-label>Attributes</mat-label>
+      <mat-select [formControl]="attributes" multiple>
+        <mat-option *ngFor="let attribute of attributeList" [value]="attribute">{{attribute}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="attributes.hasError('reuired')">
+        Please select an option
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>University</mat-label>
+        <input
+          matInput
+          formControlName="university"
+          placeholder="University"
+          type="text"
+        />
+        <mat-error
+          >Please enter a university</mat-error
+        >
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Location</mat-label>
+        <input
+          matInput
+          formControlName="location"
+          placeholder="Location"
+          type="text"
+        />
+        <mat-error
+          >Please enter a location</mat-error
+        >
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Comments</mat-label>
+        <textarea
+        matInput
+          formControlName="comments"
+          placeholder="Comments">
+        </textarea>
+    </mat-form-field>
+    <div class = "row">
+        <div class = 'btn-primary'>
+            <button
+                mat-raised-button
+                type="submit"
+                color="primary"
+                style="background-color: rgb(6, 59, 61);"
+            >
+            Submit
+            </button>
+        </div>
+        <div class = 'btn-primary'>
+            <button
+            mat-raised-button
+            routerLink="/home"
+            color="primary"
+            style="background-color: rgb(6, 59, 61);"
+          >
+          Cancel
+          </button>
