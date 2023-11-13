@@ -109,4 +109,14 @@ class Requests(Base):
     university = relationship("Universities")
     user = relationship("Users")
 
+class Reported_studyspots(Base):
+    __tablename__ = 'reported_studyspots'
+    
+    report_id = Column(Integer,nullable=False,primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    studyspot_name = Column(String(254), ForeignKey('studyspots.studyspot_name'), nullable=False)
+    report_comment = Column(String(3000),nullable=False)
+    studyspot = relationship("Studyspots")
+    user = relationship("Users")
+
     

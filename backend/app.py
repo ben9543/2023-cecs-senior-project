@@ -11,6 +11,7 @@ from universities.universities import Universities_API
 from favourite.favourite import Favourites_API
 from reviews.reviews import Reviews_API
 from requests.requests import Requests_API
+from reports.reported_studyspot import Reported_studyspots_API
 from aws.s3 import S3_API
 
 # Create a SQLAlchemy engine and connect to your database
@@ -53,6 +54,9 @@ survey_instance = Surveys_API(db)
 
 # Create Request instance
 request_instance = Requests_API(db)
+
+# Create Reported studyspots instance
+reports_studyspots_instance = Reported_studyspots_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -635,7 +639,9 @@ def check_in():
     else:
         return jsonify({'message': 'Failed to create a check-in'}), 500
 
-@app.route('/api/requests/create_request', methods=['POST'])
+    
+'''Request API'''
+@app.route('/api/requests/create_request',methods=['PUT'])
 def create_request():
     data = request.get_json()
     user_id = data.get('user_id')
@@ -661,6 +667,31 @@ def create_request():
     request_instance.add_requests(new_request)
 
     return jsonify({'message': 'Requests has been submitted successfully!'}), 200
+
+@app.route('/api/reports/create-studyspot-report',methods=['PUT'])
+def create_report():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        studyspot_name = data.get('studyspot_name')
+        if reports_studyspots_instance.check_duplicate(user_id,studyspot_name):
+            return jsonify({'message': 'Report has already been submitted successfully!'}), 200
+        
+        report_comment = data.get('comment')
+        report_id = reports_studyspots_instance.count_report()+1
+        reports_studyspots_instance.add_report(report_id,user_id,studyspot_name,report_comment)
+        
+        return jsonify({'message': 'Report has been submitted successfully!'}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/admin/reported-studyspots', methods=['GET'])
+def admin_get_reported_studyspot_list():
+    data = reports_studyspots_instance.get_reported_list()
+    if data:
+        return jsonify({"message": "ok", "data": data}),200
+    else:
+        return jsonify({"message":"Reports not found"}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

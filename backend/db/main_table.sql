@@ -95,6 +95,16 @@ CREATE TABLE IF NOT EXISTS Requests (
     CONSTRAINT FK_request_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
 );
 
+CREATE TABLE IF NOT EXISTS Reported_studyspots(
+    report_id INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
+    user_id INT NOT NULL,
+    report_comment VARCHAR(3000) NOT NULL,
+    UNIQUE(report_id),
+    CONSTRAINT FK_report_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    CONSTRAINT FK_report_studyspot FOREIGN KEY(studyspot_name) REFERENCES Studyspots(studyspot_name)
+);
+
 -- Default Values
 INSERT INTO Universities(university_name, university_state, university_zip)
 VALUES('CSULB', 'CA', 90840);

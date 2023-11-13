@@ -1,0 +1,161 @@
+form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 0 auto;
+  }
+  
+  .container_form {
+    background-color: cadetblue;
+    width: 500px;
+    height: 350px;
+    margin: 0 auto;
+    margin-top: -60px;
+    border-radius: 40px;
+    justify-content: space-between;
+    box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.9);
+  }
+ 
+  .middle {
+    display: flex;
+    margin: 0 auto;
+    margin-top: -40px;
+  }
+  
+  .middle img {
+    height: 400px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-size: 24px;
+    color: black;
+    padding-top: 20px;
+    font-family: "Lucida Console", Courier, monospace;
+  }
+  
+  mat-table {
+    border-collapse: separate;
+    border: 5px ;
+    border-radius: 40px;
+    background-color: transparent;
+  }
+  
+  mat-cell {
+    color: #fff;
+  }
+  
+  mat-header-cell,
+  mat-label{
+      color: cadetblue;
+  }
+  
+  button[type="submit"] {
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    align-self: center;
+    background-color: rgb(6, 59, 61);
+  }
+
+  .forgot-password-button{
+    background-color: rgb(6, 59, 61);
+  }
+
+  .signin{
+    flex-basis: 20%;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .btn-primary {
+    margin-top: -2%;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .btn-secondary {
+    margin-top: -5%;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .forgot-password{
+    margin: 0 auto;
+    color: blue;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  
+  /* For screens smaller than 600px */
+@media (max-width: 600px) {
+  form {
+    width: 90%;
+  }
+
+  .container_form {
+    width: 90%;
+    height: max-content;
+    margin-top: -20px;
+  }
+
+  .middle {
+    margin-top: 20px;
+  }
+
+  .middle img {
+    height: 250px;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  mat-table {
+    border-radius: 20px;
+  }
+
+  button[type="submit"] {
+    margin-top: 20px;
+  }
+
+  .btn-primary {
+    margin-top: -10px;
+  }
+
+  .btn-secondary {
+    margin-top: -20px;
+  }
+
+  .forgot-password {
+    margin-top: 20px;
+  }
+}

@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly - Created reported studyspot table
+Deep -
+Sal - 
+Tony -
+Ben -
+Jose -
+
+What will you do today?
+
+Amanuel -
+Holly - Start working on reported studyspot api
+Deep -
+Sal -
+Tony -
+Ben -
+Jose -
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben -
+Jose -
