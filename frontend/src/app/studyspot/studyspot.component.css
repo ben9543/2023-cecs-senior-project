@@ -1,6 +1,8 @@
 .card-container {
     position: relative;
     width: 300px;
+    box-shadow:rgba(0,0,0,0.8) 0 0px 10px,rgba(199, 59, 59, 0.65) 0 0 10px 1px,inset rgba(59, 85, 213, 0.15) 0 1px 0,inset rgba(0,0,0,0.25) 5px 5px 5px;
+    border: 5px rgb(6, 59, 61) dashed;
   }
   
   .card-image {
@@ -80,8 +82,8 @@
     }
 
     .card-image img {
-      width: 400px;
-      height: 300px;
+      width: 350px;
+      height: 280px;
       object-fit: cover;
     }
   
