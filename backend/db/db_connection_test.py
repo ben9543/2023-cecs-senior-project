@@ -28,7 +28,7 @@ class Studyspots(Base):
     studyspot_image_url = Column(String(3000))
     studyspot_location = Column(String(3000))
     studyspot_noise_level = Column(Integer)
-    studyspot_crowdedness_level = Column(Integer)
+    studspot_crowdedness_level = Column(Integer)
     studyspot_strong_wifi = Column(Boolean)
 
     university = relationship("Universities")
