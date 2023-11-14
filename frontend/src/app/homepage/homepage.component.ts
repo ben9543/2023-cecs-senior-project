@@ -43,7 +43,7 @@ private initializeComponent() {
       } else {
           if (this.filterCriteria === undefined) {
             this.spots = data.data;
-            console.log('Spots:', this.spots);
+            // console.log('Spots:', this.spots);
           } else {
             
             this.spots = data.data.filter((spot: any) => {
@@ -55,8 +55,8 @@ private initializeComponent() {
               // Check if the spot meets any of the selected criteria
               for (const key in flattenedData) {
                 if (flattenedData[key] !== null) {
-                  console.log("spot:", spot)
-                  console.log("Key Flattened :", key)
+                  // console.log("spot:", spot)
+                  // console.log("Key Flattened :", key)
                   if (spot[key] !== flattenedData[key]) {
                     return false; // Doesn't meet the criteria
                   }

@@ -461,6 +461,20 @@ def get_review_id(review_id):
     else:
         return jsonify({'message': 'Review not found'}), 404
 
+# Get Review by user_id
+@app.route('/api/review/user', methods=['GET'])
+def get_review_by_user_id():
+    reviews = None
+    user_id = request.args.get("user_id")
+    reviews = reviews_instance.get_review_by_user_id(user_id)
+    if reviews:
+        return make_response(jsonify({
+                    'message': 'OK', 
+                    'data': reviews
+                }), 200)
+    else:
+        return jsonify({'message': 'Review not found'}), 404
+
 # Adding a new review 
 @app.route('/api/review/add-user', methods=['POST'])
 def add_new_user():

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { StudyspotService } from '../studyspot.service';
+import { PreviousReviews } from '../DTOs/previous-reviews.dto';
 
 @Component({
   selector: 'app-reviews',
@@ -6,14 +9,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./reviews.component.css']
 })
 export class ReviewsComponent {
-  spots: Spot = [
-    { name: "Horn Center", rating: "1", imageUrl: "assets/spots/Spot1.jpeg", userId: "John Smith", comment:"Horrible Place!"},
-    { name: "VEC Squad", rating: "2", imageUrl: "assets/spots/Spot1.jpeg", userId: "Karen White", comment:"giberish"}
-  ]
+  
+  userID: string = '';
+  spots!: Spot | [];
+  constructor(private authService: AuthService, private studySpotService: StudyspotService) {}
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.userData$.subscribe((userData) => {
+      this.userID = userData.user_id;
+      this.fetchReviewsByUserId(this.userID);
+    });
+  }
 
   selectedTabIndex: number = 0; // Initial selected tab index
   tabs: number = this.spots.length; // Replace with your tab data
@@ -36,6 +42,19 @@ export class ReviewsComponent {
       this.selectedTabIndex++;
     }
   }
+  
+  fetchReviewsByUserId(userId: string): void {
+    this.studySpotService.getReviewByUserId(userId).subscribe(
+      (response) => {
+        this.spots = response.data
+        this.tabs = this.spots.length
+      },
+      (error) => {
+        console.error('Error fetching reviews:', error);
+        // Handle error - Display an error message or take appropriate action
+      }
+    );
+  }
 }
 
-type Spot = Array<{ name: string; rating: string; imageUrl: string; userId: string; comment: string; }>;
+type Spot = Array<PreviousReviews>;

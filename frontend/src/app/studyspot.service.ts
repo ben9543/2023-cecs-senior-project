@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { API_URL } from './config';
 import { Observable } from 'rxjs';
 import { CreateRequestDTO } from '../app/DTOs/create-request.dto'
+import { PreviousReviews } from './DTOs/previous-reviews.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,12 @@ export class StudyspotService {
     // Include both the studyspot name and username in the request body
     const requestPayload = { user_id: user_id, studyspot_name: studyspot_name, review_comments: review_comments, review_rate: review_rate };
     return this.http.post(addReview, requestPayload);
+  }
+
+  getReviewByUserId(userId: string): Observable<any> {
+    const getReviews = `${this.apiUrl}/review/user`; 
+
+    return this.http.get<Array<PreviousReviews>>(getReviews, { params: { user_id: userId } });
   }
 
   // Function to add a unique study spot name to local storage
