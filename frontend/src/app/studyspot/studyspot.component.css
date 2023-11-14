@@ -78,6 +78,12 @@
     .card-image {
       height: 90%;
     }
+
+    .card-image img {
+      width: 400px;
+      height: 300px;
+      object-fit: cover;
+    }
   
     .card-name {
       width: 100%;

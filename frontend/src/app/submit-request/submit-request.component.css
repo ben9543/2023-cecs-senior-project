@@ -45,7 +45,8 @@ form {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 40px;
-    font-size: 24px;
+    font-size: 32px;
+    font-weight: bolder;
     color: black;
     padding-top: 20px;
     font-family: "Lucida Console", Courier, monospace;
@@ -86,7 +87,7 @@ form {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 5%;
+    margin-top: -15%;
   }
   
   .btn-primary {
@@ -118,6 +119,14 @@ form {
     width: 80%;
   }
   
+  .survey{
+    width: 310px;
+  }
+
+  #uploader {
+    width: 325px;
+  }
+
   .container_form {
     width: 90%;
     height: auto;
@@ -125,7 +134,7 @@ form {
   }
   
   h2 {
-    font-size: 20px;
+    font-size: 26px;
     padding-top: 10px;
     margin-bottom: 30px;
   }
