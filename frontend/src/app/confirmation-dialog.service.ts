@@ -51,4 +51,13 @@ export class ConfirmationDialogService {
       },
     });
   }
+
+  openRequestSubmittedConfirmation(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Request Submitted',
+        dialogMessage: 'Thank you for submitting the request. We will take a look and get back to you with status update.',
+      },
+    });
+  }
 }

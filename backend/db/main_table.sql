@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS Surveys (
     survey_crowdednes_level INT NOT NULL, 
     survey_noise_level INT NOT NULL,
     survey_wifi INT NOT NULL,
-    survey created_at timestamptz NOT NULL DEFAULT now()
+    survey_created_at timestamptz NOT NULL DEFAULT now()
     UNIQUE (survey_id),
 	CONSTRAINT FK_survey_studyspot FOREIGN KEY (studyspot_name) REFERENCES Studyspots(studyspot_name),
     CONSTRAINT FK_survey_user FOREIGN KEY (user_id) REFERENCES Users(user_id)

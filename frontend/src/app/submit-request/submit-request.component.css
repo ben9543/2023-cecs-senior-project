@@ -18,6 +18,29 @@ form {
     box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.9);
   }
   
+  .survey{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 0 auto;
+    box-shadow:rgba(0,0,0,0.8) 0 0px 10px,rgba(0,0,0,0.65) 0 0 10px 1px,inset rgba(255,255,255,0.15) 0 1px 0,inset rgba(0,0,0,0.25) 0 -1px 0;
+    padding-top: 5%;
+    padding-left: 2%;
+  }
+
+  label{
+    margin-top: 5%;
+  }
+  #uploader {
+    margin-top: 2%;
+    margin-bottom: 5%;
+    background-color: cadetblue;
+    top:40%;
+    width:400px;
+    box-shadow:rgba(0,0,0,0.8) 0 0px 10px,rgba(0,0,0,0.65) 0 0 10px 1px,inset rgba(255,255,255,0.15) 0 1px 0,inset rgba(0,0,0,0.25) 0 -1px 0;
+    border-radius:5px;
+  }
+
   h2 {
     text-align: center;
     margin-top: 20px;

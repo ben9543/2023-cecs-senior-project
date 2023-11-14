@@ -126,18 +126,11 @@ def admin_login():
     password = request.json.get('password')
     admin_user = admins_instance.find_user_by_email(email)
     if admin_user:
-        stored_hashed_password = admin_user.password.encode('utf-8')
-        password_check = bcrypt.check_password_hash(stored_hashed_password, password)
-        if password_check:
-            token = auth_instance.generate_jwt(email)
-            if token:
-                #return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-                return jsonify({'token': token, 'authenticated': True}), 200
-            else:
-                return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
+        stored_password = admin_user.password
+        if stored_password == password:
+            return jsonify({'message': "Authorized", 'authorized': True}), 200
         else:
-            return jsonify({'message': 'Invalid password', 'authenticated': False}), 401
-                        # return jsonify({'token': token, 'authenticated': True}), 200 #for windows user
+            return jsonify({'message': 'Invalid password', 'authorized': False}), 401
     return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
 
 """ Admin Routes """

@@ -17,7 +17,7 @@ export class SearchFilterComponent {
       studyspot_is_indoor: [''],
       filters: this.formBuilder.group({
         studyspot_noise_level: [],
-        study_spot_crowdedness_level: [],
+        studspot_crowdedness_level: [],
         amenities: this.formBuilder.group({
           studyspot_power_outlets: [],
           studyspot_strong_wifi: [],

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -16,7 +17,7 @@ export class AdminLoginComponent {
   errorMessage: string = '';
   
   constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient,
-     private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar ) { }
+     private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar, private adminService: AdminService ) { }
 
   ngOnInit(): void {
     this.login = this.formBuilder.group({
@@ -30,23 +31,11 @@ export class AdminLoginComponent {
     if (this.login.valid) {
       const { email, password } = this.login.value;
 
-      this.userService.login(email, password).subscribe(
+      this.adminService.login(email, password).subscribe(
         (response: any) => {
-          localStorage.setItem('access_token', response.token);
-
-          // Fetch the user data based on the email from UserService
-          this.userService.getUserByEmail(email).subscribe(
-            (userData) => {
-              const user = userData;
-              this.authService.setUserData(user); // Set userData
-            },
-            (userError) => {
-              console.error('Error fetching user data:', userError);
-            }
-          );
-
+          // localStorage.setItem('access_token', response.token);
           // Navigate to home
-          this.router.navigate(['/home']);
+          this.router.navigate(['/admin-home']);
         },
         (error) => {
           if (error.status === 401) {

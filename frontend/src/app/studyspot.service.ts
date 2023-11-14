@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from './config';
 import { Observable } from 'rxjs';
+import { CreateRequestDTO } from '../app/DTOs/create-request.dto'
 
 @Injectable({
   providedIn: 'root'
@@ -75,4 +76,8 @@ export class StudyspotService {
     return studySpotsString ? JSON.parse(studySpotsString) : [];
   }
 
+  createRequest(requestData: CreateRequestDTO): Observable<any> {
+    const requestApi = `${this.apiUrl}/requests/create_request`;
+    return this.http.put(requestApi, requestData);
+  }
 }

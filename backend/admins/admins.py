@@ -17,7 +17,7 @@ class Admin_API():
     
     def find_user_by_email(self, email):
         # Check which user has the specific email
-        admin_user_with_target_email = [admin_user for admin_user in self.get_admin_users() if admin_user.admin_user_email == email]
+        admin_user_with_target_email = [admin_user for admin_user in self.get_admin_users() if admin_user.admin_email == email]
                 
         if admin_user_with_target_email:
             return admin_user_with_target_email[0]
