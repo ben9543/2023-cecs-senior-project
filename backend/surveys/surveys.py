@@ -2,6 +2,7 @@
 # https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/#installation
 from db.db_connection_test import Surveys
 from sqlalchemy.exc import SQLAlchemyError
+from datetime import datetime
 
 class Surveys_API():
 
@@ -49,6 +50,8 @@ class Surveys_API():
             else:
                 survey_id += 1
             
+            created_at = datetime.now()
+            
             new_check_in = Surveys(
                 survey_id=survey_id,
                 studyspot_name=studyspot_name,
@@ -56,6 +59,7 @@ class Surveys_API():
                 survey_crowdednes_level=crowdedness,
                 survey_noise_level=noise_level,
                 survey_wifi=wifi,
+                survey_created_at=created_at
             )
 
             self.db.add(new_check_in)

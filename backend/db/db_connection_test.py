@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, ForeignKey, UniqueConstraint
+from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, ForeignKey, UniqueConstraint, DateTime
+from datetime import datetime
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
 
@@ -61,6 +62,7 @@ class Surveys(Base):
     survey_crowdednes_level = Column(Integer, nullable=False)
     survey_noise_level = Column(Integer, nullable=False)
     survey_wifi = Column(Integer, nullable=False)
+    survey_created_at = Column(DateTime, default=datetime.utcnow)
 
     studyspot = relationship("Studyspots")
     user = relationship("Users")
