@@ -69,3 +69,24 @@ class Surveys_API():
         except SQLAlchemyError as e:
             print("Error creating a new check-in:", e)
             return False
+    
+    def get_latest_survey_for_studyspot(self, studyspot_name):
+        try:
+            latest_survey = (self.db.query(Surveys).filter(Surveys.studyspot_name == studyspot_name).order_by(Surveys.survey_created_at.desc()).first())
+
+            if latest_survey:
+                return {
+                    'survey_id': latest_survey.survey_id,
+                    'studyspot_name': latest_survey.studyspot_name,
+                    'user_id': latest_survey.user_id,
+                    'survey_crowdedness_level': latest_survey.survey_crowdednes_level,
+                    'survey_noise_level': latest_survey.survey_noise_level,
+                    'survey_wifi': latest_survey.survey_wifi,
+                    'survey_created_at': latest_survey.survey_created_at.strftime("%Y-%m-%d %H:%M:%S")
+                }
+            else:
+                return None
+
+        except SQLAlchemyError as e:
+            print("Error retrieving latest survey for studyspot:", e)
+            return None
