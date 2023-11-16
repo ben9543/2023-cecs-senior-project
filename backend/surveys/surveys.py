@@ -59,20 +59,31 @@ class Surveys_API():
                 survey_crowdednes_level=crowdedness,
                 survey_noise_level=noise_level,
                 survey_wifi=wifi,
-                survey_created_at=created_at
+                survey_created_at=created_at,
+                checked_out = False
             )
 
-            self.db.add(new_check_in)
-            self.db.commit()
+            self.db.session.add(new_check_in)
+            self.db.session.commit()
             return True
 
         except SQLAlchemyError as e:
             print("Error creating a new check-in:", e)
             return False
     
+    def checkout_from_studyspot(self, survey_id):
+        survey = self.db.session.query(Surveys).filter_by(survey_id = survey_id).first()
+        try:
+            survey.checked_out = True
+            self.db.session.commit()
+            return True
+        except SQLAlchemyError as e:
+            print("Error creating a new check-in:", e)
+            return False
+
     def get_latest_survey_for_studyspot(self, studyspot_name):
         try:
-            latest_survey = (self.db.query(Surveys).filter(Surveys.studyspot_name == studyspot_name).order_by(Surveys.survey_created_at.desc()).first())
+            latest_survey = (self.db.session.query(Surveys).filter(Surveys.studyspot_name == studyspot_name).order_by(Surveys.survey_created_at.desc()).first())
 
             if latest_survey:
                 return {
@@ -82,7 +93,8 @@ class Surveys_API():
                     'survey_crowdedness_level': latest_survey.survey_crowdednes_level,
                     'survey_noise_level': latest_survey.survey_noise_level,
                     'survey_wifi': latest_survey.survey_wifi,
-                    'survey_created_at': latest_survey.survey_created_at.strftime("%Y-%m-%d %H:%M:%S")
+                    'survey_created_at': latest_survey.survey_created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                    'checked_out': latest_survey.checked_out
                 }
             else:
                 return None

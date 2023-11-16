@@ -4,6 +4,7 @@ import { API_URL } from './config';
 import { Observable } from 'rxjs';
 import { CreateRequestDTO } from '../app/DTOs/create-request.dto'
 import { PreviousReviews } from './DTOs/previous-reviews.dto';
+import { CreateCheckIn } from './DTOs/create-checkin.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -86,5 +87,20 @@ export class StudyspotService {
   createRequest(requestData: CreateRequestDTO): Observable<any> {
     const requestApi = `${this.apiUrl}/requests/create_request`;
     return this.http.put(requestApi, requestData);
+  }
+
+  checkInToStudySpot(checkInData: CreateCheckIn): Observable<any>{
+    const requestApi = `${this.apiUrl}/users/surveys/check_in`;
+    return this.http.post(requestApi, checkInData);
+  }
+
+  getLatestcheckInToStudySpot(studyspot_name: string): Observable<any>{
+    const latestCheckin = `${this.apiUrl}/users/surveys/latestsurvey/${studyspot_name}`;
+    return this.http.get(latestCheckin);
+  }
+
+  checkOutFromStudyspot(survey_id: number): Observable<any>{
+    const latestCheckin = `${this.apiUrl}/users/surveys/checkout/${survey_id}`;
+    return this.http.put(latestCheckin, {});
   }
 }

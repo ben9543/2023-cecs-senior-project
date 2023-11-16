@@ -16,15 +16,16 @@
         <option value="easyToFind" *ngIf="studySpot.studyspot_easy_to_find">Easy to Find</option>
         </select>
     </div>
-    <p id="detail-p">Noise Level: {{ studySpot.studyspot_noise_level}}</p>
-    <p id="detail-p">Availablity: Available</p>
+    <p id="detail-p">Noise Level Out Of 5: {{ studySpot.studyspot_noise_level}}</p>
+    <p id="detail-p">Availablity: {{ isCheckedIn? "Occupied": "Available"}}</p>
   </div>
 
   <!-- Div for details 2 (right side) -->
   <div class="details-2">
     <div class="btnBegin">
         <div class="detail-item-button">
-            <button id = "special-button" (click)="openDialog()">Check-In</button>
+          <button *ngIf="isSpotAvailable" id = "special-button" (click)="openDialog()">Check-In</button>
+          <button *ngIf="!isSpotAvailable" id = "special-button" (click)="performCheckOut()">Check-Out</button>
           </div>
           <div class="detail-item-button">
             <button id = "special-button" (click)="rateMe()">Rate Me</button>
@@ -32,7 +33,7 @@
     </div>
 
     <div class="detail-item">
-      <p id="detail-t">Traffic Status: {{ studySpot.studspot_crowdedness_level}}</p>
+      <p id="detail-t">Traffic Status Out Of 5: {{ studySpot.studspot_crowdedness_level}}</p>
     </div>
     <div class="user-reviews" >
         <div class="detail-item-review" *ngFor="let review of reviews">
@@ -74,15 +75,16 @@
         <option value="easyToFind" *ngIf="studySpot.studyspot_easy_to_find">Easy to Find</option>
         </select>
     </div>
-    <p id="detail-p">Noise Level: {{ studySpot.studyspot_noise_level}}</p>
-    <p id="detail-p">Availablity: Available</p>
+    <p id="detail-p">Noise Level Out Of 5: {{ studySpot.studyspot_noise_level}}</p>
+    <p id="detail-p">Availablity: {{ isCheckedIn? "Occupied": "Available"}}</p>
   </div>
 
   <!-- Div for details 2 (right side) -->
   <div class="box">
     <div class="btnBegin">
         <div class="detail-item-button">
-            <button id = "special-button" (click)="openDialog()">Check-In</button>
+          <button *ngIf="isSpotAvailable" id = "special-button" (click)="openDialog()">Check-In</button>
+          <button *ngIf="!isSpotAvailable" id = "special-button" (click)="performCheckOut()">Check-Out</button>
           </div>
           <div class="detail-item-button">
             <button id = "special-button" (click)="rateMe()">Rate Me</button>
@@ -90,7 +92,7 @@
     </div>
 
     <div class="detail-item">
-      <p id="detail-t">Traffic Status: {{ studySpot.studspot_crowdedness_level}}</p>
+      <p id="detail-t">Traffic Status Out Of 5: {{ studySpot.studspot_crowdedness_level}}</p>
     </div>
     <div class="user-reviews" >
         <div class="detail-item-review" *ngFor="let review of reviews">

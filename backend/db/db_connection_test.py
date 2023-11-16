@@ -63,6 +63,7 @@ class Surveys(Base):
     survey_noise_level = Column(Integer, nullable=False)
     survey_wifi = Column(Integer, nullable=False)
     survey_created_at = Column(DateTime, default=datetime.utcnow)
+    checked_out = Column(Boolean)
 
     studyspot = relationship("Studyspots")
     user = relationship("Users")

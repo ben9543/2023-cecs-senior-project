@@ -637,6 +637,7 @@ def get_checked_in_studyspots(user_id):
 @app.route('/api/users/surveys/check_in', methods=['POST'])
 def check_in():
     data = request.get_json()
+    print(request.get_json())
     studyspot_name = data.get('studyspot_name')
     user_id = data.get('user_id')
     crowdedness = data.get('survey_crowdednes_level')
@@ -660,6 +661,19 @@ def get_latest_survey(studyspot_name):
     else:
         return jsonify({'message': 'No surveys found for the given study spot', 'data': None}), 404
 
+# Handle OPTIONS requests for /api/users/surveys/checkout/<int:survey_id>'
+@app.route('/api/users/surveys/checkout/', methods=['OPTIONS'])
+def handle_preflight_survey():
+    return '', 200
+
+@app.route('/api/users/surveys/checkout/<int:survey_id>', methods=['PUT'])
+def checkout_from_current_survey(survey_id):
+   
+    
+    if survey_instance.checkout_from_studyspot(survey_id):
+        return jsonify({'message': 'Successfully Checked-Out'}), 200
+    else:
+        return jsonify({'message': 'No surveys found for the given survey id'}), 404
     
 '''Request API'''
 @app.route('/api/requests/create_request',methods=['PUT'])
