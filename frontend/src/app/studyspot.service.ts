@@ -103,4 +103,9 @@ export class StudyspotService {
     const latestCheckin = `${this.apiUrl}/users/surveys/checkout/${survey_id}`;
     return this.http.put(latestCheckin, {});
   }
+
+  getCheckedInStudySpots(user_id: number): Observable<any> {
+    const prevCheckedInSpots = `${this.apiUrl}/users/surveys/get_checked_in_studyspots/${user_id}`;
+    return this.http.get(prevCheckedInSpots);
+  }
 }

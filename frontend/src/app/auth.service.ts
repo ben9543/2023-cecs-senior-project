@@ -22,14 +22,22 @@ export class AuthService {
     return this.userData$;
   }
 
+  getUserName(): string{
+    return localStorage.getItem('user_name') || '';
+  }
+
+  getUserID(): string{
+    return localStorage.getItem('user_id') || '';
+  }
+
   logout(): void {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('user_name');
     this.loggedInUsernameSubject.next(null);
   }
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    console.log("Token-->>", token)
     return !!token;
   }
 }

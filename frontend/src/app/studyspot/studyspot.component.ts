@@ -31,6 +31,7 @@ export class StudyspotComponent {
     this.studyspotService.getStudyspotByNameWithReviews(this.name).subscribe(
       (data: any) => {
         this.rating = data.data.studyspot_rating;
+        this.imageUrl = `https://studyspot-123.s3.us-west-1.amazonaws.com/${this.name}.jpg`;
       },
       error => {
         console.error('Error fetching StudySpot details:', error);
@@ -44,8 +45,6 @@ export class StudyspotComponent {
     this.studyspotService.getLikedState(this.name, this.userID).subscribe((response) => {
       this.liked = response.liked; 
     });
-
-    this.imageUrl = `https://studyspot-123.s3.us-west-1.amazonaws.com/${this.name}.jpg`
   }
 
   onCardClick(data: any) {

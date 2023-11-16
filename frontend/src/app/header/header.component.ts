@@ -25,9 +25,7 @@ export class HeaderComponent {
 
 
   ngOnInit(): void {
-    this.authService.userData$.subscribe((userData) => {
-      this.username = userData.user_name;
-    });
+    this.username = this.authService.getUserName();
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {

@@ -11,10 +11,11 @@ class Surveys_API():
         
     def get_checked_in_studyspots(self, user_id):
         try:
-            checked_in_spots = (
-                self.db.query(Surveys).filter(Surveys.user_id == user_id).all()
-            )
-
+            checked_in_spots = self.db.session.query(Surveys).filter_by(user_id = user_id).all()
+            
+            if checked_in_spots == None:
+                return []
+            
             checked_in_spots_list = []
             for spot in checked_in_spots:
                 checked_in_spots_list.append({
@@ -24,6 +25,8 @@ class Surveys_API():
                     'survey_crowdednes_level': spot.survey_crowdednes_level,
                     'survey_noise_level' : spot.survey_noise_level,
                     'survey_wifi': spot.survey_wifi,
+                    'survey_created_at': spot.survey_created_at,
+                    'checked_out': spot.checked_out
                 })
 
             return checked_in_spots_list

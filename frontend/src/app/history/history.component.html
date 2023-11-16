@@ -2,7 +2,9 @@
     <p>History</p>
 </div>
 <div class = "spots-container">
+    <div *ngIf="!isEmpty"><h3>You Have Not Checked-In To Any Spot Yet 🥲</h3></div>
     <div *ngFor="let spot of studySpots">
-        <app-studyspot name="{{ spot }}"></app-studyspot>
+        <h3>{{ spot.survey_created_at }}</h3>
+        <app-studyspot name="{{ spot.studyspot_name }}"></app-studyspot>
     </div>
 </div>

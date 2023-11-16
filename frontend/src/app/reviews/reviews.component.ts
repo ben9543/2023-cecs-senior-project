@@ -14,15 +14,16 @@ export class ReviewsComponent {
   spots!: Spot | [];
   constructor(private authService: AuthService, private studySpotService: StudyspotService) {}
 
+  selectedTabIndex: number = 0; 
+  tabs: number = 0;
+
   ngOnInit() {
     this.authService.userData$.subscribe((userData) => {
       this.userID = userData.user_id;
-      this.fetchReviewsByUserId(this.userID);
     });
+    this.fetchReviewsByUserId(this.userID);
   }
 
-  selectedTabIndex: number = 0; // Initial selected tab index
-  tabs: number = this.spots.length; // Replace with your tab data
 
   // Function to handle tab changes
   tabChanged(event: number): void {
@@ -51,7 +52,6 @@ export class ReviewsComponent {
       },
       (error) => {
         console.error('Error fetching reviews:', error);
-        // Handle error - Display an error message or take appropriate action
       }
     );
   }

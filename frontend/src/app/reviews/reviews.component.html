@@ -1,28 +1,26 @@
-<div class="main-container">
-    <div class="label-container"> 
-        <h1 class="label">Previous Reviews</h1>
-    </div>
-
-    <div class="align-button">
-        <div>
-            <button (click)="selectPreviousTab()" [disabled]="selectedTabIndex === 0" class="previous">
-                <mat-icon>keyboard_arrow_left</mat-icon>
-            </button>
-        </div>
-    
-        <div class="spot-container">
-            <div class="spot">
-                <app-studyspot [name]="spots[selectedTabIndex].studyspot_name"></app-studyspot>
+<div class = "title">
+    <p>Previously Reviewed</p>
+</div>
+<div class="container">
+    <div class="container-objects">
+        <button (click)="selectPreviousTab()" [disabled]="selectedTabIndex === 0" class="previous">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+      
+        <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
+            <mat-tab *ngFor="let spot of spots">
+                <ng-template mat-tab-label class="name">
+                    {{ spot.studyspot_name }}
+                  </ng-template>
+                <app-studyspot [name]="spot.studyspot_name"></app-studyspot>
                 <div class="star-uc-container">
-                    <app-userrating userID="{{ spots[selectedTabIndex].user_id }}" rating="{{ spots[selectedTabIndex].review_rate }}" comment="{{ spots[selectedTabIndex].review_comments }}"></app-userrating>
+                    <app-userrating userID="{{ spot.user_id }}" rating="{{ spot.review_rate }}" comment="{{ spot.review_comments }}"></app-userrating>
                 </div>
-            </div>
-        </div>
-
-        <div>
-            <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spots.length - 1" class="next">
-                <mat-icon>keyboard_arrow_right</mat-icon>
-            </button>
-        </div>
+            </mat-tab>
+        </mat-tab-group>
+      
+        <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spots.length - 1" class="next">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
     </div>
 </div>
