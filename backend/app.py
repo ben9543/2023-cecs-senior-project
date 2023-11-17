@@ -11,6 +11,7 @@ from universities.universities import Universities_API
 from favourite.favourite import Favourites_API
 from reviews.reviews import Reviews_API
 from requests.requests import Requests_API
+from reports.reported_studyspot import Reported_studyspots_API
 from aws.s3 import S3_API
 
 # Create a SQLAlchemy engine and connect to your database
@@ -53,6 +54,9 @@ survey_instance = Surveys_API(db)
 
 # Create Request instance
 request_instance = Requests_API(db)
+
+# Create Reported studyspots instance
+reports_studyspots_instance = Reported_studyspots_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance)
@@ -122,23 +126,23 @@ def admin_login():
     password = request.json.get('password')
     admin_user = admins_instance.find_user_by_email(email)
     if admin_user:
-        stored_hashed_password = admin_user.password.encode('utf-8')
-        password_check = bcrypt.check_password_hash(stored_hashed_password, password)
-        if password_check:
-            token = auth_instance.generate_jwt(email)
-            if token:
-                #return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-                return jsonify({'token': token, 'authenticated': True}), 200
-            else:
-                return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
+        stored_password = admin_user.password
+        if stored_password == password:
+            return jsonify({'message': "Authorized", 'authorized': True}), 200
         else:
-            return jsonify({'message': 'Invalid password', 'authenticated': False}), 401
-                        # return jsonify({'token': token, 'authenticated': True}), 200 #for windows user
+            return jsonify({'message': 'Invalid password', 'authorized': False}), 401
     return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
 
 """ Admin Routes """
 @app.route('/api/admin/approve', methods=['POST'])
 def admin_approve():
+
+    # 1. Modify request_is_approved
+    # 2. Create a new studyspot using the Request
+
+    # 1) Find the request by studyspot name
+    # 2) Modify the field
+    # 3) Use all of the information to create a new studyspot
     pass
 
 
@@ -457,6 +461,20 @@ def get_review_id(review_id):
     else:
         return jsonify({'message': 'Review not found'}), 404
 
+# Get Review by user_id
+@app.route('/api/review/user', methods=['GET'])
+def get_review_by_user_id():
+    reviews = None
+    user_id = request.args.get("user_id")
+    reviews = reviews_instance.get_review_by_user_id(user_id)
+    if reviews:
+        return make_response(jsonify({
+                    'message': 'OK', 
+                    'data': reviews
+                }), 200)
+    else:
+        return jsonify({'message': 'Review not found'}), 404
+
 # Adding a new review 
 @app.route('/api/review/add-user', methods=['POST'])
 def add_new_user():
@@ -619,6 +637,7 @@ def get_checked_in_studyspots(user_id):
 @app.route('/api/users/surveys/check_in', methods=['POST'])
 def check_in():
     data = request.get_json()
+    print(request.get_json())
     studyspot_name = data.get('studyspot_name')
     user_id = data.get('user_id')
     crowdedness = data.get('survey_crowdednes_level')
@@ -633,6 +652,30 @@ def check_in():
     else:
         return jsonify({'message': 'Failed to create a check-in'}), 500
 
+@app.route('/api/users/surveys/latestsurvey/<string:studyspot_name>', methods=['GET'])
+def get_latest_survey(studyspot_name):
+    latest_survey = survey_instance.get_latest_survey_for_studyspot(studyspot_name)
+    
+    if latest_survey:
+        return jsonify({'message': 'Latest survey retrieved', 'data': latest_survey}), 200
+    else:
+        return jsonify({'message': 'No surveys found for the given study spot', 'data': None}), 404
+
+# Handle OPTIONS requests for /api/users/surveys/checkout/<int:survey_id>'
+@app.route('/api/users/surveys/checkout/', methods=['OPTIONS'])
+def handle_preflight_survey():
+    return '', 200
+
+@app.route('/api/users/surveys/checkout/<int:survey_id>', methods=['PUT'])
+def checkout_from_current_survey(survey_id):
+   
+    
+    if survey_instance.checkout_from_studyspot(survey_id):
+        return jsonify({'message': 'Successfully Checked-Out'}), 200
+    else:
+        return jsonify({'message': 'No surveys found for the given survey id'}), 404
+    
+'''Request API'''
 @app.route('/api/requests/create_request',methods=['PUT'])
 def create_request():
     data = request.get_json()
@@ -640,25 +683,33 @@ def create_request():
     studyspot_name = data.get('studyspot_name')
     if request_instance.check_duplicate(user_id,studyspot_name):
         return jsonify({"message":"Error: The request has already been submitted"}),409
-
-    university_name = data.get('university_name')
-    is_indoor = data.get('is_indoor')
-    ada = data.get('ada')
-    power_outlets = data.get('power_outlets')
-    easy_to_find = data.get('easy_to_find')
-    image_url = data.get('image_url')
-    location = data.get('location')
-    noise_level = data.get('noise_level')
-    crowdedness_level = data.get('crowdedness_level')
-    strong_wifi = data.get('strong_wifi')
-    reason = data.get('reason')
-    new_request = {"user_id":user_id,"studyspot_name":studyspot_name,"university_name":university_name,
-                   "is_indoor":is_indoor,"ada":ada,"power_outlets":power_outlets,"easy_to_find":easy_to_find,
-                   "image_url":image_url,"location":location,"noise_level":noise_level,"crowdedness_level":crowdedness_level,
-                   "strong_wifi":strong_wifi,"reason":reason} 
-    request_instance.add_requests(new_request)
-
+    request_instance.add_requests(data)
     return jsonify({'message': 'Requests has been submitted successfully!'}), 200
+
+@app.route('/api/reports/create-studyspot-report',methods=['PUT'])
+def create_report():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        studyspot_name = data.get('studyspot_name')
+        if reports_studyspots_instance.check_duplicate(user_id,studyspot_name):
+            return jsonify({'message': 'Report has already been submitted successfully!'}), 200
+        
+        report_comment = data.get('comment')
+        report_id = reports_studyspots_instance.count_report()+1
+        reports_studyspots_instance.add_report(report_id,user_id,studyspot_name,report_comment)
+        
+        return jsonify({'message': 'Report has been submitted successfully!'}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/admin/reported-studyspots', methods=['GET'])
+def admin_get_reported_studyspot_list():
+    data = reports_studyspots_instance.get_reported_list()
+    if data:
+        return jsonify({"message": "ok", "data": data}),200
+    else:
+        return jsonify({"message":"Reports not found"}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

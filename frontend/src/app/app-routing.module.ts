@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'submitrequest', component: SubmitRequestComponent, canActivate: [AuthGuard]},
   { path: 'signup', component: SignupComponent},
   { path: 'studyspot-view', component: StudyspotViewComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-  { path: 'reset-password', component: ResetPasswordComponent, canActivate: [AuthGuard]},
+  { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]},
   { path: 'rate-me', component: RateMeComponent, canActivate: [AuthGuard]},
   { path: 'adminonlylogin', component: AdminLoginComponent},

@@ -31,7 +31,7 @@ export class StudyspotComponent {
     this.studyspotService.getStudyspotByNameWithReviews(this.name).subscribe(
       (data: any) => {
         this.rating = data.data.studyspot_rating;
-        console.log("studyspot rating", this.rating);
+        this.imageUrl = `https://studyspot-123.s3.us-west-1.amazonaws.com/${this.name}.jpg`;
       },
       error => {
         console.error('Error fetching StudySpot details:', error);
@@ -40,7 +40,6 @@ export class StudyspotComponent {
 
     this.authService.userData$.subscribe((userData) => {
       this.userID = userData.user_id;
-      console.log("userData in studyspot", userData);
     });
 
     this.studyspotService.getLikedState(this.name, this.userID).subscribe((response) => {
@@ -68,12 +67,10 @@ export class StudyspotComponent {
   toggleLike() {
     if (this.liked) {
       // User has already liked it, so remove the like
-      console.log("User ID -->", this.userID)
       this.liked = false;
       this.unlikeCard();
     } else {
       // User liked it for the first time
-      console.log("User liked it");
       this.liked = true;
       this.likeCard();
     }

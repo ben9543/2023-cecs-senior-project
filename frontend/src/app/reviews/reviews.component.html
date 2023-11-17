@@ -1,1 +1,26 @@
-<p>reviews works!</p>
+<div class = "title">
+    <p>Previously Reviewed</p>
+</div>
+<div class="container">
+    <div class="container-objects">
+        <button (click)="selectPreviousTab()" [disabled]="selectedTabIndex === 0" class="previous">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+      
+        <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
+            <mat-tab *ngFor="let spot of spots">
+                <ng-template mat-tab-label class="name">
+                    {{ spot.studyspot_name }}
+                  </ng-template>
+                <app-studyspot [name]="spot.studyspot_name"></app-studyspot>
+                <div class="star-uc-container">
+                    <app-userrating userID="{{ spot.user_id }}" rating="{{ spot.review_rate }}" comment="{{ spot.review_comments }}"></app-userrating>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+      
+        <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spots.length - 1" class="next">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+    </div>
+</div>

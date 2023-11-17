@@ -105,6 +105,7 @@ class StudySpots_API():
                 Studyspots.studyspot_noise_level,
                 Studyspots.studspot_crowdedness_level,
                 Studyspots.studyspot_strong_wifi,
+                Studyspots.studyspot_image_url,
                 Reviews.studyspot_name,
                 func.avg(Reviews.review_rate).label('rating'),
             ).group_by(Reviews.studyspot_name,Studyspots.studyspot_location,
@@ -114,6 +115,7 @@ class StudySpots_API():
                 Studyspots.studyspot_easy_to_find,
                 Studyspots.studyspot_noise_level,
                 Studyspots.studspot_crowdedness_level,
+                Studyspots.studyspot_image_url,
                 Studyspots.studyspot_strong_wifi).having(Reviews.studyspot_name==name)
 
             # Get list of reivews that has the studyspot name
@@ -136,6 +138,7 @@ class StudySpots_API():
                 "studyspot_strong_wifi":studyspot_result.studyspot_strong_wifi,
                 "studyspot_name":studyspot_result.studyspot_name,
                 "studyspot_rating":studyspot_result.rating,
+                "studyspot_image_url": studyspot_result.studyspot_image_url,
                 "reviews":[]
             }
             for review in review_results:

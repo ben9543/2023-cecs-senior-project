@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS Surveys (
     survey_crowdednes_level INT NOT NULL, 
     survey_noise_level INT NOT NULL,
     survey_wifi INT NOT NULL,
-    survey created_at timestamptz NOT NULL DEFAULT now()
+    survey_created_at timestamptz NOT NULL DEFAULT now()
     UNIQUE (survey_id),
 	CONSTRAINT FK_survey_studyspot FOREIGN KEY (studyspot_name) REFERENCES Studyspots(studyspot_name),
     CONSTRAINT FK_survey_user FOREIGN KEY (user_id) REFERENCES Users(user_id)
@@ -90,6 +90,16 @@ CREATE TABLE IF NOT EXISTS Requests (
     CONSTRAINT PK_request PRIMARY KEY (user_id, studyspot_name), 
     CONSTRAINT FK_request_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
     CONSTRAINT FK_request_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
+);
+
+CREATE TABLE IF NOT EXISTS Reported_studyspots(
+    report_id INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
+    user_id INT NOT NULL,
+    report_comment VARCHAR(3000) NOT NULL,
+    UNIQUE(report_id),
+    CONSTRAINT FK_report_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    CONSTRAINT FK_report_studyspot FOREIGN KEY(studyspot_name) REFERENCES Studyspots(studyspot_name)
 );
 
 -- Default Values

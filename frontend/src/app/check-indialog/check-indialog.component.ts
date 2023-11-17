@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { StudyspotService } from '../studyspot.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { CreateCheckIn } from '../DTOs/create-checkin.dto';
 
 @Component({
   selector: 'app-check-indialog',
@@ -13,7 +14,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class CheckIndialogComponent {
 
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, 
-  private router: Router, private authService: AuthService, private studyspotService: StudyspotService) { }
+  private router: Router, private authService: AuthService, private studyspotService: StudyspotService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
   }
@@ -25,10 +26,22 @@ export class CheckIndialogComponent {
   finalValueCrowdiness: number = 0;
 
   checkIn(){
-    this.router.navigate(['/home']);
-  }
+    const checkInData: CreateCheckIn = {
+      user_id: this.data.user_id,
+      studyspot_name: this.data.studyspot_name,
+      survey_crowdednes_level: this.finalValueCrowdiness,
+      survey_noise_level: this.finalValueNoise, 
+      survey_wifi: this.finalValueWifi
+    };
 
-  onSubmit(){
+    this.studyspotService.checkInToStudySpot(checkInData).subscribe(
+      (response) => {
+        this.router.navigate(['/studyspot-view'], { queryParams: { name: this.data.studyspot_name } });
+      },
+      (error) => {
+        console.error('Check-in failed:', error);
+        // Handle error if needed
+      }
+    );
   }
-
 }

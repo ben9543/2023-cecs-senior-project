@@ -72,4 +72,12 @@ class Reviews_API():
             print("Your review has been added")
         except Exception as e:
             print("Unable to add your review", e)
-        
+    
+    # Get review by ID
+    def get_review_by_user_id(self, user_id):
+        reviews = self.db.session.query(Reviews).filter(Reviews.user_id == user_id).all()
+        results = []
+        for review in reviews:
+            dict_result = review.as_dict()
+            results.append(dict_result)
+        return results

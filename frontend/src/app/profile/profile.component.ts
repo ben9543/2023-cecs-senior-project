@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StudyspotService } from '../studyspot.service';
 
 
 @Component({
@@ -7,12 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  spotsRecent: Spot = [
-    { name: "London", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Madrid", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Barcelona", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Vegas", rating: "5", imageUrl: "assets/spots/Spot1.jpeg"}
-  ];
 
   spotsSuggested: Spot = [
     { name: "Portland", rating: "5", imageUrl: "assets/spots/Spot1.jpeg"},
@@ -21,12 +16,16 @@ export class ProfileComponent {
     { name: "Atlanta", rating: "1", imageUrl: "assets/spots/Spot1.jpeg"}
   ];
 
-  constructor() {}
+  spotsRecent: string[]=[];
+
+  selectedTabIndex: number = 0;
+  tabs: number = 0;
+  constructor(private studyspotService: StudyspotService) { 
+    this.spotsRecent = this.studyspotService.getStudySpots();
+    this.tabs = this.spotsRecent.length;
+  }
 
   ngOnInit() {}
-
-  selectedTabIndex: number = 0; // Initial selected tab index
-  tabs: number = this.spotsRecent.length; // Replace with your tab data
 
   // Function to handle tab changes
   tabChanged(event: number): void {
@@ -47,8 +46,8 @@ export class ProfileComponent {
     }
   }
 
-  selectedMightTabIndex: number = 0; // Initial selected tab index
-  mighttabs: number = this.spotsSuggested.length; // Replace with your tab data
+  selectedMightTabIndex: number = 0; 
+  mighttabs: number = this.spotsSuggested.length; 
 
   // Function to handle tab changes
   tabChangedmight(event: number): void {

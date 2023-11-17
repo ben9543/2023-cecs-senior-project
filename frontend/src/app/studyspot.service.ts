@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from './config';
 import { Observable } from 'rxjs';
+import { CreateRequestDTO } from '../app/DTOs/create-request.dto'
+import { PreviousReviews } from './DTOs/previous-reviews.dto';
+import { CreateCheckIn } from './DTOs/create-checkin.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +63,12 @@ export class StudyspotService {
     return this.http.post(addReview, requestPayload);
   }
 
+  getReviewByUserId(userId: string): Observable<any> {
+    const getReviews = `${this.apiUrl}/review/user`; 
+
+    return this.http.get<Array<PreviousReviews>>(getReviews, { params: { user_id: userId } });
+  }
+
   // Function to add a unique study spot name to local storage
   addStudySpotName(name: string): void {
     const studySpots = this.getStudySpots();
@@ -75,4 +84,28 @@ export class StudyspotService {
     return studySpotsString ? JSON.parse(studySpotsString) : [];
   }
 
+  createRequest(requestData: CreateRequestDTO): Observable<any> {
+    const requestApi = `${this.apiUrl}/requests/create_request`;
+    return this.http.put(requestApi, requestData);
+  }
+
+  checkInToStudySpot(checkInData: CreateCheckIn): Observable<any>{
+    const requestApi = `${this.apiUrl}/users/surveys/check_in`;
+    return this.http.post(requestApi, checkInData);
+  }
+
+  getLatestcheckInToStudySpot(studyspot_name: string): Observable<any>{
+    const latestCheckin = `${this.apiUrl}/users/surveys/latestsurvey/${studyspot_name}`;
+    return this.http.get(latestCheckin);
+  }
+
+  checkOutFromStudyspot(survey_id: number): Observable<any>{
+    const latestCheckin = `${this.apiUrl}/users/surveys/checkout/${survey_id}`;
+    return this.http.put(latestCheckin, {});
+  }
+
+  getCheckedInStudySpots(user_id: number): Observable<any> {
+    const prevCheckedInSpots = `${this.apiUrl}/users/surveys/get_checked_in_studyspots/${user_id}`;
+    return this.http.get(prevCheckedInSpots);
+  }
 }

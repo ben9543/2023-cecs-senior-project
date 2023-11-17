@@ -2,6 +2,7 @@
 # https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/#installation
 from db.db_connection_test import Surveys
 from sqlalchemy.exc import SQLAlchemyError
+from datetime import datetime
 
 class Surveys_API():
 
@@ -10,10 +11,11 @@ class Surveys_API():
         
     def get_checked_in_studyspots(self, user_id):
         try:
-            checked_in_spots = (
-                self.db.query(Surveys).filter(Surveys.user_id == user_id).all()
-            )
-
+            checked_in_spots = self.db.session.query(Surveys).filter_by(user_id = user_id).all()
+            
+            if checked_in_spots == None:
+                return []
+            
             checked_in_spots_list = []
             for spot in checked_in_spots:
                 checked_in_spots_list.append({
@@ -23,6 +25,8 @@ class Surveys_API():
                     'survey_crowdednes_level': spot.survey_crowdednes_level,
                     'survey_noise_level' : spot.survey_noise_level,
                     'survey_wifi': spot.survey_wifi,
+                    'survey_created_at': spot.survey_created_at,
+                    'checked_out': spot.checked_out
                 })
 
             return checked_in_spots_list
@@ -49,6 +53,8 @@ class Surveys_API():
             else:
                 survey_id += 1
             
+            created_at = datetime.now()
+            
             new_check_in = Surveys(
                 survey_id=survey_id,
                 studyspot_name=studyspot_name,
@@ -56,12 +62,46 @@ class Surveys_API():
                 survey_crowdednes_level=crowdedness,
                 survey_noise_level=noise_level,
                 survey_wifi=wifi,
+                survey_created_at=created_at,
+                checked_out = False
             )
 
-            self.db.add(new_check_in)
-            self.db.commit()
+            self.db.session.add(new_check_in)
+            self.db.session.commit()
             return True
 
         except SQLAlchemyError as e:
             print("Error creating a new check-in:", e)
             return False
+    
+    def checkout_from_studyspot(self, survey_id):
+        survey = self.db.session.query(Surveys).filter_by(survey_id = survey_id).first()
+        try:
+            survey.checked_out = True
+            self.db.session.commit()
+            return True
+        except SQLAlchemyError as e:
+            print("Error creating a new check-in:", e)
+            return False
+
+    def get_latest_survey_for_studyspot(self, studyspot_name):
+        try:
+            latest_survey = (self.db.session.query(Surveys).filter(Surveys.studyspot_name == studyspot_name).order_by(Surveys.survey_created_at.desc()).first())
+
+            if latest_survey:
+                return {
+                    'survey_id': latest_survey.survey_id,
+                    'studyspot_name': latest_survey.studyspot_name,
+                    'user_id': latest_survey.user_id,
+                    'survey_crowdedness_level': latest_survey.survey_crowdednes_level,
+                    'survey_noise_level': latest_survey.survey_noise_level,
+                    'survey_wifi': latest_survey.survey_wifi,
+                    'survey_created_at': latest_survey.survey_created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                    'checked_out': latest_survey.checked_out
+                }
+            else:
+                return None
+
+        except SQLAlchemyError as e:
+            print("Error retrieving latest survey for studyspot:", e)
+            return None
