@@ -686,6 +686,31 @@ def create_request():
     request_instance.add_requests(data)
     return jsonify({'message': 'Requests has been submitted successfully!'}), 200
 
+@app.route('/api/requests/get_requested_spots',methods=['GET'])
+def get_requested_studyspots():
+    
+    requested_spots = request_instance.get_requested_studyspots()
+    if requested_spots:
+        return jsonify({'message': 'Sucessful!', 'data': requested_spots}), 200
+    return jsonify({"message":"Error: Couldn't get the requested spots"}),409
+
+@app.route('/api/requests/get_requested_spot_by_name', methods=['GET'])
+def get_requested_spot_by_name():
+    try:
+        data = None
+        studyspot_name = request.args.get('name')
+        data = request_instance.get_studyspot_by_name(studyspot_name)
+        return make_response(jsonify({
+            'message': 'OK', 
+            'data': data
+        }), 200)
+    except Exception as e:
+        # print(e)
+        return make_response(jsonify({
+            'message': 'FAILED', 
+            'data': None
+        }), 400)
+
 @app.route('/api/reports/create-studyspot-report',methods=['PUT'])
 def create_report():
     try:

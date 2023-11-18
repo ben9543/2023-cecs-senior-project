@@ -1,0 +1,14 @@
+<div class="card-container">
+    <div class="card-image">
+      <img [src]="imageUrl" alt="Card Image">
+    </div>
+    <div class="card-details">
+      <div class="requester">
+        <span>
+          Requested By: {{username}}
+        </span>
+      </div>
+      <div class="card-name" (click)="onCardClick()">{{ name }}</div>
+    </div>
+</div>
+  

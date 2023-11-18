@@ -20,4 +20,12 @@ export class AdminService {
     // Send a POST request to your API for login
     return this.http.post(`${this.apiUrl}/admin/login`, loginData);
   }
+
+  getRequestedStudySpots(){
+    return this.http.get(`${this.apiUrl}/requests/get_requested_spots`);
+  }
+
+  getRequestedStudySpotByName(name: string){
+    return this.http.get(`${this.apiUrl}/requests/get_requested_spot_by_name`, { params: { 'name': name } });
+  }
 }

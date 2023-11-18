@@ -19,6 +19,7 @@ import { AuthGuard } from './auth.guard';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
 import { LandingAgeComponent } from './landing-age/landing-age.component';
+import { RequestedSpotViewComponent } from './requested-spot-view/requested-spot-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'rate-me', component: RateMeComponent, canActivate: [AuthGuard]},
   { path: 'adminonlylogin', component: AdminLoginComponent},
   { path: 'admin-home', component: AdminHomepageComponent},
+  { path: 'requested-spot-view', component: RequestedSpotViewComponent}
 ];
 
 @NgModule({

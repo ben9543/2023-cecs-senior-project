@@ -35,7 +35,21 @@ class Requests_API():
             return True
         else:
             return False
+    
+    def get_requested_studyspots(self):
+        results = []
+        query = self.db.session.execute(self.db.select(Requests)).scalars().all()
+        for q in query:
+            dict_result = q.as_dict()
+            results.append(dict_result)
+        return results
 
+    def get_studyspot_by_name(self, name):
+        studyspot = self.db.session.query(Requests).filter(Requests.studyspot_name == name).first()
+        if studyspot:
+            return studyspot.as_dict()
+        else:
+            return None
             
 
 

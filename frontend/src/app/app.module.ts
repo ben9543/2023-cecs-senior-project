@@ -66,6 +66,8 @@ import { StudyspotService } from './studyspot.service';
 import { UserService } from './user.service';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
+import { RequestedSpotsComponent } from './requested-spots/requested-spots.component';
+import { RequestedSpotViewComponent } from './requested-spot-view/requested-spot-view.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +101,9 @@ import { AuthService } from './auth.service';
     AdminHomepageComponent,
     AdminDecisionPageComponent,
     AdminHeaderComponent,
-    LandingAgeComponent
+    LandingAgeComponent,
+    RequestedSpotsComponent,
+    RequestedSpotViewComponent
   ],
   entryComponents: [ 
     CheckIndialogComponent

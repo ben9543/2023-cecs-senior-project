@@ -20,6 +20,7 @@ export class HeaderComponent {
   isAdminLoginPage: boolean = false;
   isAdminHomePage: boolean = false;
   isLandingPage: boolean = false;
+  isRequestedSpotView: boolean = false;
 
   constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
 
@@ -37,6 +38,7 @@ export class HeaderComponent {
       this.isAdminLoginPage = event.urlAfterRedirects.includes('/adminonlylogin');
       this.isAdminHomePage = event.urlAfterRedirects.includes('/admin-home');
       this.isLandingPage = event.urlAfterRedirects.includes('/welcome');
+      this.isRequestedSpotView = event.urlAfterRedirects.includes('/requested-spot-view')
     });
   }
   toggleMainNav() {
