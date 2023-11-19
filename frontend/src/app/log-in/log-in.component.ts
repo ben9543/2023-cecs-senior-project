@@ -39,9 +39,7 @@ export class LogInComponent {
           this.userService.getUserByEmail(email).subscribe(
             (userData: any) => {
               const user = userData;
-              this.authService.setUserData(user); // Set userData
-              localStorage.setItem('user_name', user.user_name);
-              localStorage.setItem('user_id', user.user_id);
+              this.authService.setUserData(user);
             },
             (userError) => {
               console.error('Error fetching user data:', userError);

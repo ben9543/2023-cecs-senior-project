@@ -396,6 +396,14 @@ def main_studyspot():
                 'data': True
             }), 201)
 
+@app.route('/api/studyspot-names', methods=['GET'])
+def get_cities():
+    names = studyspots_instance.get_all_studyspot_name()
+    return make_response(jsonify({
+                'message': 'OK', 
+                'data': names
+            }), 200)
+
 # Studyspot aggregation API
 @app.route('/api/studyspots/reviews', methods=['GET'])
 def get_studyspot_with_reviews():

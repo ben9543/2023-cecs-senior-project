@@ -9,6 +9,7 @@ import { CreateCheckIn } from '../DTOs/create-checkin.dto';
 import { AuthService } from '../auth.service';
 import { PreviousCheckIn } from '../DTOs/previous-checked-in.dto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserData } from '../DTOs/user-data.dto';
 
 @Component({
   selector: 'app-studyspot-view',
@@ -16,11 +17,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./studyspot-view.component.css']
 })
 export class StudyspotViewComponent {
+  
   studySpot: any;
   name: string = '';
   reviews: any[] = [];
   lengthOfReviews: number = 4;
-  user_id: string='';
+  userData!: UserData;
+  user_id!: number;
   latest: PreviousCheckIn = {
     survey_id: '',
     studyspot_name: '',
@@ -42,10 +45,9 @@ export class StudyspotViewComponent {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.name = params['name'];
-      this.authService.userData$.subscribe((userData) => {
-        this.user_id = userData.user_id;
-        this.loadStudySpotData();
-      });
+      this.userData = this.authService.getUserData();
+      this.user_id = this.userData?.user_id;
+      this.loadStudySpotData();
     });
   }
 
@@ -55,10 +57,9 @@ export class StudyspotViewComponent {
         this.studySpot = data.data;
         this.reviews = data.data.reviews;
         this.lengthOfReviews = data.data.reviews.length;
-        console.log(this.user_id)
         this.studyspotService.getLatestcheckInToStudySpot(this.name).subscribe((data: any)=> {
           this.latest = data.data
-          if(this.latest.user_id === this.user_id){
+          if(parseInt(this.latest.user_id) == this.user_id){
             this.isSpotAvailable = !this.isCheckInAllowed(this.latest.survey_created_at) || this.latest.checked_out
             this.isCheckedIn = !this.latest.checked_out;
           }

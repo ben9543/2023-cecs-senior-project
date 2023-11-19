@@ -10,29 +10,40 @@ export class AuthService {
   private userDataSubject: BehaviorSubject<any | null> = new BehaviorSubject<any | null>(null); 
   public userData$: Observable<any | null> = this.userDataSubject.asObservable(); 
 
+  private readonly USER_DATA_KEY = 'userData';
+
+  constructor() {}
+
+  setUserData(userData: any): void {
+    sessionStorage.setItem(this.USER_DATA_KEY, JSON.stringify(userData));
+  }
+
+  getUserData(): any {
+    const storedData = sessionStorage.getItem(this.USER_DATA_KEY);
+    return storedData ? JSON.parse(storedData) : null;
+  }
+
+  clearUserData(): void {
+    sessionStorage.removeItem(this.USER_DATA_KEY);
+  }
+
   getToken(): string {
     return localStorage.getItem('access_token') || '';
   }
 
-  setUserData(userData: any): void {
-    this.userDataSubject.next(userData);
-  }
+  // getUserName(): string{
+  //   return sessionStorage.getItem(this.USER_DATA_KEY)?.at(3) || '';
+  // }
 
-  getUserData(): Observable<any | null> {
-    return this.userData$;
-  }
-
-  getUserName(): string{
-    return localStorage.getItem('user_name') || '';
-  }
-
-  getUserID(): string{
-    return localStorage.getItem('user_id') || '';
-  }
+  // getUserID(): string{
+  //   return localStorage.getItem('user_id') || '';
+  // }
 
   logout(): void {
     localStorage.removeItem('access_token');
+    this.clearUserData()
     localStorage.removeItem('user_name');
+    localStorage.removeItem('user_id');
     this.loggedInUsernameSubject.next(null);
   }
 

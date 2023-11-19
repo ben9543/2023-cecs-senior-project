@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudyspotService } from '../studyspot.service';
 import { AuthService } from '../auth.service';
+import { UserData } from '../DTOs/user-data.dto';
 @Component({
   selector: 'app-studyspot',
   templateUrl: './studyspot.component.html',
@@ -12,8 +13,8 @@ export class StudyspotComponent {
   @Input() rating: number = 0;
   @Input() imageUrl: string = '../assets/spots/Spot1.jpeg';
   
-  userID: number = -1;
-  
+  userID!: number;
+  userData!: UserData;
   liked: boolean = false;
 
   getStars(num: number) {
@@ -38,10 +39,9 @@ export class StudyspotComponent {
       }
     );
 
-    this.authService.userData$.subscribe((userData) => {
-      this.userID = userData.user_id;
-    });
-
+    this.userData = this.authService.getUserData();
+    this.userID = this.userData?.user_id;
+    
     this.studyspotService.getLikedState(this.name, this.userID).subscribe((response) => {
       this.liked = response.liked; 
     });

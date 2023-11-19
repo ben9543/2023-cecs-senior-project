@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { filter } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { UserData } from '../DTOs/user-data.dto';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,8 @@ export class HeaderComponent {
   isSignUpPage: boolean = false;
   isResetPasswordPage: boolean = false;
   isResetLinkPage: boolean = false;
-  username: string = '';
+  userData!: UserData;
+  username: string = "";
   isMainNavOpen = false;
   isCheckInPage: boolean = false;
   isAdminLoginPage: boolean = false;
@@ -26,7 +28,8 @@ export class HeaderComponent {
 
 
   ngOnInit(): void {
-    this.username = this.authService.getUserName();
+    this.userData = this.authService.getUserData();
+    this.username = this.userData?.user_name;
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {

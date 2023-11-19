@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { StudyspotService } from '../studyspot.service';
 import { PreviousReviews } from '../DTOs/previous-reviews.dto';
+import { UserData } from '../DTOs/user-data.dto';
 
 @Component({
   selector: 'app-reviews',
@@ -10,17 +11,17 @@ import { PreviousReviews } from '../DTOs/previous-reviews.dto';
 })
 export class ReviewsComponent {
   
-  userID: string = '';
+  userID!: number;
   spots!: Spot | [];
+  userData!: UserData;
   constructor(private authService: AuthService, private studySpotService: StudyspotService) {}
 
   selectedTabIndex: number = 0; 
   tabs: number = 0;
 
   ngOnInit() {
-    this.authService.userData$.subscribe((userData) => {
-      this.userID = userData.user_id;
-    });
+    this.userData = this.authService.getUserData();
+    this.userID = this.userData?.user_id;
     this.fetchReviewsByUserId(this.userID);
   }
 
@@ -44,7 +45,7 @@ export class ReviewsComponent {
     }
   }
   
-  fetchReviewsByUserId(userId: string): void {
+  fetchReviewsByUserId(userId: number): void {
     this.studySpotService.getReviewByUserId(userId).subscribe(
       (response) => {
         this.spots = response.data

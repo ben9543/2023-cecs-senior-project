@@ -63,7 +63,7 @@ export class StudyspotService {
     return this.http.post(addReview, requestPayload);
   }
 
-  getReviewByUserId(userId: string): Observable<any> {
+  getReviewByUserId(userId: number): Observable<any> {
     const getReviews = `${this.apiUrl}/review/user`; 
 
     return this.http.get<Array<PreviousReviews>>(getReviews, { params: { user_id: userId } });
@@ -107,5 +107,10 @@ export class StudyspotService {
   getCheckedInStudySpots(user_id: number): Observable<any> {
     const prevCheckedInSpots = `${this.apiUrl}/users/surveys/get_checked_in_studyspots/${user_id}`;
     return this.http.get(prevCheckedInSpots);
+  }
+
+  getStudyspotNames(): Observable<any>{
+    const requestApi = `${this.apiUrl}/studyspot-names`;
+    return this.http.get(requestApi);
   }
 }

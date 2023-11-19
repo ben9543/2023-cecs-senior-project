@@ -73,6 +73,13 @@ class StudySpots_API():
         else:
             return None
         
+    def get_all_studyspot_name(self):
+        names = []
+        studyspot_names = self.db.session.query(Studyspots.studyspot_name).all()
+        names = [name[0] for name in studyspot_names]
+        print(names)
+        return names
+    
     def get_studyspot_by_name(self, name):
         studyspot = self.db.session.query(Studyspots).filter(Studyspots.studyspot_name == name).first()
         if studyspot:

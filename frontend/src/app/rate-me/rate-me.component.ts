@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { StudyspotService } from '../studyspot.service';
+import { UserData } from '../DTOs/user-data.dto';
 
 @Component({
   selector: 'app-rate-me',
@@ -12,7 +13,8 @@ import { StudyspotService } from '../studyspot.service';
 export class RateMeComponent {
   //comment: string = '';
   name: string = '';
-  userID: number = -1;
+  userData!: UserData;
+  userID!: number;
 
   rate!:FormGroup;
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private studyspotService: StudyspotService) { }
@@ -24,10 +26,8 @@ export class RateMeComponent {
     this.rate = this.formBuilder.group({
       comment: ['', Validators.required]
     })
-    this.authService.userData$.subscribe((userData) => {
-      this.userID = userData.user_id;
-      console.log("userData in studyspot", userData);
-    });
+    this.userData = this.authService.getUserData();
+    this.userID = this.userData?.user_id;
   }
 
   min: number = 0;

@@ -6,6 +6,8 @@ import { AuthService } from '../auth.service';
 import { CreateRequestDTO } from '../DTOs/create-request.dto'
 import { StudyspotService } from '../studyspot.service';
 import { ConfirmationDialogService } from '../confirmation-dialog.service';
+import { UserData } from '../DTOs/user-data.dto';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-submit-request',
@@ -21,9 +23,14 @@ export class SubmitRequestComponent {
   ada: boolean = false;
   easy_to_find: boolean = false;
 
+  spotNamesFromJSON: string[] = [];
+  spotNamessFromDB: string[] = [];
+  availableSpotNames: string[] = [];
+
   attributeList: string[] = ['WiFi', 'Power', 'ADA Accessible', 'Indoor', 'Easy to find'];
-  userID: string = '';
-  constructor(private router: Router, private formBuilder: FormBuilder, private userService: UserService, private authService: AuthService, private studySpotService: StudyspotService, private confirmationDialogService: ConfirmationDialogService) { }
+  userData!: UserData;
+  userID!: number;
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private userService: UserService, private authService: AuthService, private studySpotService: StudyspotService, private confirmationDialogService: ConfirmationDialogService) { }
 
   min: number = 0;
   max: number = 5;
@@ -32,9 +39,8 @@ export class SubmitRequestComponent {
   finalValueCrowdiness: number = 0;
 
   ngOnInit(): void {
-    this.authService.userData$.subscribe((userData) => {
-      this.userID = userData.user_id;
-    });
+    this.userData = this.authService.getUserData();
+    this.userID = this.userData?.user_id;
     this.request = this.formBuilder.group({
       features: [[], Validators.required],
       university: ['', Validators.required],
@@ -43,9 +49,35 @@ export class SubmitRequestComponent {
       image: [''],
       studyspot_name: ['', Validators.required]
     });
+
     this.userService.getUniversityList().subscribe((universities: any) => {
       this.universities = universities.data;
     });
+    this.http.get<any>('assets/Data/Studyspot_Names.json') // Adjust the URL based on your file path
+      .subscribe((response) => {
+        this.spotNamesFromJSON = response;
+        console.log(response)
+        this.fetchCitiesFromDB();
+    });
+
+  }
+
+  fetchCitiesFromDB(): void {
+    this.studySpotService.getStudyspotNames().subscribe(
+      (data: any) =>{
+        this.spotNamessFromDB = data.names;
+      },
+      (error) => {
+        console.error('Error fetching requested study spots:', error);
+      }
+      );
+
+      this.availableSpotNames = this.getAvailableCities();
+  }
+
+  getAvailableCities(): string[] {
+    // Compare cities from JSON and database to get available cities
+    return this.spotNamesFromJSON.filter(city => !(city in this.spotNamessFromDB));
   }
 
   onSubmit(): void {
@@ -53,7 +85,7 @@ export class SubmitRequestComponent {
 
       this.convertAttributesToBoolean()
       const requestData: CreateRequestDTO= {
-        user_id: this.userID,
+        user_id: this.userID.toString(),
         studyspot_name: this.request.value.studyspot_name,
         university_name: this.request.value.university,
         is_indoor: this.in_door,

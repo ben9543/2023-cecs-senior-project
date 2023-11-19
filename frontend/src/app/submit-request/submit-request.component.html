@@ -30,15 +30,15 @@
         type="file" />
     
     <mat-form-field>
-        <mat-label>StudySpot Name</mat-label>
-        <input
-            matInput
-            formControlName="studyspot_name"
-            type="text"
-        />
-        <mat-error
-            >Please give your spot name</mat-error
+      <mat-select formControlName="studyspot_name" placeholder="Select Spot Name">
+        <mat-option *ngFor="let city of availableSpotNames" [value]="city">{{ city }}</mat-option>
+      </mat-select>
+      <mat-error
+      >
+        <span
+          >Please Select Spot Name</span
         >
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Attributes</mat-label>
