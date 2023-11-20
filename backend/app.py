@@ -10,7 +10,9 @@ from surveys.surveys import Surveys_API
 from universities.universities import Universities_API
 from favourite.favourite import Favourites_API
 from reviews.reviews import Reviews_API
-from requests.requests import Requests_API
+from rejections.rejections import Rejections_API
+# from requests.requests import Requests_API
+from requests_v2.requests import Requests_API
 from reports.reported_studyspot import Reported_studyspots_API
 from aws.s3 import S3_API
 
@@ -54,6 +56,9 @@ survey_instance = Surveys_API(db)
 
 # Create Request instance
 request_instance = Requests_API(db)
+
+# Create Rejection instance
+rejection_instance = Rejections_API(db)
 
 # Create Reported studyspots instance
 reports_studyspots_instance = Reported_studyspots_API(db)
@@ -136,13 +141,21 @@ def admin_login():
 """ Admin Routes """
 @app.route('/api/admin/approve', methods=['POST'])
 def admin_approve():
+    name = request.json.get('name')
+    req = request_instance.get_studyspot_by_name(name)
+    
+    # 1. Create a new studyspot using the Request
+    studyspot = studyspots_instance.create_studyspot_from_request(req)
+    
+    # 2. Delete the Request
+    request_instance.delete_request(req)
 
-    # 1. Modify request_is_approved
-    # 2. Create a new studyspot using the Request
+    # 3. Return the response
+    return jsonify({'message': "Successfully Approved the New Studyspot"}), 200
 
-    # 1) Find the request by studyspot name
-    # 2) Modify the field
-    # 3) Use all of the information to create a new studyspot
+@app.route('/api/admin/reject', methods=['POST'])
+def admin_reject():
+
     pass
 
 
