@@ -29,7 +29,7 @@ class Studyspots(Base):
     studyspot_image_url = Column(String(3000))
     studyspot_location = Column(String(3000))
     studyspot_noise_level = Column(Integer)
-    studspot_crowdedness_level = Column(Integer)
+    studspot_crowdedness_level = Column(Integer) # Typo
     studyspot_strong_wifi = Column(Boolean)
 
     university = relationship("Universities")
@@ -103,6 +103,25 @@ class Requests(Base):
     request_crowdedness_level = Column(Integer, nullable=False)
     request_strong_wifi = Column(Boolean)
     request_reason = Column(String(3000))
+
+    university = relationship("Universities")
+    user = relationship("Users")
+
+class Rejection(Base):
+    __tablename__="rejections"
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False, primary_key=True)
+    studyspot_name = Column(String(254), nullable=False, primary_key=True)
+    university_name = Column(String(200), ForeignKey('universities.university_name'))
+    rejection_is_indoor = Column(Boolean)
+    rejection_ada = Column(Boolean)
+    rejection_power_outlets = Column(Boolean)
+    rejection_easy_to_find = Column(Boolean)
+    rejection_image_url = Column(String(3000))
+    rejection_location = Column(String(3000))
+    rejection_noise_level = Column(Integer, nullable=False)
+    rejection_crowdedness_level = Column(Integer, nullable=False)
+    rejection_strong_wifi = Column(Boolean)
+    rejection_reason = Column(String(3000))
 
     university = relationship("Universities")
     user = relationship("Users")

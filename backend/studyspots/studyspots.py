@@ -3,6 +3,7 @@
 from db.db_connection_test import Studyspots
 from db.db_connection_test import Reviews
 from sqlalchemy.sql import func
+import random
 
 def create_studyspot_and_review_object(data):
     return {
@@ -177,6 +178,25 @@ class StudySpots_API():
 
     def create_studyspot(self, params):
         new_studyspot = Studyspots(**params)
+        self.db.session.add(new_studyspot)
+        self.db.session.commit()
+        return new_studyspot.as_dict()
+    
+    def create_studyspot_from_request(self, request):
+        new_studyspot = Studyspots(
+            studyspot_id = request["user_id"] + random.randint(1,100000000),
+            studyspot_name= request["studyspot_name"],
+            university_name = request["university_name"],
+            studyspot_is_indoor= request["request_is_indoor"],
+            studyspot_ada= request["request_ada"],
+            studyspot_power_outlets= request["request_power_outlets"],
+            studyspot_easy_to_find= request["request_easy_to_find"],
+            studyspot_image_url= request["request_image_url"],
+            studyspot_location= request["request_location"],
+            studyspot_noise_level= request["request_noise_level"],
+            studspot_crowdedness_level= request["request_crowdedness_level"],# Typo
+            studyspot_strong_wifi= request["request_strong_wifi"]
+        )
         self.db.session.add(new_studyspot)
         self.db.session.commit()
         return new_studyspot.as_dict()
