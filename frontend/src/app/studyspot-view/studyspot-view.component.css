@@ -114,6 +114,18 @@
     margin-top: 10px;
     padding: 5%;
 }
+
+#detail-a{
+    background-color: whitesmoke;
+    color: black;
+    font-size: 12px;
+    font-weight: bolder;
+    border-radius: 5px 0 0 5px;
+    cursor: pointer; 
+    border: rgb(14, 75, 77) 2px solid;
+    padding: 2.9%;
+}
+
 #detail-t{
     width: max-content;
     background-color: whitesmoke;
@@ -123,6 +135,12 @@
     cursor: pointer; 
     border: rgb(14, 75, 77) 2px solid;
     padding: 4px;
+}
+
+.avail{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
 }
 
 .select-features{
@@ -179,6 +197,23 @@
     padding-left: 3%;
 }
 
+.green-icon {
+    color: green; 
+    background-color: green; 
+    border: rgb(14, 75, 77) 1px solid;
+    width: 67%;
+    height: 60%;
+    padding-top: 5%;
+  }
+  
+.red-icon {
+    color: red; 
+    background-color: red;
+    border-left: rgb(180, 17, 17) 2px solid;
+    width: 67%;
+    height: 60%;
+    padding-top: 5%;
+}
 
 /* Media queries for mobile responsiveness */
 @media screen and (max-width: 768px) {
@@ -270,6 +305,9 @@
     .box{
         padding: 10px;
         margin: 5px;
+    }
+    .green-icon, .red-icon{
+        width: 74%;
     }
 
 }
