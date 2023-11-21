@@ -47,7 +47,7 @@ import { HelpsComponent } from './helps/helps.component';
 import { SignupComponent } from './signup/signup.component';
 import { StudyspotViewComponent } from './studyspot-view/studyspot-view.component';
 import { FavoritesComponent } from './favorites/favorites.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
@@ -69,6 +69,7 @@ import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { RequestedSpotsComponent } from './requested-spots/requested-spots.component';
 import { RequestedSpotViewComponent } from './requested-spot-view/requested-spot-view.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -142,7 +143,7 @@ import { RequestedSpotViewComponent } from './requested-spot-view/requested-spot
     MatSlideToggleModule,
     MatProgressSpinnerModule
   ],
-  providers: [StudyspotService, UserService, AuthGuard, AuthService],
+  providers: [StudyspotService, UserService, AuthGuard, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

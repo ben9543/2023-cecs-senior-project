@@ -28,7 +28,13 @@ export class AuthService {
   }
 
   getToken(): string {
-    return localStorage.getItem('access_token') || '';
+    const header = localStorage.getItem('header');
+    if (header){
+      const tokenData = JSON.parse(header);
+      const token = tokenData.token;
+      return token;
+    }
+    return '';
   }
 
   // getUserName(): string{
@@ -40,15 +46,27 @@ export class AuthService {
   // }
 
   logout(): void {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem('header');
     this.clearUserData()
     localStorage.removeItem('user_name');
     localStorage.removeItem('user_id');
+    localStorage.removeItem('studySpots');
     this.loggedInUsernameSubject.next(null);
   }
 
   isAuthenticated(): boolean {
-    const token = this.getToken();
-    return !!token;
+    const header = localStorage.getItem('header');
+
+    if (header) {
+      const tokenData = JSON.parse(header);
+      const expiresAt = new Date(tokenData.expires_in).getTime();
+      // Check if the current time is before the expiration time
+      // console.log(expiresAt)
+      // console.log(Date.now())
+      return Date.now() < expiresAt;
+    } else {
+      // header data not found in local storage
+      return false;
+    }
   }
 }

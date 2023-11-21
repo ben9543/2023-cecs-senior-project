@@ -38,7 +38,6 @@ export class CheckIndialogComponent {
 
     this.studyspotService.checkInToStudySpot(checkInData).subscribe(
       (response) => {
-        this.checkInSuccess.emit();
       },
       (error) => {
         console.error('Check-in failed:', error);
