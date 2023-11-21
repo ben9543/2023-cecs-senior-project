@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { StudyspotService } from '../studyspot.service';
+import { StudySpot } from '../DTOs/studyspot.dto';
 
 @Component({
   selector: 'app-homepage',
@@ -7,7 +8,7 @@ import { StudyspotService } from '../studyspot.service';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit, OnChanges {
-  spots: any[] = [];
+  spots!: Array<StudySpot>;
   filterCriteria: any;
   searchQuery: string = '';
 
@@ -35,6 +36,7 @@ export class HomepageComponent implements OnInit, OnChanges {
 private initializeComponent() {
   this.studyspotService.getAllStudyspots().subscribe(
     (data: any) => {
+      console.log(data.data)
       if (this.searchQuery) {
         // Filter spots based on the search query
         this.spots = data.data.filter((spot: any) => {

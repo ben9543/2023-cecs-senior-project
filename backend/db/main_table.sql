@@ -124,3 +124,23 @@ CREATE TABLE IF NOT EXISTS Reported_studyspots(
 -- Default Values
 INSERT INTO Universities(university_name, university_state, university_zip)
 VALUES('CSULB', 'CA', 90840);
+
+
+-- Funtions and Triggers
+
+CREATE OR REPLACE FUNCTION update_studyspots()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE studyspots
+  SET studyspot_noise_level = NEW.survey_noise_level,
+      studspot_crowdedness_level = NEW.survey_crowdednes_level
+  WHERE studyspot_name = NEW.studyspot_name; 
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_studyspots_trigger
+AFTER INSERT ON surveys 
+FOR EACH ROW
+EXECUTE FUNCTION update_studyspots();

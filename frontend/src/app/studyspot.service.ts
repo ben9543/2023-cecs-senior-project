@@ -29,6 +29,10 @@ export class StudyspotService {
     return this.http.get(`${this.apiUrl}/studyspots`);
   }
 
+  getAllStudyspotName(name: string) {
+    return this.http.get(`${this.apiUrl}/studyspots-by-name`, { params: { 'name':name } });
+  }
+
   likeCard(studyspotName: string, userID: number): Observable<any> {
     const likeUrl = `${this.apiUrl}/like-card`; 
     // Include both the studyspot name and username in the request body

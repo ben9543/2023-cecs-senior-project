@@ -10,6 +10,8 @@ import { AuthService } from '../auth.service';
 import { PreviousCheckIn } from '../DTOs/previous-checked-in.dto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserData } from '../DTOs/user-data.dto';
+import { Review, StudyspotDetails } from '../DTOs/studyspot-with-review.dto';
+import { StudySpot } from '../DTOs/studyspot.dto';
 
 @Component({
   selector: 'app-studyspot-view',
@@ -18,22 +20,14 @@ import { UserData } from '../DTOs/user-data.dto';
 })
 export class StudyspotViewComponent {
   
-  studySpot: any;
+  studySpot!: StudyspotDetails;
+  studyspotWOReviews!: StudySpot;
   name: string = '';
-  reviews: any[] = [];
+  reviews!: Array<Review>;
   lengthOfReviews: number = 4;
   userData!: UserData;
   user_id!: number;
-  latest: PreviousCheckIn = {
-    survey_id: '',
-    studyspot_name: '',
-    user_id: '',
-    survey_crowdednes_level: 0,
-    survey_noise_level: 0,
-    survey_wifi: 0,
-    survey_created_at: '',
-    checked_out: false
-  }
+  latest!: PreviousCheckIn;
 
   isSpotAvailable: boolean = true;
   isCheckedIn: boolean = false;
@@ -49,6 +43,12 @@ export class StudyspotViewComponent {
       this.user_id = this.userData?.user_id;
       this.loadStudySpotData();
     });
+
+    this.studyspotService.getAllStudyspotName(this.name).subscribe(
+      (data: any) => {
+        this.studyspotWOReviews = data.data;
+      }
+    );
   }
 
   private loadStudySpotData() {
@@ -57,7 +57,6 @@ export class StudyspotViewComponent {
         this.studySpot = data.data;
         this.reviews = data.data.reviews;
         this.spotHasReviews = this.reviews? true: false;
-        console.log(this.spotHasReviews)
         if(this.spotHasReviews)
           this.lengthOfReviews = data.data.reviews.length;
         this.studyspotService.getLatestcheckInToStudySpot(this.name).subscribe((data: any)=> {
@@ -67,7 +66,6 @@ export class StudyspotViewComponent {
             this.isCheckedIn = !this.latest.checked_out;
           }
           else {
-            console.error("U ID:", this.latest.user_id );
             if(this.isCheckInAllowed(this.latest.survey_created_at)){
                 if(!this.latest.checked_out){
                   this.canFillTheSurvey = false;

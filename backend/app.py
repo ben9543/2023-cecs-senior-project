@@ -418,6 +418,15 @@ def get_cities():
                 'data': names
             }), 200)
 
+@app.route('/api/studyspots-by-name', methods=['GET'])
+def get_studyspot():
+    studyspot_name = request.args.get('name')
+    spot = studyspots_instance.get_studyspot_by_name(studyspot_name)
+    return make_response(jsonify({
+                'message': 'OK', 
+                'data': spot
+            }), 200)
+
 # Studyspot aggregation API
 @app.route('/api/studyspots/reviews', methods=['GET'])
 def get_studyspot_with_reviews():
