@@ -60,4 +60,13 @@ export class ConfirmationDialogService {
       },
     });
   }
+
+  requestedSpotIsApproved(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Request Approved',
+        dialogMessage: 'You (Admin) have approved the requested StudySpot.',
+      },
+    });
+  }
 }

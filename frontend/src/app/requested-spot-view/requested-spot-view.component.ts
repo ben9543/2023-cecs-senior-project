@@ -6,6 +6,7 @@ import { StudyspotService } from '../studyspot.service';
 import { ConfirmationDialogService } from '../confirmation-dialog.service';
 import { AdminService } from '../admin.service';
 import { RequestedSpotDTO } from '../DTOs/requested-spot.dto';
+import { APIResponse } from '../DTOs/TypicalAPIResponse.dto';
 
 @Component({
   selector: 'app-requested-spot-view',
@@ -70,7 +71,17 @@ export class RequestedSpotViewComponent implements OnInit{
   }
 
   onSubmit(): void {
-    if (this.request.valid) {}
+    this.adminService.approveStudyspot(this.requestedSpot).subscribe(
+      (data: any) => {
+        if(data.result){
+          this.router.navigate(['/admin-home']);
+          this.confirmationDialogService.requestedSpotIsApproved();
+        }
+      },
+      error => {
+        console.error('Error Approving Requested Spot:', error);
+      }
+    );
   }
 
   onReject(): void {

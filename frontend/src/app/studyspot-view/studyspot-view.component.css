@@ -2,7 +2,7 @@
     background-color: cadetblue;
     position: relative;
     width: 900px;
-    height: fit-content;
+    height: max-content;
     margin: 230px auto;
     display: flex;
     flex-wrap: wrap;
@@ -31,13 +31,12 @@
   }
   
   :root {
-    --number-of-reviews: 0; 
+    --number-of-reviews: 5; 
   }
   .details-1 {
     width: max-content;
     flex: 1;
-    position: absolute;
-    top: calc(var(--number-of-reviews ) * 10%);
+    position:absolute;
     left: 2.2%; 
     padding: 20px 45px; 
     border: none;
@@ -113,7 +112,7 @@
     cursor: pointer; 
     border: rgb(14, 75, 77) 2px solid;
     margin-top: 10px;
-    padding: 5px;
+    padding: 5%;
 }
 #detail-t{
     width: max-content;
@@ -133,6 +132,7 @@
     border-radius: 5px;
     cursor: pointer; 
     border: rgb(14, 75, 77) 2px solid;
+    padding-left: 2px;
 }
 
 .top-right-more {
@@ -155,6 +155,7 @@
     padding-left: 5%;
     margin-left: -5%;
     margin-top: 10%;
+    padding-bottom: 20%;
 }
 
 .detail-item-review {
@@ -168,6 +169,13 @@
 
 .studyspotCard{
     padding-top: 2%;
+    padding-left: 3%;
+}
+
+#blocker{
+    border-left: rgb(14, 75, 77) 2px solid;
+    color: bisque;
+    padding-bottom: 40%;
     padding-left: 3%;
 }
 
@@ -246,7 +254,7 @@
         border-radius: 3px;
     }
     #features option {
-        padding: 5px;
+        padding: 2%;
     }
 
     .spots-container-mobile{

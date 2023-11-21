@@ -50,14 +50,10 @@
             </button>
         </div>
         <div class = 'btn-secondary'>
-            <button
-            mat-raised-button
-            type="submit"
-            color="primary"
-          >
-          Sign In
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+            <span *ngIf="!loading">Sign In</span>
+            <mat-spinner *ngIf="loading" diameter="20" color="accent"></mat-spinner>
           </button>
-
         </div>
       </div>
       <div class="forgot-password">

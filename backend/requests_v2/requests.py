@@ -51,7 +51,8 @@ class Requests_API():
         else:
             return None
     
-    def delete_request(self, request):
+    def delete_request(self, user_id, name):
+        request = self.db.session.query(Requests).filter_by(user_id=user_id, studyspot_name=name).first()
         if request:
             self.db.session.delete(request)
             self.db.session.commit()

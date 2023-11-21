@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject} from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { StudyspotService } from '../studyspot.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { CreateCheckIn } from '../DTOs/create-checkin.dto';
 
 @Component({
@@ -13,8 +13,10 @@ import { CreateCheckIn } from '../DTOs/create-checkin.dto';
 })
 export class CheckIndialogComponent {
 
+  @Output() checkInSuccess: EventEmitter<any> = new EventEmitter<any>();
+  
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, 
-  private router: Router, private authService: AuthService, private studyspotService: StudyspotService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  private router: Router, private authService: AuthService, private studyspotService: StudyspotService, @Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<CheckIndialogComponent>,) { }
 
   ngOnInit(): void {
   }
@@ -36,7 +38,7 @@ export class CheckIndialogComponent {
 
     this.studyspotService.checkInToStudySpot(checkInData).subscribe(
       (response) => {
-        this.router.navigate(['/studyspot-view'], { queryParams: { name: this.data.studyspot_name } });
+        this.checkInSuccess.emit();
       },
       (error) => {
         console.error('Check-in failed:', error);

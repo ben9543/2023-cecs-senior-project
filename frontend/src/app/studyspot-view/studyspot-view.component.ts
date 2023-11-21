@@ -38,7 +38,7 @@ export class StudyspotViewComponent {
   isSpotAvailable: boolean = true;
   isCheckedIn: boolean = false;
   canFillTheSurvey: boolean = true;
-
+  spotHasReviews: boolean = false;
   constructor(private route: ActivatedRoute, private router: Router, private studyspotService: StudyspotService, private userService: UserService,
     private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar ) { }
 
@@ -56,7 +56,10 @@ export class StudyspotViewComponent {
       .subscribe((data: any) => {
         this.studySpot = data.data;
         this.reviews = data.data.reviews;
-        this.lengthOfReviews = data.data.reviews.length;
+        this.spotHasReviews = this.reviews? true: false;
+        console.log(this.spotHasReviews)
+        if(this.spotHasReviews)
+          this.lengthOfReviews = data.data.reviews.length;
         this.studyspotService.getLatestcheckInToStudySpot(this.name).subscribe((data: any)=> {
           this.latest = data.data
           if(parseInt(this.latest.user_id) == this.user_id){
@@ -87,9 +90,13 @@ export class StudyspotViewComponent {
           user_id: this.user_id,
           studyspot_name: this.name
         }});
-  
+        
+      dialogRef.afterClosed().subscribe(() => {
+        // Refresh the current page
+        location.reload();
+      });
+
       dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
       });
     }
     else{

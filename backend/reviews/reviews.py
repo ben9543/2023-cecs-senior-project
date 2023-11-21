@@ -81,3 +81,12 @@ class Reviews_API():
             dict_result = review.as_dict()
             results.append(dict_result)
         return results
+
+    # Get review by spot name
+    def get_review_by_studyspot_name(self, studyspot_name):
+        reviews = self.db.session.query(Reviews).filter(Reviews.studyspot_name == studyspot_name).all()
+        results = []
+        for review in reviews:
+            dict_result = review.as_dict()
+            results.append(dict_result)
+        return results

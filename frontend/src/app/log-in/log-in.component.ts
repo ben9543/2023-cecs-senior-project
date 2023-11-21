@@ -15,7 +15,7 @@ export class LogInComponent {
 
   login!: FormGroup;
   errorMessage: string = '';
-  
+  loading: boolean = false;
   constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient,
      private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar ) { }
 
@@ -29,6 +29,7 @@ export class LogInComponent {
 
   onSubmit(): void {
     if (this.login.valid) {
+      this.loading = true;
       const { email, password } = this.login.value;
 
       this.userService.login(email, password).subscribe(
@@ -40,6 +41,9 @@ export class LogInComponent {
             (userData: any) => {
               const user = userData;
               this.authService.setUserData(user);
+              setTimeout(() => {
+              }, 5000);
+              this.loading = false;
             },
             (userError) => {
               console.error('Error fetching user data:', userError);

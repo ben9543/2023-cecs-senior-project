@@ -141,17 +141,18 @@ def admin_login():
 """ Admin Routes """
 @app.route('/api/admin/approve', methods=['POST'])
 def admin_approve():
-    name = request.json.get('name')
+    name = request.json.get('studyspot_name')
+    user_id = request.json.get('user_id')
     req = request_instance.get_studyspot_by_name(name)
     
     # 1. Create a new studyspot using the Request
     studyspot = studyspots_instance.create_studyspot_from_request(req)
     
     # 2. Delete the Request
-    request_instance.delete_request(req)
+    deleted = request_instance.delete_request(user_id, name)
 
     # 3. Return the response
-    return jsonify({'message': "Successfully Approved the New Studyspot"}), 200
+    return jsonify({'message': "Successfully Approved the New Studyspot", 'result': True}), 200
 
 @app.route('/api/admin/reject', methods=['POST'])
 def admin_reject():
@@ -426,7 +427,11 @@ def get_studyspot_with_reviews():
         if not studyspot_name:
             data = studyspots_instance.get_studyspots_with_reviews()
         else:
-            data = studyspots_instance.get_studyspot_by_name_with_reviews(studyspot_name)
+            spot_in_reviews = reviews_instance.get_review_by_studyspot_name(studyspot_name)
+            if spot_in_reviews:
+                data = studyspots_instance.get_studyspot_by_name_with_reviews(studyspot_name)
+            else:
+                data = studyspots_instance.get_studyspot_by_name(studyspot_name)
         # print(data)
         return make_response(jsonify({
             'message': 'OK', 

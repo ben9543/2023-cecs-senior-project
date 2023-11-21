@@ -21,7 +21,7 @@ form {
   .survey{
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 390px;
     margin: 0 auto;
     box-shadow:rgba(0,0,0,0.8) 0 0px 10px,rgba(0,0,0,0.65) 0 0 10px 1px,inset rgba(255,255,255,0.15) 0 1px 0,inset rgba(0,0,0,0.25) 0 -1px 0;
     padding-top: 5%;
@@ -112,6 +112,12 @@ form {
     cursor: pointer;
   }
 
+  mat-slider{
+    width: 75%;
+    border: 2px wheat solid;
+    padding: 1%;
+    margin-bottom: 5%;
+  }
   
   /* Mobile styles */
 @media screen and (max-width: 767px) {
@@ -120,11 +126,11 @@ form {
   }
   
   .survey{
-    width: 310px;
+    width: 300px;
   }
 
   #uploader {
-    width: 325px;
+    width: 305px;
   }
 
   .container_form {

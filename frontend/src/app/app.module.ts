@@ -25,6 +25,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -138,7 +139,8 @@ import { RequestedSpotViewComponent } from './requested-spot-view/requested-spot
     HammerModule,
     MatTabsModule,
     MatCardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressSpinnerModule
   ],
   providers: [StudyspotService, UserService, AuthGuard, AuthService],
   bootstrap: [AppComponent]

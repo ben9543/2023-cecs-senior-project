@@ -2,8 +2,7 @@
   <!-- Div for the study spot component using hard coded data-->
   <div class="studyspotCard">
     <app-studyspot [ngStyle]="" name="{{ studySpot.studyspot_name }}"></app-studyspot>
-  </div>
-  <!-- Div for details 1 (bottom left) -->
+      <!-- Div for details 1 (bottom left) -->
   <div class="details-1">
     <p id="detail-p">Location:{{ studySpot.studyspot_location}}</p>
     <!-- Dropdown for Features, will be iteration once we have all in db -->
@@ -18,6 +17,7 @@
     </div>
     <p id="detail-p">Noise Level Out Of 5: {{ studySpot.studyspot_noise_level}}</p>
     <p id="detail-p">Availablity: {{ isCheckedIn? "Occupied": "Available"}}</p>
+  </div>
   </div>
 
   <!-- Div for details 2 (right side) -->
@@ -34,6 +34,9 @@
 
     <div class="detail-item">
       <p id="detail-t">Traffic Status Out Of 5: {{ studySpot.studspot_crowdedness_level}}</p>
+    </div>
+    <div id="blocker" *ngIf="!spotHasReviews">
+      <h2> No Users Rating To Display</h2>
     </div>
     <div class="user-reviews" >
         <div class="detail-item-review" *ngFor="let review of reviews">
