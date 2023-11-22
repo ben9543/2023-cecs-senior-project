@@ -30,20 +30,20 @@ class Rejections_API():
         except Exception as e:
             print("Ooops someting went wrong =[\n",e)
 
-    def create_rejection_from_request(self, request):
+    def create_rejection_from_request(self, request, rejection_reason = ""):
         new_rejection = Rejection(
-            studyspot_id = request["user_id"] + random.randint(1,100000000),
             studyspot_name= request["studyspot_name"],
             university_name = request["university_name"],
-            rejection_is_indoor= request["rejection_is_indoor"],
-            rejection_ada= request["rejection_ada"],
-            rejection_power_outlets= request["rejection_power_outlets"],
-            rejection_easy_to_find= request["rejection_easy_to_find"],
-            rejection_image_url= request["rejection_image_url"],
-            rejection_location= request["rejection_location"],
-            rejection_noise_level= request["rejection_noise_level"],
-            studspot_crowdedness_level= request["rejection_crowdedness_level"],# Typo
-            rejection_strong_wifi= request["rejection_strong_wifi"]
+            rejection_is_indoor= request["request_is_indoor"],
+            rejection_ada= request["request_ada"],
+            rejection_power_outlets= request["request_power_outlets"],
+            rejection_easy_to_find= request["request_easy_to_find"],
+            rejection_image_url= request["request_image_url"],
+            rejection_location= request["request_location"],
+            rejection_noise_level= request["request_noise_level"],
+            rejection_crowdedness_level= request["request_crowdedness_level"],
+            rejection_strong_wifi= request["request_strong_wifi"],
+            rejection_reason = rejection_reason
         )
         self.db.session.add(new_rejection)
         self.db.session.commit()
