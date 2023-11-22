@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
@@ -85,10 +86,11 @@ def after_request(response):
 # Protect routes
 def login_required(func):
     def secure_function(*args, **kwargs):
+        # print("Print All Headers: ",request.headers)
         if(not AUTH_HEADER_KEY in request.headers):
             return make_response(jsonify({'error': 'Authorization header missing'}), 401)
         token = request.headers.get(AUTH_HEADER_KEY)
-        #print("Payload->>>>>>",token)
+        # print("Payload->>>>>>",token)
         if not token:
             return make_response(jsonify({'error': 'Token is missing'}), 401)
         if auth_instance.verify_token(token):
@@ -174,8 +176,9 @@ def login():
         if password_check:
             token = auth_instance.generate_jwt(email)
             if token:
-                #return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-                return jsonify({'token': token, 'authenticated': True}), 200
+                expiration_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+                #return jsonify({'token': token.decode('utf-8'), 'expires_in': expiration_time, 'authenticated': True}), 200
+                return jsonify({'token': token, 'expires_in': expiration_time, 'authenticated': True}), 200
             else:
                 return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
         else:
@@ -216,6 +219,7 @@ def handle_preflight_change_pswd():
     return '', 200
 
 @app.route('/api/change-password', methods=['PUT'])
+@login_required
 def change_password():
     try:
         user_id = request.json.get('user_id')
@@ -240,6 +244,7 @@ def change_password():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/user/<string:user_name>', methods=['GET'])
+@login_required
 def get_user(user_name):
     # Retrieve user data based on the username from the database
     user = users_instance.get_user_by_username(user_name)
@@ -292,6 +297,7 @@ def handle_preflight_email():
 # Define an API route for updating user data
 @app.route('/api/update-user', methods=['PUT'])  # Use PUT for updating data
 @cross_origin()  # Allow cross-origin requests for this route
+@login_required
 def update_user():
     try:
         # Get the user data from the request
@@ -320,6 +326,7 @@ def update_user():
 
 # API route to check if a username is taken
 @app.route('/api/check-username', methods=['GET', 'POST', 'OPTIONS'])
+@login_required
 @cross_origin()
 def check_username_availability():
     data = request.json  # Get the JSON data from the request
@@ -339,6 +346,7 @@ def check_username_availability():
 
 # API route to check if an email is taken
 @app.route('/api/check-email', methods=['GET', 'POST', 'OPTIONS'])
+@login_required
 @cross_origin()
 def check_email_availability():
     data = request.json  # Get the JSON data from the request
@@ -358,6 +366,7 @@ def check_email_availability():
         return jsonify({'taken': False})
 
 @app.route('/api/users/<int:user_id>', methods=['GET'])
+@login_required
 def get_username_by_id(user_id):
     user = users_instance.get_user_by_id(user_id)
     print(user.user_name)
@@ -372,6 +381,8 @@ def get_username_by_id(user_id):
 
 """ StudySpot API """
 @app.route('/api/studyspots', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@login_required
+@login_required
 def main_studyspot():
     if request.method == 'GET':
         try:
@@ -411,6 +422,7 @@ def main_studyspot():
             }), 201)
 
 @app.route('/api/studyspot-names', methods=['GET'])
+@login_required
 def get_cities():
     names = studyspots_instance.get_all_studyspot_name()
     return make_response(jsonify({
@@ -419,6 +431,7 @@ def get_cities():
             }), 200)
 
 @app.route('/api/studyspots-by-name', methods=['GET'])
+@login_required
 def get_studyspot():
     studyspot_name = request.args.get('name')
     spot = studyspots_instance.get_studyspot_by_name(studyspot_name)
@@ -429,6 +442,7 @@ def get_studyspot():
 
 # Studyspot aggregation API
 @app.route('/api/studyspots/reviews', methods=['GET'])
+@login_required
 def get_studyspot_with_reviews():
     try:
         data = None
@@ -461,6 +475,7 @@ def search_studyspot():
 
 # Get a single studyspot by id
 @app.route('/api/studyspots/<int:studyspot_id>', methods=['GET'])
+@login_required
 def get_studyspot_by_id(studyspot_id):
     #studyspot = next((spot for spot in studyspots_instance if spot['id'] == studyspot_id), None)
     studyspot = None
@@ -474,6 +489,7 @@ REVIEWS API
 '''
 
 @app.route('/api/add_review', methods=['POST'])
+@login_required
 def add_new_review():
     if request.method == 'POST':
         data = request.get_json()
@@ -488,6 +504,7 @@ def add_new_review():
     
 # Get review by id
 @app.route('/api/review/<int:review_id>', methods=['GET'])
+@login_required
 def get_review_id(review_id):
     review = reviews_instance.get_review_by_id(review_id)
     if review:
@@ -498,6 +515,7 @@ def get_review_id(review_id):
 
 # Get Review by user_id
 @app.route('/api/review/user', methods=['GET'])
+@login_required
 def get_review_by_user_id():
     reviews = None
     user_id = request.args.get("user_id")
@@ -512,6 +530,7 @@ def get_review_by_user_id():
 
 # Adding a new review 
 @app.route('/api/review/add-user', methods=['POST'])
+@login_required
 def add_new_user():
     review_id = request.json.get('review_id')
     user_id= request.json.get('user_id')
@@ -536,6 +555,7 @@ def add_new_user():
 
 # Updating a review by id    
 @app.route('/api/reviews/<int:review_id>', methods=['PUT'])
+@login_required
 def update_review(review_id):
     try:
         # Parse the JSON data from the request
@@ -574,6 +594,7 @@ def update_review(review_id):
 
 # Deleting a review 
 @app.route('/api/reviews/<int:review_id>', methods=['DELETE'])
+@login_required
 def delete_review(review_id):
     try:
         # Call the delete_review method
@@ -601,6 +622,7 @@ def get_university_list():
 Favourtie API
 '''
 @app.route('/api/like-card', methods=['POST'])
+@login_required
 def like_card():
     try:
         data = request.get_json()
@@ -616,6 +638,7 @@ def like_card():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/unlike-card', methods=['POST'])
+@login_required
 def unlike_card():
     try:
         data = request.get_json()
@@ -631,6 +654,7 @@ def unlike_card():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/get-liked-state', methods=['GET'])
+@login_required
 def get_liked_state():
     try:
         studyspot_name = request.args.get("studyspot_name")
@@ -647,6 +671,7 @@ def get_liked_state():
     
 
 @app.route('/api/users/favorites/get-favorites-list/<int:user_id>', methods=['GET'])
+@login_required
 def get_favorites_by_user(user_id):
     user = users_instance.get_user_by_id(user_id)
     if user:
@@ -662,6 +687,7 @@ def get_favorites_by_user(user_id):
 SURVEY API
 '''
 @app.route('/api/users/surveys/get_checked_in_studyspots/<int:user_id>', methods=['GET'])
+@login_required
 def get_checked_in_studyspots(user_id):
     checked_in_spots = survey_instance.get_checked_in_studyspots(user_id)
     if checked_in_spots:
@@ -670,6 +696,7 @@ def get_checked_in_studyspots(user_id):
         return jsonify({'message': 'No checked-in study spots found for this user'}), 404
 
 @app.route('/api/users/surveys/check_in', methods=['POST'])
+@login_required
 def check_in():
     data = request.get_json()
     print(request.get_json())
@@ -688,6 +715,7 @@ def check_in():
         return jsonify({'message': 'Failed to create a check-in'}), 500
 
 @app.route('/api/users/surveys/latestsurvey/<string:studyspot_name>', methods=['GET'])
+@login_required
 def get_latest_survey(studyspot_name):
     latest_survey = survey_instance.get_latest_survey_for_studyspot(studyspot_name)
     
@@ -698,6 +726,7 @@ def get_latest_survey(studyspot_name):
 
 # Handle OPTIONS requests for /api/users/surveys/checkout/<int:survey_id>'
 @app.route('/api/users/surveys/checkout/', methods=['OPTIONS'])
+@login_required
 def handle_preflight_survey():
     return '', 200
 
@@ -712,6 +741,7 @@ def checkout_from_current_survey(survey_id):
     
 '''Request API'''
 @app.route('/api/requests/create_request',methods=['PUT'])
+@login_required
 def create_request():
     data = request.get_json()
     user_id = data.get('user_id')

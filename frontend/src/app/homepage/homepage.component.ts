@@ -36,7 +36,6 @@ export class HomepageComponent implements OnInit, OnChanges {
 private initializeComponent() {
   this.studyspotService.getAllStudyspots().subscribe(
     (data: any) => {
-      console.log(data.data)
       if (this.searchQuery) {
         // Filter spots based on the search query
         this.spots = data.data.filter((spot: any) => {

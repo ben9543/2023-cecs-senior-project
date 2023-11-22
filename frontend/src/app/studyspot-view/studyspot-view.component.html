@@ -18,7 +18,7 @@
     <p id="detail-p">Noise Level Out Of 5: {{ studyspotWOReviews.studyspot_noise_level}}</p>
     <div class="avail">
       <p id="detail-a">Availability</p>
-      <ng-container *ngIf="isCheckedIn; else notCheckedIn">
+      <ng-container *ngIf="isCheckedIn && this.isCheckInAllowed(this.latest.survey_created_at); else notCheckedIn">
         <mat-icon class="red-icon">block</mat-icon>
       </ng-container>
       <ng-template #notCheckedIn>

@@ -34,8 +34,7 @@ export class LogInComponent {
 
       this.userService.login(email, password).subscribe(
         (response: any) => {
-          localStorage.setItem('access_token', response.token);
-
+          localStorage.setItem('header', JSON.stringify(response));
           // Fetch the user data based on the email from UserService
           this.userService.getUserByEmail(email).subscribe(
             (userData: any) => {
