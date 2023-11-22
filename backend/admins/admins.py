@@ -15,6 +15,13 @@ class Admin_API():
             print("Error retrieving all users from the database:", e)
             return []
     
+    def get_admin_by_id(self, admin_id):
+        admin = self.db.session.query(Admins).filter_by(admin_id=admin_id).first()
+        if admin:
+            return admin
+        else:
+            return None
+    
     def find_user_by_email(self, email):
         # Check which user has the specific email
         admin_user_with_target_email = [admin_user for admin_user in self.get_admin_users() if admin_user.admin_email == email]

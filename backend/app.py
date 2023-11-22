@@ -65,7 +65,7 @@ rejection_instance = Rejections_API(db)
 reports_studyspots_instance = Reported_studyspots_API(db)
 
 # Create auth instance
-auth_instance = Auth(db, users_instance)
+auth_instance = Auth(db, users_instance, admins_instance)
 
 # Constants
 AUTH_HEADER_KEY  = 'Authorization'
@@ -109,7 +109,7 @@ def admin_login_required(func):
         #print("Payload->>>>>>",token)
         if not token:
             return make_response(jsonify({'error': 'Token is missing'}), 401)
-        if auth_instance.verify_token(token):
+        if auth_instance.verify_admin_token(token):
             return func(*args, **kwargs)
         else:
             return make_response(jsonify({'error': 'Authentication failed (invalid token)'}), 401)
@@ -135,13 +135,20 @@ def admin_login():
     if admin_user:
         stored_password = admin_user.password
         if stored_password == password:
-            return jsonify({'message': "Authorized", 'authorized': True}), 200
+            token = auth_instance.generate_jwt_admin(email)
+            if token:
+                expiration_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+                # return jsonify({'admin_token': token.decode('utf-8'), 'expires_in': expiration_time, 'authenticated': True}), 200
+                return jsonify({'admin_token': token, 'expires_in': expiration_time, 'authenticated': True}), 200
+            else:
+                return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
         else:
             return jsonify({'message': 'Invalid password', 'authorized': False}), 401
     return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
 
 """ Admin Routes """
 @app.route('/api/admin/approve', methods=['POST'])
+@admin_login_required
 def admin_approve():
     name = request.json.get('studyspot_name')
     user_id = request.json.get('user_id')
@@ -369,7 +376,6 @@ def check_email_availability():
 @login_required
 def get_username_by_id(user_id):
     user = users_instance.get_user_by_id(user_id)
-    print(user.user_name)
     if user:
         return jsonify(user.user_name), 200
     else:
@@ -699,7 +705,6 @@ def get_checked_in_studyspots(user_id):
 @login_required
 def check_in():
     data = request.get_json()
-    print(request.get_json())
     studyspot_name = data.get('studyspot_name')
     user_id = data.get('user_id')
     crowdedness = data.get('survey_crowdednes_level')
@@ -752,6 +757,7 @@ def create_request():
     return jsonify({'message': 'Requests has been submitted successfully!'}), 200
 
 @app.route('/api/requests/get_requested_spots',methods=['GET'])
+@admin_login_required
 def get_requested_studyspots():
     
     requested_spots = request_instance.get_requested_studyspots()
@@ -760,6 +766,7 @@ def get_requested_studyspots():
     return jsonify({"message":"Error: Couldn't get the requested spots"}),409
 
 @app.route('/api/requests/get_requested_spot_by_name', methods=['GET'])
+@admin_login_required
 def get_requested_spot_by_name():
     try:
         data = None

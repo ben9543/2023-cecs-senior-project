@@ -31,12 +31,34 @@ export class AuthService {
     const header = localStorage.getItem('header');
     if (header){
       const tokenData = JSON.parse(header);
-      const token = tokenData.token;
-      return token;
+      if(this.hasAdminTokenKey()){
+        const token = tokenData.admin_token;
+        return token;
+      }else{
+        const token = tokenData.token;
+        return token;
+      }
+
+      
     }
     return '';
   }
 
+  hasAdminTokenKey(): boolean {
+    const header = localStorage.getItem('header');
+
+    if (header) {
+      const tokenData = JSON.parse(header);
+      const token = tokenData.admin_token;
+      if (token) {
+        return true;
+      }else{
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
   // getUserName(): string{
   //   return sessionStorage.getItem(this.USER_DATA_KEY)?.at(3) || '';
   // }

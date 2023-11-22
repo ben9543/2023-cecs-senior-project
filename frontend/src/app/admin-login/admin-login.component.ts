@@ -33,8 +33,7 @@ export class AdminLoginComponent {
 
       this.adminService.login(email, password).subscribe(
         (response: any) => {
-          // localStorage.setItem('access_token', response.token);
-          // Navigate to home
+          localStorage.setItem('header', JSON.stringify(response));
           this.router.navigate(['/admin-home']);
         },
         (error) => {

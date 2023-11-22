@@ -287,6 +287,8 @@
         width: 52%;
         height: 30px;
         border-radius: 3px;
+        opacity: 1;
+        color: #000;
     }
     #features option {
         padding: 2%;
