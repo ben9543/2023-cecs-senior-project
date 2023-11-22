@@ -1,4 +1,5 @@
-from db.db_connection_test import Requests
+from db.db_connection_test import Rejection
+import random
 # https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/#installation
 
 
@@ -9,7 +10,7 @@ class Rejections_API():
 
     def add_rejection(self,data):
         try:
-            request = Requests(
+            rejection = Rejection(
                 user_id= data["user_id"],
                 studyspot_name= data["studyspot_name"],
                 university_name = data["university_name"],
@@ -24,32 +25,29 @@ class Rejections_API():
                 request_strong_wifi= data["strong_wifi"],
                 request_reason = data["reason"]
             )
-            self.db.session.add(request)
+            self.db.session.add(rejection)
             self.db.session.commit()
         except Exception as e:
             print("Ooops someting went wrong =[\n",e)
 
-    # def check_duplicate(self,user_id,studyspot_name):
-    #     request = self.db.session.query(Requests).filter_by(user_id=user_id,studyspot_name=studyspot_name).first()
-    #     if request: 
-    #         return True
-    #     else:
-    #         return False
-    
-    def get_requested_studyspots(self):
-        results = []
-        query = self.db.session.execute(self.db.select(Requests)).scalars().all()
-        for q in query:
-            dict_result = q.as_dict()
-            results.append(dict_result)
-        return results
-
-    def get_studyspot_by_name(self, name):
-        studyspot = self.db.session.query(Requests).filter(Requests.studyspot_name == name).first()
-        if studyspot:
-            return studyspot.as_dict()
-        else:
-            return None
+    def create_rejection_from_request(self, request, rejection_reason = ""):
+        new_rejection = Rejection(
+            studyspot_name= request["studyspot_name"],
+            university_name = request["university_name"],
+            rejection_is_indoor= request["request_is_indoor"],
+            rejection_ada= request["request_ada"],
+            rejection_power_outlets= request["request_power_outlets"],
+            rejection_easy_to_find= request["request_easy_to_find"],
+            rejection_image_url= request["request_image_url"],
+            rejection_location= request["request_location"],
+            rejection_noise_level= request["request_noise_level"],
+            rejection_crowdedness_level= request["request_crowdedness_level"],
+            rejection_strong_wifi= request["request_strong_wifi"],
+            rejection_reason = rejection_reason
+        )
+        self.db.session.add(new_rejection)
+        self.db.session.commit()
+        return new_rejection.as_dict()
             
 
 
