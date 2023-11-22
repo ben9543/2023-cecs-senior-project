@@ -85,7 +85,17 @@ export class RequestedSpotViewComponent implements OnInit{
   }
 
   onReject(): void {
-    if (this.request.valid) {}
+    this.adminService.rejectStudyspot(this.requestedSpot).subscribe(
+      (data: any) => {
+        if(data.result){
+          this.router.navigate(['/admin-home']);
+          this.confirmationDialogService.requestedSpotIsRejected();
+        }
+      },
+      error => {
+        console.error('Error Approving Requested Spot:', error);
+      }
+    );
   }
 
   convertAttributesToBoolean(): void{

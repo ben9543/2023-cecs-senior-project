@@ -23,9 +23,10 @@ export class SubmitRequestComponent {
   ada: boolean = false;
   easy_to_find: boolean = false;
 
-  spotNamesFromJSON: string[] = [];
-  spotNamessFromDB: string[] = [];
-  availableSpotNames: string[] = [];
+  spotNamesFromJSON!: string[];
+  spotNamessFromDB!: string[] ;
+  availableSpotNames!: string[];
+  spotNamessFromReqDB!: string[];
 
   attributeList: string[] = ['WiFi', 'Power', 'ADA Accessible', 'Indoor', 'Easy to find'];
   userData!: UserData;
@@ -56,28 +57,32 @@ export class SubmitRequestComponent {
     this.http.get<any>('assets/Data/Studyspot_Names.json') // Adjust the URL based on your file path
       .subscribe((response) => {
         this.spotNamesFromJSON = response;
-        console.log(response)
         this.fetchCitiesFromDB();
     });
 
   }
 
-  fetchCitiesFromDB(): void {
-    this.studySpotService.getStudyspotNames().subscribe(
-      (data: any) =>{
-        this.spotNamessFromDB = data.names;
-      },
-      (error) => {
-        console.error('Error fetching requested study spots:', error);
-      }
-      );
-
+  async fetchCitiesFromDB(): Promise<void> {
+    try {
+      const [studyspotNamesResponse, requestedNamesResponse] = await Promise.all([
+        this.studySpotService.getStudyspotNames().toPromise(),
+        this.studySpotService.getRequestedNames().toPromise()
+      ]);
+  
+      this.spotNamessFromDB = studyspotNamesResponse.data;
+      this.spotNamessFromReqDB = requestedNamesResponse.data;
+  
       this.availableSpotNames = this.getAvailableCities();
+    } catch (error) {
+      console.error('Error fetching study spots:', error);
+    }
   }
 
   getAvailableCities(): string[] {
-    // Compare cities from JSON and database to get available cities
-    return this.spotNamesFromJSON.filter(city => !(city in this.spotNamessFromDB));
+    const citiesFromDB = this.spotNamessFromDB.map(item => item);
+    const citiesFromReqDB = this.spotNamessFromReqDB.map(item => item);
+
+    return this.spotNamesFromJSON.filter(city => !citiesFromDB.includes(city) && !citiesFromReqDB.includes(city));
   }
 
   onSubmit(): void {

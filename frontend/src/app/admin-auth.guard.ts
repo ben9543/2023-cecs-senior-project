@@ -13,7 +13,7 @@ export class AdminAuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if (this.authService.hasAdminTokenKey() && this.authService.isAuthenticated()) {
+    if (this.authService.hasAdminTokenKey() && this.authService.isAdminAuthenticated()) {
       return true;
     } else {
       this.authService.logout()

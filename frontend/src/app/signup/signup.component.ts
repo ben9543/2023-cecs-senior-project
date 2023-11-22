@@ -47,11 +47,11 @@ export class SignupComponent {
       if (usernameResponse.taken) {
         this.snackBar.open('Username is already taken', 'Close', { duration: 3000 });
       } else {
-        this.userService.checkEmail(email).subscribe((emailResponse: any) => {
+        this.userService.checkEmail(email.toLowerCase()).subscribe((emailResponse: any) => {
           if (emailResponse.taken) {
             this.snackBar.open('Email is already taken', 'Close', { duration: 3000 });
           } else {
-            this.userService.signup(username, college, email, password).subscribe(
+            this.userService.signup(username, college, email.toLowerCase(), password).subscribe(
               () => {
                   this.router.navigate(['/login']);
                   this.confirmationDialogService.openAccountCreatedConfirmation();

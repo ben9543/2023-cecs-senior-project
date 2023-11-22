@@ -32,6 +32,7 @@ class Rejections_API():
 
     def create_rejection_from_request(self, request, rejection_reason = ""):
         new_rejection = Rejection(
+            user_id= request["user_id"],
             studyspot_name= request["studyspot_name"],
             university_name = request["university_name"],
             rejection_is_indoor= request["request_is_indoor"],

@@ -78,14 +78,36 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const header = localStorage.getItem('header');
-
     if (header) {
       const tokenData = JSON.parse(header);
-      const expiresAt = new Date(tokenData.expires_in).getTime();
-      // Check if the current time is before the expiration time
-      // console.log(expiresAt)
-      // console.log(Date.now())
-      return Date.now() < expiresAt;
+      if(tokenData.token){
+        const expiresAt = new Date(tokenData.expires_in).getTime();
+        // Check if the current time is before the expiration time
+        // console.log(expiresAt)
+        // console.log(Date.now())
+        return Date.now() < expiresAt;
+      }else{
+        return false;
+      }
+    } else {
+      // header data not found in local storage
+      return false;
+    }
+  }
+
+  isAdminAuthenticated(): boolean {
+    const header = localStorage.getItem('header');
+    if (header) {
+      const tokenData = JSON.parse(header);
+      if(tokenData.admin_token){
+        const expiresAt = new Date(tokenData.expires_in).getTime();
+        // Check if the current time is before the expiration time
+        // console.log(expiresAt)
+        // console.log(Date.now())
+        return Date.now() < expiresAt;
+      }else{
+        return false;
+      }
     } else {
       // header data not found in local storage
       return false;

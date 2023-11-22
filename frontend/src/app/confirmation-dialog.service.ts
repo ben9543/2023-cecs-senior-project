@@ -69,4 +69,13 @@ export class ConfirmationDialogService {
       },
     });
   }
+
+  requestedSpotIsRejected(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Request Rejected',
+        dialogMessage: 'You (Admin) have rejected the requested StudySpot.',
+      },
+    });
+  }
 }

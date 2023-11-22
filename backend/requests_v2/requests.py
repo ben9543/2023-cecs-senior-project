@@ -59,5 +59,11 @@ class Requests_API():
             return {"message": "Requests deleted successfully"}
         else:
             return None
+    
+    def get_all_studyspot_name(self):
+        names = []
+        studyspot_names = self.db.session.query(Requests.studyspot_name).all()
+        names = [name[0] for name in studyspot_names]
+        return names
 
 

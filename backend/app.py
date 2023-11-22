@@ -177,7 +177,8 @@ def admin_reject():
     try:
         # The route takes three arguments
         name = request.json.get('studyspot_name')
-        rejection_reason = request.json.get('rejection_reason')
+        #rejection_reason = request.json.get('rejection_reason')
+        rejection_reason = "Not Qualified"
         user_id = request.json.get('user_id')
 
         # Get the request from the table using the studyspot name
@@ -362,7 +363,6 @@ def update_user():
 
 # API route to check if a username is taken
 @app.route('/api/check-username', methods=['GET', 'POST', 'OPTIONS'])
-@login_required
 @cross_origin()
 def check_username_availability():
     data = request.json  # Get the JSON data from the request
@@ -382,7 +382,6 @@ def check_username_availability():
 
 # API route to check if an email is taken
 @app.route('/api/check-email', methods=['GET', 'POST', 'OPTIONS'])
-@login_required
 @cross_origin()
 def check_email_availability():
     data = request.json  # Get the JSON data from the request
@@ -458,8 +457,17 @@ def main_studyspot():
 
 @app.route('/api/studyspot-names', methods=['GET'])
 @login_required
-def get_cities():
+def get_names_from_studyspots():
     names = studyspots_instance.get_all_studyspot_name()
+    return make_response(jsonify({
+                'message': 'OK', 
+                'data': names
+            }), 200)
+
+@app.route('/api/requested-names', methods=['GET'])
+@login_required
+def get_names_from_requests():
+    names = request_instance.get_all_studyspot_name()
     return make_response(jsonify({
                 'message': 'OK', 
                 'data': names

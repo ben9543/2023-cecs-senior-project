@@ -31,7 +31,7 @@ export class AdminLoginComponent {
     if (this.login.valid) {
       const { email, password } = this.login.value;
 
-      this.adminService.login(email, password).subscribe(
+      this.adminService.login(email.toLowerCase(), password).subscribe(
         (response: any) => {
           localStorage.setItem('header', JSON.stringify(response));
           this.router.navigate(['/admin-home']);

@@ -109,6 +109,7 @@ class Requests(Base):
 
 class Rejection(Base):
     __tablename__="rejections"
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False, primary_key=True)
     studyspot_name = Column(String(254), nullable=False, primary_key=True)
     university_name = Column(String(200), ForeignKey('universities.university_name'))
     rejection_is_indoor = Column(Boolean)

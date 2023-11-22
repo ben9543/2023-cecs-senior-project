@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS Requests (
 );
 
 CREATE TABLE IF NOT EXISTS Rejections (
+    user_id INT NOT NULL,
     studyspot_name VARCHAR(254) NOT NULL,
     university_name VARCHAR(200),
     rejection_is_indoor BOOLEAN, 

@@ -32,11 +32,11 @@ export class LogInComponent {
       this.loading = true;
       const { email, password } = this.login.value;
 
-      this.userService.login(email, password).subscribe(
+      this.userService.login(email.toLowerCase(), password).subscribe(
         (response: any) => {
           localStorage.setItem('header', JSON.stringify(response));
           // Fetch the user data based on the email from UserService
-          this.userService.getUserByEmail(email).subscribe(
+          this.userService.getUserByEmail(email.toLowerCase()).subscribe(
             (userData: any) => {
               const user = userData;
               this.authService.setUserData(user);

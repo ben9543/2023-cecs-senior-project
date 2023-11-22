@@ -117,4 +117,9 @@ export class StudyspotService {
     const requestApi = `${this.apiUrl}/studyspot-names`;
     return this.http.get(requestApi);
   }
+ 
+  getRequestedNames(): Observable<any>{
+    const requestApi = `${this.apiUrl}/requested-names`;
+    return this.http.get(requestApi);
+  } 
 }

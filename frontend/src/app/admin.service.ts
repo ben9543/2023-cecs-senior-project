@@ -19,8 +19,6 @@ export class AdminService {
       email: email,
       password: password
     };
-
-    // Send a POST request to your API for login
     return this.http.post(`${this.apiUrl}/admin/login`, loginData);
   }
 
@@ -34,5 +32,9 @@ export class AdminService {
 
   approveStudyspot(approveRequest: RequestedSpotDTO){
     return this.http.post(`${this.apiUrl}/admin/approve`, approveRequest);
+  }
+
+  rejectStudyspot(approveRequest: RequestedSpotDTO){
+    return this.http.post(`${this.apiUrl}/admin/reject`, approveRequest);
   }
 }
