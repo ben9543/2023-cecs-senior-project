@@ -143,23 +143,41 @@ def admin_login():
 """ Admin Routes """
 @app.route('/api/admin/approve', methods=['POST'])
 def admin_approve():
-    name = request.json.get('studyspot_name')
-    user_id = request.json.get('user_id')
-    req = request_instance.get_studyspot_by_name(name)
-    
-    # 1. Create a new studyspot using the Request
-    studyspot = studyspots_instance.create_studyspot_from_request(req)
-    
-    # 2. Delete the Request
-    deleted = request_instance.delete_request(user_id, name)
+    try:
+        name = request.json.get('studyspot_name')
+        user_id = request.json.get('user_id')
+        req = request_instance.get_studyspot_by_name(name)
+        
+        # 1. Create a new studyspot using the Request
+        new_studyspot = studyspots_instance.create_studyspot_from_request(req)
+        
+        # 2. Delete the Request
+        deleted = request_instance.delete_request(user_id, name)
 
-    # 3. Return the response
-    return jsonify({'message': "Successfully Approved the New Studyspot", 'result': True}), 200
+        # 3. Return the response
+        return jsonify({'message': "Successfully Approved the New Studyspot", 'result': True}), 200
+    except:
+        # 4. Return the error
+        return jsonify({'message': "Internal Error: Please Check the Primary Key", 'result': False}), 400
 
 @app.route('/api/admin/reject', methods=['POST'])
 def admin_reject():
+    try:
+        name = request.json.get('studyspot_name')
+        user_id = request.json.get('user_id')
+        req = request_instance.get_studyspot_by_name(name)
+        
+        # 1. Create a new rejection using the Request
+        new_rejection = rejection_instance.create_rejection_from_request(req)
+        
+        # 2. Delete the Request
+        deleted = request_instance.delete_request(user_id, name)
 
-    pass
+        # 3. Return the response
+        return jsonify({'message': "Successfully Approved the New Studyspot", 'result': True}), 200
+    except:
+        # 4. Return the error
+        return jsonify({'message': "Internal Error: Please Check the Primary Key", 'result': False}), 400
 
 
 """ Users Routes """
