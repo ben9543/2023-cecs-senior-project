@@ -78,7 +78,6 @@ class StudySpots_API():
         names = []
         studyspot_names = self.db.session.query(Studyspots.studyspot_name).all()
         names = [name[0] for name in studyspot_names]
-        print(names)
         return names
     
     def get_studyspot_by_name(self, name):

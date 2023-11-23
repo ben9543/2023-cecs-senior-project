@@ -113,6 +113,11 @@ export class StudyspotService {
     return this.http.get(prevCheckedInSpots);
   }
 
+  getCheckedInStudySpotsName(): Observable<any> {
+    const prevCheckedInSpots = `${this.apiUrl}/users/surveys/get_checked_in_studyspots_name`;
+    return this.http.get(prevCheckedInSpots);
+  }
+
   getStudyspotNames(): Observable<any>{
     const requestApi = `${this.apiUrl}/studyspot-names`;
     return this.http.get(requestApi);

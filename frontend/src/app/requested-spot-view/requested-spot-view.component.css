@@ -198,8 +198,15 @@ label{
 
 /* Media queries for mobile responsiveness */
 @media screen and (max-width: 768px) {
-    .spots-container {
-        display: none;
+    .spots-container{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin-left: 2.5%;
+        margin-top: 35%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: cadetblue;
     }
 
     .study-spot-image {
@@ -235,29 +242,26 @@ label{
         width: max-content;
         margin-left: 25%;
     }
-
+    #detail-p{
+        width: max-content;
+    }
     #special-button{
         width: 100px;
     }
 
     .details-2 {
-        margin-top: 10px;
-        margin-left: 0;
+        margin-top: 10%;
+        border-left: none;
+        border-top: rgb(14, 75, 77) 2px solid;
+    }
+
+    .detail-p{
+        width: fit-content;
     }
 
     .detail-item {
         padding: 5px 10px;
         font-size: 14px;
-    }
-    .user-reviews{
-        border-left: none;
-        border-top: rgb(14, 75, 77) 2px solid;
-        margin-top: 5%;
-    }
-    .select-features{
-        font-size: 16px;
-        border-radius: 5px;
-        height: 30px;
     }
     label{
         padding-right: 12%;
@@ -271,17 +275,6 @@ label{
     }
     #features option {
         padding: 5px;
-    }
-
-    .spots-container-mobile{
-        display: flex;
-        flex-direction: column;
-        width: 90%;
-        margin-left: 2.5%;
-        margin-top: 35%;
-        padding: 10px;
-        border-radius: 5px;
-        background-color: cadetblue;
     }
     .box{
         padding: 10px;

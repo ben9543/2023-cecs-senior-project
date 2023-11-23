@@ -83,6 +83,12 @@ class Surveys_API():
         except SQLAlchemyError as e:
             print("Error creating a new check-in:", e)
             return False
+        
+    def get_checkedin_studyspots_names(self):
+        names=[]
+        studyspot_names = self.db.session.query(Surveys.studyspot_name).all()
+        names = [name[0] for name in studyspot_names]
+        return names
 
     def get_latest_survey_for_studyspot(self, studyspot_name):
         try:

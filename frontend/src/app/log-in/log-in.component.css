@@ -112,7 +112,16 @@ form {
     cursor: pointer;
   }
   
-  
+mat-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  backdrop-filter: blur(2px);
+  transform: translate(-50%, -50%);
+  z-index: 9999; 
+  color: cadetblue;
+}
+
   /* For screens smaller than 600px */
 @media (max-width: 600px) {
   form {

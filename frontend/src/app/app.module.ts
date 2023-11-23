@@ -31,7 +31,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogInComponent } from './log-in/log-in.component';
-import { StudyspotsComponent } from './studyspots/studyspots.component';
 import { HeaderComponent } from './header/header.component';
 import { StudyspotComponent } from './studyspot/studyspot.component';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -60,7 +59,6 @@ import { CheckInComponent } from './check-in/check-in.component';
 import { CheckIndialogComponent } from './check-indialog/check-indialog.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
-import { AdminDecisionPageComponent } from './admin-decision-page/admin-decision-page.component';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { LandingAgeComponent } from './landing-age/landing-age.component';
 import { StudyspotService } from './studyspot.service';
@@ -75,7 +73,6 @@ import { AuthInterceptor } from './auth.interceptor';
   declarations: [
     AppComponent,
     LogInComponent,
-    StudyspotsComponent,
     HeaderComponent,
     StudyspotComponent,
     HomepageComponent,
@@ -101,7 +98,6 @@ import { AuthInterceptor } from './auth.interceptor';
     CheckIndialogComponent,
     AdminLoginComponent,
     AdminHomepageComponent,
-    AdminDecisionPageComponent,
     AdminHeaderComponent,
     LandingAgeComponent,
     RequestedSpotsComponent,

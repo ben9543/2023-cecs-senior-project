@@ -738,6 +738,15 @@ def get_checked_in_studyspots(user_id):
     else:
         return jsonify({'message': 'No checked-in study spots found for this user'}), 404
 
+@app.route('/api/users/surveys/get_checked_in_studyspots_name', methods=['GET'])
+@login_required
+def get_checked_in_studyspots_name():
+    checkedin_names = survey_instance.get_checkedin_studyspots_names()
+    if checkedin_names:
+        return jsonify({'message': 'Success', 'data': checkedin_names}), 200
+    else:
+        return jsonify({'message': 'No checked-in study spots found for this user'}), 404
+
 @app.route('/api/users/surveys/check_in', methods=['POST'])
 @login_required
 def check_in():
@@ -821,6 +830,7 @@ def get_requested_spot_by_name():
         }), 400)
 
 @app.route('/api/reports/create-studyspot-report',methods=['PUT'])
+@login_required
 def create_report():
     try:
         data = request.get_json()
@@ -838,6 +848,7 @@ def create_report():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/admin/reported-studyspots', methods=['GET'])
+@login_required
 def admin_get_reported_studyspot_list():
     data = reports_studyspots_instance.get_reported_list()
     if data:

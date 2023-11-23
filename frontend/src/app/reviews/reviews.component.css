@@ -7,6 +7,7 @@
     margin-top: 12%;
     display: flex;
     justify-content: left;
+    border-radius: 10px 10px 0 0;
   }
   
   p{
@@ -40,7 +41,6 @@ app-studyspot
 {
     flex-shrink: 10;
 }
-
 ng-template{
     display: none;
 }
@@ -49,16 +49,16 @@ ng-template{
     display: none;
   }
 
-  .previous, .next {
+.previous, .next {
     border: rgb(2, 35, 36) 2px solid;
     background-color: cadetblue;
     cursor: pointer;
 
-  }
+}
 
 .star-uc-container{
-    width: 50%;
-    margin-top: 2%;
+    width: 100%;
+    margin-top: 3%;
 }
 /* Media Query for Small Screens */
 @media (max-width: 768px) {

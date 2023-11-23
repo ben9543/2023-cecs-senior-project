@@ -3,12 +3,12 @@
 </div>
 <div class="container">
     <div class="container-objects">
-        <button (click)="selectPreviousTab()" [disabled]="selectedTabIndex === 0" class="previous">
+        <button (click)="previousPage()" [disabled]="currentPage === 0" class="previous">
             <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
       
         <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
-            <mat-tab *ngFor="let spot of spots">
+            <mat-tab *ngFor="let spot of paginatedSpots">
                 <ng-template mat-tab-label class="name">
                     {{ spot.studyspot_name }}
                   </ng-template>
@@ -19,7 +19,7 @@
             </mat-tab>
         </mat-tab-group>
       
-        <button (click)="selectNextTab()" [disabled]="selectedTabIndex === spots.length - 1" class="next">
+        <button (click)="nextPage()" [disabled]="currentPage === spots.length / itemsPerPage - 1" class="next">
             <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
     </div>

@@ -19,7 +19,7 @@
     </div>
     <p id="detail-p">Noise Level Out Of 5: {{ studyspotWOReviews.studyspot_noise_level}}</p>
     <div class="avail">
-      <p id="detail-a">Availability</p>
+      <p id="detail-a"><span>&nbsp;&nbsp;&nbsp;</span>Availability:</p>
       <ng-container *ngIf="isCheckedIn && this.isCheckInAllowed(this.latest.survey_created_at); else notCheckedIn">
         <mat-icon class="red-icon">block</mat-icon>
       </ng-container>
@@ -48,7 +48,7 @@
     <div id="blocker" *ngIf="!spotHasReviews">
       <h2> No Users Rating To Display</h2>
     </div>
-    <div class="user-reviews" >
+    <div class="user-reviews" *ngIf="spotHasReviews">
         <div class="detail-item-review" *ngFor="let review of reviews">
             <app-userrating userID={{review.user_id}} rating={{review.review_rate}} comment={{review.review_comments}}></app-userrating>
         </div>
@@ -77,11 +77,11 @@
   </div>
   <!-- Div for details 1 (bottom left) -->
   <div class="box">
-    <p id="detail-p">Location:{{ studyspotWOReviews.studyspot_location}}</p>
+    <p id="detail-p">Location:<span>&nbsp;&nbsp;&nbsp;</span>{{ studyspotWOReviews.studyspot_location}}</p>
     <!-- Dropdown for Features, will be iteration once we have all in db -->
     <div class="select-features">
-        <label for="features">Features</label>
-        <select id="features" name="features" disabled>
+        <label for="features"><span>&nbsp;&nbsp;&nbsp;</span>Features</label>
+        <select id="features" name="features">
         <option value="powerOutlets" *ngIf="studyspotWOReviews.studyspot_power_outlets">Power Outlets</option>
         <option value="strongWifi" *ngIf="studyspotWOReviews.studyspot_strong_wifi">Strong Wi-Fi Signal</option>
         <option value="ada" *ngIf="studyspotWOReviews.studyspot_ada">ADA Accessible</option>
@@ -92,7 +92,7 @@
     </div>
     <p id="detail-p">Noise Level Out Of 5: {{ studyspotWOReviews.studyspot_noise_level}}</p>
     <div class="avail">
-      <p id="detail-a">Availability</p>
+      <p id="detail-a"><span>&nbsp;&nbsp;&nbsp;</span>Availability:</p>
       <ng-container *ngIf="isCheckedIn && this.isCheckInAllowed(this.latest.survey_created_at); else notCheckedIn">
         <mat-icon class="red-icon">block</mat-icon>
       </ng-container>
@@ -113,11 +113,13 @@
             <button id = "special-button" (click)="rateMe()">Rate Me</button>
           </div>
     </div>
-
     <div class="detail-item">
       <p id="detail-t">Traffic Status Out Of 5: {{ studyspotWOReviews.studspot_crowdedness_level}}</p>
     </div>
-    <div class="user-reviews" >
+    <div id="blocker" *ngIf="!spotHasReviews">
+      <h2> No Users Rating To Display</h2>
+    </div>
+    <div class="user-reviews" *ngIf="spotHasReviews">
         <div class="detail-item-review" *ngFor="let review of reviews">
             <app-userrating userID={{review.user_id}} rating={{review.review_rate}} comment={{review.review_comments}}></app-userrating>
         </div>

@@ -52,7 +52,6 @@
         <div class = 'btn-secondary'>
           <button mat-raised-button color="primary" type="submit" [disabled]="loading">
             <span *ngIf="!loading">Sign In</span>
-            <mat-spinner *ngIf="loading" diameter="20" color="accent"></mat-spinner>
           </button>
         </div>
       </div>
@@ -67,4 +66,5 @@
         </button>
       </div>
     </form>
+    <mat-spinner *ngIf="loading" diameter="100"></mat-spinner>
   </div>

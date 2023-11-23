@@ -39,12 +39,13 @@ export class LogInComponent {
           this.userService.getUserByEmail(email.toLowerCase()).subscribe(
             (userData: any) => {
               const user = userData;
-              this.authService.setUserData(user);
               setTimeout(() => {
+                this.authService.setUserData(user);
+                // Navigate to home
+                this.loading = false;
+                this.router.navigate(['/home']);
+
               }, 3000);
-              this.loading = false;
-              // Navigate to home
-              this.router.navigate(['/home']);
             },
             (userError) => {
               console.error('Error fetching user data:', userError);

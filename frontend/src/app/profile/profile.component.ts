@@ -9,12 +9,7 @@ import { StudyspotService } from '../studyspot.service';
 })
 export class ProfileComponent {
 
-  spotsSuggested: Spot = [
-    { name: "Portland", rating: "5", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Seattle", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Nashville", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Atlanta", rating: "1", imageUrl: "assets/spots/Spot1.jpeg"}
-  ];
+  spotsSuggested!: Array<string>;
 
   spotsRecent: string[]=[];
 
@@ -25,7 +20,18 @@ export class ProfileComponent {
     this.tabs = this.spotsRecent.length;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.studyspotService.getCheckedInStudySpotsName().subscribe(
+      (response) => {
+        this.spotsSuggested = response.data;
+        this.spotsSuggested = [...new Set(this.spotsSuggested)];
+        this.spotsSuggested = this.spotsSuggested.slice(0, 8);
+      },
+      (error) => {
+        console.error('Error fetching reviews:', error);
+      }
+    );
+  }
 
   // Function to handle tab changes
   tabChanged(event: number): void {
@@ -47,7 +53,6 @@ export class ProfileComponent {
   }
 
   selectedMightTabIndex: number = 0; 
-  mighttabs: number = this.spotsSuggested.length; 
 
   // Function to handle tab changes
   tabChangedmight(event: number): void {
@@ -63,10 +68,9 @@ export class ProfileComponent {
 
   // Function to select the next tab
   selectNextTabmight(): void {
-    if (this.selectedMightTabIndex < this.mighttabs - 1) {
+    const mighttabs  = this.spotsSuggested.length; 
+    if (this.selectedMightTabIndex < mighttabs - 1) {
       this.selectedMightTabIndex++;
     }
   }
 }
-
-type Spot = Array<{ name: string; rating: string; imageUrl: string; }>;

@@ -16,40 +16,42 @@ export class ReviewsComponent {
   userData!: UserData;
   constructor(private authService: AuthService, private studySpotService: StudyspotService) {}
 
-  selectedTabIndex: number = 0; 
-  tabs: number = 0;
-
   ngOnInit() {
     this.userData = this.authService.getUserData();
     this.userID = this.userData?.user_id;
     this.fetchReviewsByUserId(this.userID);
   }
 
+  selectedTabIndex = 0; // Initially selected tab index
+  itemsPerPage = 4; // Number of items to display per page
+  currentPage = 0; // Current page number
 
   // Function to handle tab changes
   tabChanged(event: number): void {
     this.selectedTabIndex = event;
   }
 
-  // Function to select the previous tab
-  selectPreviousTab(): void {
-    if (this.selectedTabIndex > 0) {
-      this.selectedTabIndex--;
-    }
+  get paginatedSpots(): any[] {
+    const startIndex = this.currentPage * this.itemsPerPage;
+    return this.spots.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
-  // Function to select the next tab
-  selectNextTab(): void {
-    if (this.selectedTabIndex < this.tabs - 1) {
-      this.selectedTabIndex++;
-    }
+  // Function to handle the next page
+  nextPage(): void {
+    const totalPages = Math.ceil(this.spots.length / this.itemsPerPage);
+    this.currentPage = (this.currentPage + 1) % totalPages;
+  }
+
+  // Function to handle the previous page if needed
+  previousPage(): void {
+    const totalPages = Math.ceil(this.spots.length / this.itemsPerPage);
+    this.currentPage = (this.currentPage - 1 + totalPages) % totalPages;
   }
   
   fetchReviewsByUserId(userId: number): void {
     this.studySpotService.getReviewByUserId(userId).subscribe(
       (response) => {
-        this.spots = response.data
-        this.tabs = this.spots.length
+        this.spots = response.data;
       },
       (error) => {
         console.error('Error fetching reviews:', error);

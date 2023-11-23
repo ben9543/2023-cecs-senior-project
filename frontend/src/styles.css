@@ -8,3 +8,4 @@ i {
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-mdc-progress-spinner { --mdc-circular-progress-active-indicator-color: rgb(1, 90, 67); }

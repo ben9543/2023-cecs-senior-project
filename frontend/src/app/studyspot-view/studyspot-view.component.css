@@ -118,12 +118,12 @@
 #detail-a{
     background-color: whitesmoke;
     color: black;
-    font-size: 12px;
-    font-weight: bolder;
+    font-size: 16px;
     border-radius: 5px 0 0 5px;
     cursor: pointer; 
     border: rgb(14, 75, 77) 2px solid;
-    padding: 2.9%;
+    margin-top: 10px;
+    padding: 5%;
 }
 
 #detail-t{
@@ -193,24 +193,24 @@
 #blocker{
     border-left: rgb(14, 75, 77) 2px solid;
     color: bisque;
-    padding-bottom: 40%;
+    padding-bottom: 50%;
     padding-left: 3%;
 }
 
 .green-icon {
     color: green; 
     background-color: green; 
-    border: rgb(14, 75, 77) 1px solid;
-    width: 67%;
-    height: 60%;
-    padding-top: 5%;
+    border: rgb(14, 75, 77) 2px solid;
+    width: 43%;
+    margin-top: 10px;
+    padding: 4.2%;
   }
   
 .red-icon {
     color: red; 
     background-color: red;
     border-left: rgb(180, 17, 17) 2px solid;
-    width: 67%;
+    width: 50%;
     height: 60%;
     padding-top: 5%;
 }
@@ -273,6 +273,16 @@
         border-top: rgb(14, 75, 77) 2px solid;
         margin-top: 5%;
     }
+    #blocker{
+        border-left: none;
+        border-top: rgb(14, 75, 77) 2px solid;
+        margin-top: 5%;
+    }
+
+    #blocker h2{
+        padding-left: 10%;
+    }
+
     .select-features{
         font-size: 16px;
         border-radius: 5px;
@@ -309,7 +319,7 @@
         margin: 5px;
     }
     .green-icon, .red-icon{
-        width: 74%;
+        width: 52%;
     }
 
 }
