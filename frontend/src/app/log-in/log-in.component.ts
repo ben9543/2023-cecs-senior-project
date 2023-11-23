@@ -41,19 +41,19 @@ export class LogInComponent {
               const user = userData;
               this.authService.setUserData(user);
               setTimeout(() => {
-              }, 5000);
+              }, 3000);
               this.loading = false;
+              // Navigate to home
+              this.router.navigate(['/home']);
             },
             (userError) => {
               console.error('Error fetching user data:', userError);
             }
           );
-
-          // Navigate to home
-          this.router.navigate(['/home']);
         },
         (error) => {
           if (error.status === 401) {
+            this.loading = false;
             this.snackBar.open('Invalid email or password', 'Close', { duration: 5000 });
           } else {
             this.snackBar.open('Login failed! Unknown Error', 'Close', { duration: 5000 });

@@ -16,7 +16,7 @@ export class HeaderComponent {
   isResetPasswordPage: boolean = false;
   isResetLinkPage: boolean = false;
   userData!: UserData;
-  username: string = "";
+  username!: string;
   isMainNavOpen = false;
   isCheckInPage: boolean = false;
   isAdminLoginPage: boolean = false;
@@ -24,12 +24,13 @@ export class HeaderComponent {
   isLandingPage: boolean = false;
   isRequestedSpotView: boolean = false;
 
-  constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) { 
+    this.userData = this.authService.getUserData();
+    this.username = this.userData?.user_name;
+  }
 
 
   ngOnInit(): void {
-    this.userData = this.authService.getUserData();
-    this.username = this.userData?.user_name;
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
