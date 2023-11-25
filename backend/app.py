@@ -15,6 +15,7 @@ from rejections.rejections import Rejections_API
 # from requests.requests import Requests_API
 from requests_v2.requests import Requests_API
 from reports.reported_studyspot import Reported_studyspots_API
+from reports.reported_comment import Reported_comments_API
 from aws.s3 import S3_API
 
 # Create a SQLAlchemy engine and connect to your database
@@ -63,6 +64,9 @@ rejection_instance = Rejections_API(db)
 
 # Create Reported studyspots instance
 reports_studyspots_instance = Reported_studyspots_API(db)
+
+# Create Reported comments instance
+reports_comments_instance = Reported_comments_API(db)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance, admins_instance)
@@ -833,7 +837,7 @@ def get_requested_spot_by_name():
 
 @app.route('/api/reports/create-studyspot-report',methods=['PUT'])
 @login_required
-def create_report():
+def create_studyspot_report():
     try:
         data = request.get_json()
         user_id = data.get('user_id')
@@ -853,6 +857,33 @@ def create_report():
 @login_required
 def admin_get_reported_studyspot_list():
     data = reports_studyspots_instance.get_reported_list()
+    if data:
+        return jsonify({"message": "ok", "data": data}),200
+    else:
+        return jsonify({"message":"Reports not found"}), 404
+    
+@app.route('/api/reports/create-comment-report',methods=['PUT'])
+@login_required
+def create_comment_report():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        review_id = data.get('review_id')
+        if reports_comments_instance.check_duplicate(user_id,review_id):
+            return jsonify({'message': 'Report has already been submitted successfully!'}), 200
+        
+        report_comment = data.get('comment')
+        report_id = reports_comments_instance.count_report()+1
+        reports_comments_instance.add_report(report_id,user_id,review_id,report_comment)
+        
+        return jsonify({'message': 'Report has been submitted successfully!'}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/admin/reported-comment', methods=['GET'])
+@login_required
+def admin_get_reported_comment_list():
+    data = reports_comments_instance.get_reported_list()
     if data:
         return jsonify({"message": "ok", "data": data}),200
     else:

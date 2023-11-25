@@ -136,4 +136,14 @@ class Reported_studyspots(Base):
     studyspot = relationship("Studyspots")
     user = relationship("Users")
 
+class Reported_comments(Base):
+    __tablename__ = 'reported_comments'
+    
+    report_id = Column(Integer,nullable=False,primary_key=True)
+    review_id = Column(Integer, ForeignKey('reviews.review_id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    report_comment = Column(String(3000),nullable=False)
+    review = relationship("Reviews")
+    user = relationship("Users")
+
     
