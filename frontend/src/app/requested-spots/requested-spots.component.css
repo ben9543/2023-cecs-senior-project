@@ -42,10 +42,12 @@
     background-color: none !important;
     font-size: 24px;
     color: rgb(0, 0, 0);
+    padding: 2%;
   }
   
-  .requester i {
-    margin-right: 5px;
+  .requester span {
+    color: cadetblue;
+    font-weight: bold;
   }
 
   .bigger-icon {

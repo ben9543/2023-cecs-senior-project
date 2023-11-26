@@ -92,7 +92,7 @@ class Surveys_API():
 
     def get_latest_survey_for_studyspot(self, studyspot_name):
         try:
-            latest_survey = (self.db.session.query(Surveys).filter(Surveys.studyspot_name == studyspot_name).order_by(Surveys.survey_created_at.desc()).first())
+            latest_survey = (self.db.session.query(Surveys).filter(Surveys.studyspot_name == studyspot_name).order_by(Surveys.survey_id.desc()).first())
 
             if latest_survey:
                 return {

@@ -6,7 +6,7 @@
     </div>
     <!-- Div for details 1 (bottom left) -->
     <div class="details-2">
-      <p id="detail-p">Location:{{ requestedSpot.request_location}}</p>
+      <p id="detail-p">Location:<span>&nbsp;&nbsp;&nbsp;</span>{{ requestedSpot.request_location}}</p>
       <!-- Dropdown for Features, will be iteration once we have all in db -->
       <!-- <div class="select-features">
           <label for="features">Features</label>
@@ -17,8 +17,8 @@
           <option value="easyToFind" *ngIf="studySpot.studyspot_easy_to_find">Easy to Find</option>
           </select>
       </div> -->
-      <p id="detail-p">Crowdedness Level Out Of 5: {{ requestedSpot.request_crowdedness_level}}</p>
-      <p id="detail-p">Noise Level Out Of 5: {{ requestedSpot.request_noise_level}}</p>
+      <p id="detail-p">Crowdedness Level Out Of 5: <span>&nbsp;&nbsp;&nbsp;</span>{{ requestedSpot.request_crowdedness_level}}</p>
+      <p id="detail-p">Noise Level Out Of 5: <span>&nbsp;&nbsp;&nbsp;</span>{{ requestedSpot.request_noise_level}}</p>
       <label>Features:</label>
       <div class="features">
         <p id="detail-f" *ngIf="requestedSpot.request_ada">ADA Accessible</p>
@@ -28,7 +28,7 @@
         <p id="detail-f" *ngIf="!requestedSpot.request_is_indoor">Outdoor</p>
         <p id="detail-f" *ngIf="!requestedSpot.request_easy_to_find">Easy To Find</p>
       </div>
-      <p id="detail-p">Reason: {{ requestedSpot.request_reason}}</p>
+      <p id="detail-p">Reason: <span>&nbsp;&nbsp;&nbsp;</span>{{ requestedSpot.request_reason}}</p>
 
       <div class = "row">
         <div class = 'btn-primary'>

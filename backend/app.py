@@ -287,6 +287,7 @@ def change_password():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/user/<string:user_name>', methods=['GET'])
+@admin_login_required
 @login_required
 def get_user(user_name):
     # Retrieve user data based on the username from the database
@@ -763,9 +764,6 @@ def check_in():
     noise_level = data.get('survey_noise_level')
     wifi = data.get('survey_wifi')
 
-    if not all([studyspot_name, user_id, crowdedness, noise_level, wifi]):
-        return jsonify({'message': 'Invalid parameters'}), 400
-
     if survey_instance.create_check_in(studyspot_name, user_id, crowdedness, noise_level, wifi):
         return jsonify({'message': 'Check-in created successfully'}), 201
     else:
@@ -775,7 +773,7 @@ def check_in():
 @login_required
 def get_latest_survey(studyspot_name):
     latest_survey = survey_instance.get_latest_survey_for_studyspot(studyspot_name)
-    
+
     if latest_survey:
         return jsonify({'message': 'Latest survey retrieved', 'data': latest_survey}), 200
     else:

@@ -210,9 +210,9 @@
     color: red; 
     background-color: red;
     border-left: rgb(180, 17, 17) 2px solid;
-    width: 50%;
-    height: 60%;
-    padding-top: 5%;
+    width: 43%;
+    margin-top: 10px;
+    padding: 4.2%;
 }
 
 /* Media queries for mobile responsiveness */

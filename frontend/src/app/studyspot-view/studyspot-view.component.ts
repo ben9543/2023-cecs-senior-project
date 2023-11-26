@@ -41,14 +41,13 @@ export class StudyspotViewComponent {
       this.name = params['name'];
       this.userData = this.authService.getUserData();
       this.user_id = this.userData?.user_id;
+      this.studyspotService.getAllStudyspotName(this.name).subscribe(
+        (data: any) => {
+          this.studyspotWOReviews = data.data;
+        }
+      );
       this.loadStudySpotData();
     });
-
-    this.studyspotService.getAllStudyspotName(this.name).subscribe(
-      (data: any) => {
-        this.studyspotWOReviews = data.data;
-      }
-    );
   }
 
   private loadStudySpotData() {
@@ -60,9 +59,9 @@ export class StudyspotViewComponent {
         if(this.spotHasReviews)
           this.lengthOfReviews = data.data.reviews.length;
         this.studyspotService.getLatestcheckInToStudySpot(this.name).subscribe((data: any)=> {
-          this.latest = data.data
+          this.latest = data.data;
           if(parseInt(this.latest.user_id) == this.user_id){
-            this.isSpotAvailable = !this.isCheckInAllowed(this.latest.survey_created_at) || this.latest.checked_out
+            this.isSpotAvailable = !this.isCheckInAllowed(this.latest.survey_created_at) || this.latest.checked_out;
             this.isCheckedIn = !this.latest.checked_out;
           }
           else {
@@ -136,7 +135,7 @@ export class StudyspotViewComponent {
     const adjustedDateTime = new Date(givenDateTime.getTime() + (2 * 60 * 60 * 1000));
   
     // Check if the adjusted date and time is greater than the current date and time
-    console.log(adjustedDateTime > currentDateTime)
+    // console.log(adjustedDateTime > currentDateTime)
     return adjustedDateTime > currentDateTime;
   }
 }
