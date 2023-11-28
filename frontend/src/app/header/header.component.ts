@@ -24,10 +24,7 @@ export class HeaderComponent {
   isLandingPage: boolean = false;
   isRequestedSpotView: boolean = false;
 
-  constructor(private router: Router, private userService: UserService, private authService: AuthService) { 
-    this.userData = this.authService.getUserData();
-    this.username = this.userData?.user_name;
-  }
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
 
 
   ngOnInit(): void {
@@ -43,6 +40,10 @@ export class HeaderComponent {
       this.isAdminHomePage = event.urlAfterRedirects.includes('/admin-home');
       this.isLandingPage = event.urlAfterRedirects.includes('/welcome');
       this.isRequestedSpotView = event.urlAfterRedirects.includes('/requested-spot-view')
+      if(event.urlAfterRedirects.includes('/home')){
+        this.userData = this.authService.getUserData();
+        this.username = this.userData?.user_name;
+      }
     });
   }
   toggleMainNav() {

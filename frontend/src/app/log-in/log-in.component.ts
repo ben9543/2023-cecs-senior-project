@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserData } from '../DTOs/user-data.dto';
 
 @Component({
   selector: 'app-log-in',
@@ -16,6 +17,7 @@ export class LogInComponent {
   login!: FormGroup;
   errorMessage: string = '';
   loading: boolean = false;
+  user!: UserData;
   constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient,
      private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar ) { }
 
@@ -38,14 +40,14 @@ export class LogInComponent {
           // Fetch the user data based on the email from UserService
           this.userService.getUserByEmail(email.toLowerCase()).subscribe(
             (userData: any) => {
-              const user = userData;
+              this.user = userData;
+              this.authService.setUserData(this.user);
               setTimeout(() => {
-                this.authService.setUserData(user);
                 // Navigate to home
                 this.loading = false;
                 this.router.navigate(['/home']);
 
-              }, 3000);
+              }, 1000);
             },
             (userError) => {
               console.error('Error fetching user data:', userError);

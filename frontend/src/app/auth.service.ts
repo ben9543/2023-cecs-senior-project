@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UserData } from './DTOs/user-data.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +15,11 @@ export class AuthService {
 
   constructor() {}
 
-  setUserData(userData: any): void {
+  setUserData(userData: UserData): void {
     sessionStorage.setItem(this.USER_DATA_KEY, JSON.stringify(userData));
   }
 
-  getUserData(): any {
+  getUserData(): UserData {
     const storedData = sessionStorage.getItem(this.USER_DATA_KEY);
     return storedData ? JSON.parse(storedData) : null;
   }
