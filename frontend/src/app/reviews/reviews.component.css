@@ -37,6 +37,17 @@
     padding: 20px 20px 20px 20px;
 }
 
+#blocker{
+    color: bisque;
+    padding-top: 1%;
+    background-color: cadetblue;
+    width: 100%;
+}
+
+#blocker h2{
+    padding-left: 35%;
+}
+
 app-studyspot
 {
     flex-shrink: 10;
@@ -96,4 +107,14 @@ ng-template{
     .name{
         display: block;
     }
+    #blocker{
+        margin-top: 15%;
+        width: 100%;
+    }
+
+    #blocker h2{
+        padding-left: 20%;
+        font-size: small;
+    }
+
 }

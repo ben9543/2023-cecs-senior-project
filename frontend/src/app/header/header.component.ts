@@ -35,12 +35,12 @@ export class HeaderComponent {
       this.isSignUpPage = event.urlAfterRedirects.includes('/signup');
       this.isResetPasswordPage = event.urlAfterRedirects.includes('/reset-password');
       this.isResetLinkPage = event.urlAfterRedirects.includes('/reset-link');
-      this.isCheckInPage = event.urlAfterRedirects.includes('/check-in');
+      //this.isCheckInPage = event.urlAfterRedirects.includes('/check-in');
       this.isAdminLoginPage = event.urlAfterRedirects.includes('/adminonlylogin');
       this.isAdminHomePage = event.urlAfterRedirects.includes('/admin-home');
       this.isLandingPage = event.urlAfterRedirects.includes('/welcome');
       this.isRequestedSpotView = event.urlAfterRedirects.includes('/requested-spot-view')
-      if(event.urlAfterRedirects.includes('/home')){
+      if(!(this.isLoginPage&&this.isSignUpPage&&this.isResetPasswordPage&&this.isAdminLoginPage&&this.isAdminHomePage&&this.isLandingPage&&this.isRequestedSpotView)){
         this.userData = this.authService.getUserData();
         this.username = this.userData?.user_name;
       }

@@ -2,7 +2,10 @@
     <p>Previously Reviewed</p>
 </div>
 <div class="container">
-    <div class="container-objects">
+    <div id="blocker" *ngIf="noReviews">
+        <h2> You Haven't Reviewed Any Spot Yet🥲</h2>
+    </div>
+    <div class="container-objects" *ngIf="!noReviews">
         <button (click)="previousPage()" [disabled]="currentPage === 0" class="previous">
             <mat-icon>keyboard_arrow_left</mat-icon>
         </button>

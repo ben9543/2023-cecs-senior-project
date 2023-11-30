@@ -14,6 +14,7 @@ export class ReviewsComponent {
   userID!: number;
   spots!: Spot | [];
   userData!: UserData;
+  noReviews: boolean = false;
   constructor(private authService: AuthService, private studySpotService: StudyspotService) {}
 
   ngOnInit() {
@@ -54,7 +55,7 @@ export class ReviewsComponent {
         this.spots = response.data;
       },
       (error) => {
-        console.error('Error fetching reviews:', error);
+        this.noReviews = true;
       }
     );
   }
