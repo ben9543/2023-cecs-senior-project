@@ -24,8 +24,7 @@ export class SearchFilterComponent {
           studyspot_ada: [],
           studyspot_easy_to_find: []
         })
-      }),
-      temperature: ['']
+      })
     });
   }
 

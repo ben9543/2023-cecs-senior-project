@@ -78,4 +78,14 @@ export class ConfirmationDialogService {
       },
     });
   }
+
+  spotAlreadyTaken(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Check-In Failed',
+        dialogMessage: 'Opps..Check-In Faster Next Time',
+      },
+      disableClose: true
+    });
+  }
 }

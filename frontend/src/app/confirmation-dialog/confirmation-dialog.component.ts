@@ -14,6 +14,6 @@ export class ConfirmationDialogComponent {
   }
 
   get dialogMessage(): string {
-    return this.data.dialogMessage || 'Are you sure you want to proceed?';
+    return this.data.dialogMessage || 'Are you sure you want to Continue?';
   }
 }

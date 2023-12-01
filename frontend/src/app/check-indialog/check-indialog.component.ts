@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { StudyspotService } from '../studyspot.service';
 import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { CreateCheckIn } from '../DTOs/create-checkin.dto';
+import { ConfirmationDialogService } from '../confirmation-dialog.service';
 
 @Component({
   selector: 'app-check-indialog',
@@ -13,10 +14,10 @@ import { CreateCheckIn } from '../DTOs/create-checkin.dto';
 })
 export class CheckIndialogComponent {
 
-  @Output() checkInSuccess: EventEmitter<any> = new EventEmitter<any>();
+  @Output() checkInSuccess: EventEmitter<boolean> = new EventEmitter<boolean>();
   
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, 
-  private router: Router, private authService: AuthService, private studyspotService: StudyspotService, @Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<CheckIndialogComponent>,) { }
+  private router: Router, private authService: AuthService, private studyspotService: StudyspotService, @Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<CheckIndialogComponent>, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit(): void {
   }
@@ -36,10 +37,14 @@ export class CheckIndialogComponent {
       survey_wifi: this.finalValueWifi
     };
 
+
     this.studyspotService.checkInToStudySpot(checkInData).subscribe(
       (response) => {
+        this.dialogRef.close();
       },
       (error) => {
+        const isSpotAvailable = false;
+        this.checkInSuccess.emit(isSpotAvailable);
         console.error('Check-in failed:', error);
         // Handle error if needed
       }

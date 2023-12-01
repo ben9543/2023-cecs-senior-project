@@ -2,7 +2,7 @@
 # https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/#installation
 from db.db_connection_test import Surveys
 from sqlalchemy.exc import SQLAlchemyError
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 class Surveys_API():
 
@@ -53,8 +53,16 @@ class Surveys_API():
             else:
                 survey_id += 1
             
-            created_at = datetime.now()
+            created_at = datetime.now(timezone.utc)
             
+            # Check if there's a study spot with created_at > current_time and checked_out is False
+            # taken = self.db.session.query(Surveys).filter_by(studyspot_name = studyspot_name).filter_by(Surveys.survey_created_at > created_at).filter_by(Surveys.checked_out == False).first()
+            taken = (self.db.session.query(Surveys).filter(Surveys.studyspot_name == studyspot_name).order_by(Surveys.survey_id.desc()).first())
+
+            if taken.survey_created_at +  timedelta(hours=2) > created_at:
+                if not taken.checked_out:
+                    return False
+
             new_check_in = Surveys(
                 survey_id=survey_id,
                 studyspot_name=studyspot_name,

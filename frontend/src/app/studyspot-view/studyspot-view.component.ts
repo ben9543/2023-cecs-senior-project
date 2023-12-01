@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserData } from '../DTOs/user-data.dto';
 import { Review, StudyspotDetails } from '../DTOs/studyspot-with-review.dto';
 import { StudySpot } from '../DTOs/studyspot.dto';
+import { ConfirmationDialogService } from '../confirmation-dialog.service';
 
 @Component({
   selector: 'app-studyspot-view',
@@ -30,11 +31,12 @@ export class StudyspotViewComponent {
   latest!: PreviousCheckIn;
 
   isSpotAvailable: boolean = true;
+  isCheckInSuccessful: boolean = false;
   isCheckedIn: boolean = false;
   canFillTheSurvey: boolean = true;
   spotHasReviews: boolean = false;
   constructor(private route: ActivatedRoute, private router: Router, private studyspotService: StudyspotService, private userService: UserService,
-    private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar ) { }
+    private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -80,25 +82,36 @@ export class StudyspotViewComponent {
       });
   }
 
-  openDialog() {
-    if(this.canFillTheSurvey){
-      let dialogRef = this.dialog.open(CheckIndialogComponent,
-        {data: {
-          user_id: this.user_id,
-          studyspot_name: this.name
-        }});
-        
-      dialogRef.afterClosed().subscribe(() => {
-        // Refresh the current page
-        location.reload();
-      });
+  checkLatest(): boolean{
+    this.loadStudySpotData();
+    return this.canFillTheSurvey;
+  }
 
-      dialogRef.afterClosed().subscribe(result => {
-      });
-    }
-    else{
-       this.snackBar.open('Spot Is Taken', 'Close', { duration: 5000 });
-    }
+  openDialog() {
+    this.loadStudySpotData(); 
+  
+    setTimeout(() => { 
+      if (this.canFillTheSurvey) {
+        let dialogRef = this.dialog.open(CheckIndialogComponent, {
+          data: {
+            user_id: this.user_id,
+            studyspot_name: this.name
+          }
+        });
+  
+        dialogRef.afterClosed().subscribe((result: boolean) => {
+          this.isCheckInSuccessful = result;
+          // console.log("Data == ", this.isCheckInSuccessful)
+          if (!this.isCheckInSuccessful) {
+            this.snackBar.open('Opps..Spot Is Taken', 'Close', { duration: 5000 });
+          }
+          location.reload();
+        });
+      } else {
+        this.snackBar.open('Spot Is Taken', 'Close', { duration: 5000 });
+        setTimeout(() => { location.reload()}, 1000);;
+      }
+    }, 1000);
   }
 
   performCheckOut(): void {

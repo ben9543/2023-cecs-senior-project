@@ -35,7 +35,7 @@
     <div class="btnBegin">
         <div class="detail-item-button">
           <button *ngIf="isSpotAvailable" id = "special-button" (click)="openDialog()">Check-In</button>
-          <button *ngIf="!isSpotAvailable" id = "special-button" (click)="performCheckOut()">Check-Out</button>
+          <button *ngIf="!isSpotAvailable" id = "special-button" (click)="performCheckOut()">Hey {{userData.user_name}}, Check-Out?</button>
           </div>
           <div class="detail-item-button">
             <button id = "special-button" (click)="rateMe()">Rate Me</button>

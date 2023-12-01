@@ -33,7 +33,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # Allow Cross Origin from anywhere (will be restricted in prod)
-CORS(app, resources={r"/api/*": {"origins": ["http://www.studyspot.info", "http://studyspot.info"]}})
+CORS(app, resources={r"/api/*": {"origins": ["http://www.studyspot.info", "http://studyspot.info", "http://localhost:4200"]}})
 
 # Create Users instance
 users_instance = User_API(db)
@@ -76,7 +76,7 @@ AUTH_HEADER_KEY  = 'Authorization'
 
 # Define a function to set CORS headers
 def add_cors_headers(response):
-    allowed_origins = ["http://www.studyspot.info", "http://studyspot.info"]
+    allowed_origins = ["http://www.studyspot.info", "http://studyspot.info", "http://localhost:4200"]
     origin = request.headers.get("Origin")
     if origin in allowed_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
