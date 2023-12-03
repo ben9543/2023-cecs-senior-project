@@ -18,6 +18,7 @@ import { RateMeComponent } from './rate-me/rate-me.component';
 import { AuthGuard } from './auth.guard';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
+import { AdminRequestsViewComponent } from './admin-requests-view/admin-requests-view.component';
 import { LandingAgeComponent } from './landing-age/landing-age.component';
 import { RequestedSpotViewComponent } from './requested-spot-view/requested-spot-view.component';
 import { AdminAuthGuard } from './admin-auth.guard';
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'rate-me', component: RateMeComponent, canActivate: [AuthGuard]},
   { path: 'adminonlylogin', component: AdminLoginComponent},
   { path: 'admin-home', component: AdminHomepageComponent, canActivate: [AdminAuthGuard]},
+  { path: 'admin-requests-view', component: AdminRequestsViewComponent, canActivate: [AdminAuthGuard]},
   { path: 'requested-spot-view', component: RequestedSpotViewComponent, canActivate: [AdminAuthGuard]}
 ];
 

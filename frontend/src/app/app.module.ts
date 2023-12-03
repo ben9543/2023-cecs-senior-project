@@ -69,6 +69,7 @@ import { RequestedSpotsComponent } from './requested-spots/requested-spots.compo
 import { RequestedSpotViewComponent } from './requested-spot-view/requested-spot-view.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { FooterComponent } from './footer/footer.component';
+import { AdminRequestsViewComponent } from './admin-requests-view/admin-requests-view.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { FooterComponent } from './footer/footer.component';
     LandingAgeComponent,
     RequestedSpotsComponent,
     RequestedSpotViewComponent,
-    FooterComponent
+    FooterComponent,
+    AdminRequestsViewComponent
   ],
   entryComponents: [ 
     CheckIndialogComponent
