@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_URL } from './config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class S3Service {
+
+  apiUrl = API_URL;
   constructor(private http: HttpClient) {}
 
-  uploadFileToS3(file: File, name: string): Promise<string> {
-    const formData = new FormData();
-    const newName = name; // Set the file name to spot name
-
-    formData.append('file', file, newName);
-
-    return this.http.post<string>('endpoint here', formData)
-      .toPromise()
-      .then((response: any) => {
-        return response.fileUrl; 
-      })
-      .catch((error: any) => {
-        throw new Error('Failed to upload file to S3');
-      });
+  async uploadFileToS3(formData: FormData): Promise<string> {
+    try {
+      const response: any = await this.http.post<any>(
+        `${this.apiUrl}/requests/upload_image`,
+        formData
+      ).toPromise();
+      return response.fileUrl; // Assuming the response contains the file URL
+    } catch (error) {
+      throw new Error('Failed to upload file to S3');
+    }
   }
 }

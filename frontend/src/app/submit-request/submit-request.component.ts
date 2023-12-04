@@ -8,6 +8,7 @@ import { StudyspotService } from '../studyspot.service';
 import { ConfirmationDialogService } from '../confirmation-dialog.service';
 import { UserData } from '../DTOs/user-data.dto';
 import { HttpClient } from '@angular/common/http';
+import { S3Service } from '../s3.service';
 
 @Component({
   selector: 'app-submit-request',
@@ -16,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SubmitRequestComponent {
   request !: FormGroup;
+  selectedFile!: File;
   universities: [] | undefined;
   strong_wifi: boolean = false;
   in_door: boolean = false;
@@ -31,7 +33,7 @@ export class SubmitRequestComponent {
   attributeList: string[] = ['WiFi', 'Power', 'ADA Accessible', 'Indoor', 'Easy to find'];
   userData!: UserData;
   userID!: number;
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private userService: UserService, private authService: AuthService, private studySpotService: StudyspotService, private confirmationDialogService: ConfirmationDialogService) { }
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private userService: UserService, private authService: AuthService, private studySpotService: StudyspotService, private confirmationDialogService: ConfirmationDialogService, private s3Service: S3Service) { }
 
   min: number = 0;
   max: number = 5;
@@ -54,7 +56,7 @@ export class SubmitRequestComponent {
     this.userService.getUniversityList().subscribe((universities: any) => {
       this.universities = universities.data;
     });
-    this.http.get<any>('assets/Data/Studyspot_Names.json') // Adjust the URL based on your file path
+    this.http.get<any>('assets/Data/Studyspot_Names.json')
       .subscribe((response) => {
         this.spotNamesFromJSON = response;
         this.fetchCitiesFromDB();
@@ -85,36 +87,52 @@ export class SubmitRequestComponent {
     return this.spotNamesFromJSON.filter(city => !citiesFromDB.includes(city) && !citiesFromReqDB.includes(city));
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.request.valid) {
 
-      this.convertAttributesToBoolean()
-      const requestData: CreateRequestDTO= {
-        user_id: this.userID.toString(),
-        studyspot_name: this.request.value.studyspot_name,
-        university_name: this.request.value.university,
-        is_indoor: this.in_door,
-        ada: this.ada,
-        power_outlets: this.power_outlet,
-        easy_to_find: this.easy_to_find,
-        image_url: '',
-        location: this.request.value.location,
-        noise_level: this.finalValueNoise,
-        crowdedness_level: this.finalValueCrowdiness,
-        strong_wifi: this.strong_wifi,
-        reason: this.request.value.comments
-      };
+      this.convertAttributesToBoolean();
+      const formData = new FormData();
+      formData.append('file', this.selectedFile, this.selectedFile.name);
 
-      this.studySpotService.createRequest(requestData).subscribe(
-        (response) => {
-          this.router.navigate(['/home']);
-          this.confirmationDialogService.openRequestSubmittedConfirmation();
-        },
-        (error) => {
-          console.error('Error submitting request:', error);
-          // Handle error
-        }
-      );
+      try {
+        const fileUrl = await this.s3Service.uploadFileToS3(formData);
+        const requestData: CreateRequestDTO= {
+          user_id: this.userID.toString(),
+          studyspot_name: this.request.value.studyspot_name,
+          university_name: this.request.value.university,
+          is_indoor: this.in_door,
+          ada: this.ada,
+          power_outlets: this.power_outlet,
+          easy_to_find: this.easy_to_find,
+          image_url: '',
+          location: this.request.value.location,
+          noise_level: this.finalValueNoise,
+          crowdedness_level: this.finalValueCrowdiness,
+          strong_wifi: this.strong_wifi,
+          reason: this.request.value.comments
+        };
+
+        this.studySpotService.createRequest(requestData).subscribe(
+          (response) => {
+            this.router.navigate(['/home']);
+            this.confirmationDialogService.openRequestSubmittedConfirmation();
+          },
+          (error) => {
+            console.error('Error submitting request:', error);
+            // Handle error
+          }
+        );
+      }
+      catch (error) {
+        console.error('Error uploading file:', error);
+      }
+    }
+  }
+
+  onFileSelected(event: any): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+      this.selectedFile = inputElement.files[0];
     }
   }
 
