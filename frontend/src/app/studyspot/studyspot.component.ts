@@ -11,7 +11,7 @@ import { UserData } from '../DTOs/user-data.dto';
 export class StudyspotComponent {
   @Input() name: string = '';
   @Input() rating: number = 0;
-  @Input() imageUrl: string = '../assets/spots/Spot1.jpeg';
+  @Input() imageUrl: string = '';
   
   userID!: number;
   userData!: UserData;
@@ -41,7 +41,7 @@ export class StudyspotComponent {
 
     this.userData = this.authService.getUserData();
     this.userID = this.userData?.user_id;
-    
+
     this.studyspotService.getLikedState(this.name, this.userID).subscribe((response) => {
       this.liked = response.liked; 
     });

@@ -58,10 +58,10 @@ class Surveys_API():
             # Check if there's a study spot with created_at > current_time and checked_out is False
             # taken = self.db.session.query(Surveys).filter_by(studyspot_name = studyspot_name).filter_by(Surveys.survey_created_at > created_at).filter_by(Surveys.checked_out == False).first()
             taken = (self.db.session.query(Surveys).filter(Surveys.studyspot_name == studyspot_name).order_by(Surveys.survey_id.desc()).first())
-
-            if taken.survey_created_at +  timedelta(hours=2) > created_at:
-                if not taken.checked_out:
-                    return False
+            if taken:
+                if taken.survey_created_at +  timedelta(hours=2) > created_at:
+                    if not taken.checked_out:
+                        return False
 
             new_check_in = Surveys(
                 survey_id=survey_id,
