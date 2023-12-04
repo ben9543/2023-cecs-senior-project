@@ -791,6 +791,16 @@ def checkout_from_current_survey(survey_id):
         return jsonify({'message': 'No surveys found for the given survey id'}), 404
     
 '''Request API'''
+@app.route('/api/requests/upload_image',methods=['POST'])
+@login_required
+def upload_image_to_s3():
+    data = request.get_json()
+    print(data)
+    file = data.get('file')
+    file_name = data.get("name")
+    # S3_API.upload_to_s3()
+    return jsonify({"message":"Successfully uploaded the image"}),200
+    
 @app.route('/api/requests/create_request',methods=['PUT'])
 @login_required
 def create_request():
