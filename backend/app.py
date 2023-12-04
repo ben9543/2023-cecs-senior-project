@@ -24,6 +24,9 @@ password = "Imma473923"
 hostname = "studyspot.cpudrqditw4f.us-west-1.rds.amazonaws.com:5432"
 database_name = "studyspot"
 port = "5432"
+access_key = "AKIAT5RLZLINSTBNW53R"
+secret_key = "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"
+
 DATABASE_URI = f"postgresql://{user}:{password}@{hostname}/{database_name}"
 
 # Create Flask app
@@ -67,6 +70,9 @@ reports_studyspots_instance = Reported_studyspots_API(db)
 
 # Create Reported comments instance
 reports_comments_instance = Reported_comments_API(db)
+
+# Create S3 instance
+s3_instace = S3_API(aws_access_key_id = access_key, aws_secret_access_key = secret_key)
 
 # Create auth instance
 auth_instance = Auth(db, users_instance, admins_instance)
@@ -794,6 +800,7 @@ def checkout_from_current_survey(survey_id):
 @app.route('/api/requests/upload_image',methods=['POST'])
 @login_required
 def upload_image_to_s3():
+
     try:
         
         if 'file' not in request.files:
@@ -806,11 +813,11 @@ def upload_image_to_s3():
         print("File Name: ", file_name)
         # file = data.get('file')
         # file_name = data.get("name")
-        S3_API.upload_to_s3(file,file_name)
+        s3_instace.upload_to_s3(file,file_name)
         return jsonify({"message":"Successfully uploaded the image"}),200
     except:
         return jsonify({"message":"Error Uploading image"}),400
-    
+
 @app.route('/api/requests/create_request',methods=['PUT'])
 @login_required
 def create_request():
