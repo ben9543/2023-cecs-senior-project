@@ -28,6 +28,8 @@
         formControlName="image"
         placeholder="image"
         type="file"
+        (change)="onFileSelected($event)" 
+        accept="image/*"
         required="true"/>
     
     <mat-form-field>

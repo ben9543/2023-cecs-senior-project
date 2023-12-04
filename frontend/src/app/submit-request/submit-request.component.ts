@@ -96,6 +96,7 @@ export class SubmitRequestComponent {
 
       try {
         const fileUrl = await this.s3Service.uploadFileToS3(formData);
+        console.log("Image URL:", fileUrl)
         const requestData: CreateRequestDTO= {
           user_id: this.userID.toString(),
           studyspot_name: this.request.value.studyspot_name,

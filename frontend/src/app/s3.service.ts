@@ -11,6 +11,7 @@ export class S3Service {
   constructor(private http: HttpClient) {}
 
   async uploadFileToS3(formData: FormData): Promise<string> {
+    console.log(formData.get('file'));
     try {
       const response: any = await this.http.post<any>(
         `${this.apiUrl}/requests/upload_image`,

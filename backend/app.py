@@ -794,12 +794,22 @@ def checkout_from_current_survey(survey_id):
 @app.route('/api/requests/upload_image',methods=['POST'])
 @login_required
 def upload_image_to_s3():
-    data = request.get_json()
-    print(data)
-    file = data.get('file')
-    file_name = data.get("name")
-    # S3_API.upload_to_s3()
-    return jsonify({"message":"Successfully uploaded the image"}),200
+    try:
+        
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'})
+
+        file = request.files.get('file')
+        
+        print("File: ", file)
+        file_name = file.filename
+        print("File Name: ", file_name)
+        # file = data.get('file')
+        # file_name = data.get("name")
+        S3_API.upload_to_s3(file,file_name)
+        return jsonify({"message":"Successfully uploaded the image"}),200
+    except:
+        return jsonify({"message":"Error Uploading image"}),400
     
 @app.route('/api/requests/create_request',methods=['PUT'])
 @login_required
