@@ -27,7 +27,10 @@
         id="uploader"
         formControlName="image"
         placeholder="image"
-        type="file" />
+        type="file"
+        (change)="onFileSelected($event)" 
+        accept="image/*"
+        required="true"/>
     
     <mat-form-field>
       <mat-select formControlName="studyspot_name" placeholder="Select Spot Name">
