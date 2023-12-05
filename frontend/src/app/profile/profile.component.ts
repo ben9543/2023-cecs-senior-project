@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StudyspotService } from '../studyspot.service';
 
 
 @Component({
@@ -7,26 +8,30 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  spotsRecent: Spot = [
-    { name: "London", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Madrid", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Barcelona", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Vegas", rating: "5", imageUrl: "assets/spots/Spot1.jpeg"}
-  ];
 
-  spotsSuggested: Spot = [
-    { name: "Portland", rating: "5", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Seattle", rating: "2", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Nashville", rating: "3", imageUrl: "assets/spots/Spot1.jpeg"},
-    { name: "Atlanta", rating: "1", imageUrl: "assets/spots/Spot1.jpeg"}
-  ];
+  spotsSuggested!: Array<string>;
 
-  constructor() {}
+  spotsRecent: string[]=[];
 
-  ngOnInit() {}
+  selectedTabIndex: number = 0;
+  tabs: number = 0;
+  constructor(private studyspotService: StudyspotService) { 
+    this.spotsRecent = this.studyspotService.getStudySpots();
+    this.tabs = this.spotsRecent.length;
+  }
 
-  selectedTabIndex: number = 0; // Initial selected tab index
-  tabs: number = this.spotsRecent.length; // Replace with your tab data
+  ngOnInit() {
+    this.studyspotService.getCheckedInStudySpotsName().subscribe(
+      (response) => {
+        this.spotsSuggested = response.data;
+        this.spotsSuggested = [...new Set(this.spotsSuggested)];
+        this.spotsSuggested = this.spotsSuggested.slice(0, 8);
+      },
+      (error) => {
+        console.error('Error fetching reviews:', error);
+      }
+    );
+  }
 
   // Function to handle tab changes
   tabChanged(event: number): void {
@@ -47,8 +52,7 @@ export class ProfileComponent {
     }
   }
 
-  selectedMightTabIndex: number = 0; // Initial selected tab index
-  mighttabs: number = this.spotsSuggested.length; // Replace with your tab data
+  selectedMightTabIndex: number = 0; 
 
   // Function to handle tab changes
   tabChangedmight(event: number): void {
@@ -64,10 +68,9 @@ export class ProfileComponent {
 
   // Function to select the next tab
   selectNextTabmight(): void {
-    if (this.selectedMightTabIndex < this.mighttabs - 1) {
+    const mighttabs  = this.spotsSuggested.length; 
+    if (this.selectedMightTabIndex < mighttabs - 1) {
       this.selectedMightTabIndex++;
     }
   }
 }
-
-type Spot = Array<{ name: string; rating: string; imageUrl: string; }>;

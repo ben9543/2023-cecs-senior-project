@@ -1,0 +1,69 @@
+<app-admin-header></app-admin-header>
+<div class="spots-container">
+    <!-- Div for the study spot component using hard coded data-->
+    <div class="studyspotCard">
+      <app-requested-spots [ngStyle]="" name="{{ requestedSpot.studyspot_name }}"></app-requested-spots>
+    </div>
+    <!-- Div for details 1 (bottom left) -->
+    <div class="details-2">
+      <p id="detail-p">Location:<span>&nbsp;&nbsp;&nbsp;</span>{{ requestedSpot.request_location}}</p>
+      <!-- Dropdown for Features, will be iteration once we have all in db -->
+      <!-- <div class="select-features">
+          <label for="features">Features</label>
+          <select id="features" name="features">
+          <option value="powerOutlets" *ngIf="studySpot.studyspot_power_outlets">Power Outlets</option>
+          <option value="strongWifi" *ngIf="studySpot.studyspot_strong_wifi">Strong Wi-Fi Signal</option>
+          <option value="ada" *ngIf="studySpot.studyspot_ada">ADA Accessible</option>
+          <option value="easyToFind" *ngIf="studySpot.studyspot_easy_to_find">Easy to Find</option>
+          </select>
+      </div> -->
+      <p id="detail-p">Crowdedness Level Out Of 5: <span>&nbsp;&nbsp;&nbsp;</span>{{ requestedSpot.request_crowdedness_level}}</p>
+      <p id="detail-p">Noise Level Out Of 5: <span>&nbsp;&nbsp;&nbsp;</span>{{ requestedSpot.request_noise_level}}</p>
+      <label>Features:</label>
+      <div class="features">
+        <p id="detail-f" *ngIf="requestedSpot.request_ada">ADA Accessible</p>
+        <p id="detail-f" *ngIf="requestedSpot.request_strong_wifi">Strong Wi-Fi</p>
+        <p id="detail-f" *ngIf="requestedSpot.request_power_outlets">Power Outlets</p>
+        <p id="detail-f" *ngIf="requestedSpot.request_is_indoor">Indoor</p>
+        <p id="detail-f" *ngIf="!requestedSpot.request_is_indoor">Outdoor</p>
+        <p id="detail-f" *ngIf="!requestedSpot.request_easy_to_find">Easy To Find</p>
+      </div>
+      <p id="detail-p">Reason: <span>&nbsp;&nbsp;&nbsp;</span>{{ requestedSpot.request_reason}}</p>
+
+      <div class = "row">
+        <div class = 'btn-primary'>
+            <button
+                mat-raised-button
+                (click)="onSubmit()"
+                style="background-color: rgb(11, 131, 37);"
+            >
+            Approve
+            </button>
+        </div>
+        <div class = 'btn-secondary'>
+            <button
+            mat-raised-button
+            (click)="onReject()"
+            style="background-color: rgb(167, 10, 10);"
+          >
+            Reject
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="top-right-more">
+      <button mat-icon-button matTooltip="More" [matMenuTriggerFor]="reportSpotMenu">
+          <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #reportSpotMenu [overlapTrigger]="false" yPosition="below" class="customize">
+          <button id="more-on-spot" mat-menu-item>
+              <span>Report</span>
+          </button>
+          <button id="more-on-spot" mat-menu-item>
+              <span>Feedback</span>
+          </button>
+      </mat-menu>
+    </div>
+  </div>

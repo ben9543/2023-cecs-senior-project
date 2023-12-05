@@ -25,12 +25,12 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogInComponent } from './log-in/log-in.component';
-import { StudyspotsComponent } from './studyspots/studyspots.component';
 import { HeaderComponent } from './header/header.component';
 import { StudyspotComponent } from './studyspot/studyspot.component';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -46,7 +46,7 @@ import { HelpsComponent } from './helps/helps.component';
 import { SignupComponent } from './signup/signup.component';
 import { StudyspotViewComponent } from './studyspot-view/studyspot-view.component';
 import { FavoritesComponent } from './favorites/favorites.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
@@ -57,12 +57,23 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { RateMeComponent } from './rate-me/rate-me.component';
 import { CheckInComponent } from './check-in/check-in.component';
 import { CheckIndialogComponent } from './check-indialog/check-indialog.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
+import { AdminHeaderComponent } from './admin-header/admin-header.component';
+import { LandingAgeComponent } from './landing-age/landing-age.component';
+import { StudyspotService } from './studyspot.service';
+import { UserService } from './user.service';
+import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
+import { RequestedSpotsComponent } from './requested-spots/requested-spots.component';
+import { RequestedSpotViewComponent } from './requested-spot-view/requested-spot-view.component';
+import { AuthInterceptor } from './auth.interceptor';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogInComponent,
-    StudyspotsComponent,
     HeaderComponent,
     StudyspotComponent,
     HomepageComponent,
@@ -85,7 +96,14 @@ import { CheckIndialogComponent } from './check-indialog/check-indialog.componen
     UserratingComponent,
     RateMeComponent,
     CheckInComponent,
-    CheckIndialogComponent
+    CheckIndialogComponent,
+    AdminLoginComponent,
+    AdminHomepageComponent,
+    AdminHeaderComponent,
+    LandingAgeComponent,
+    RequestedSpotsComponent,
+    RequestedSpotViewComponent,
+    FooterComponent
   ],
   entryComponents: [ 
     CheckIndialogComponent
@@ -120,9 +138,10 @@ import { CheckIndialogComponent } from './check-indialog/check-indialog.componen
     HammerModule,
     MatTabsModule,
     MatCardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [StudyspotService, UserService, AuthGuard, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

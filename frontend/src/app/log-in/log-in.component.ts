@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserData } from '../DTOs/user-data.dto';
 
 @Component({
   selector: 'app-log-in',
@@ -15,7 +16,8 @@ export class LogInComponent {
 
   login!: FormGroup;
   errorMessage: string = '';
-  
+  loading: boolean = false;
+  user!: UserData;
   constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient,
      private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar ) { }
 
@@ -29,28 +31,32 @@ export class LogInComponent {
 
   onSubmit(): void {
     if (this.login.valid) {
+      this.loading = true;
       const { email, password } = this.login.value;
 
-      this.userService.login(email, password).subscribe(
+      this.userService.login(email.toLowerCase(), password).subscribe(
         (response: any) => {
-          localStorage.setItem('access_token', response.token);
-
+          localStorage.setItem('header', JSON.stringify(response));
           // Fetch the user data based on the email from UserService
-          this.userService.getUserByEmail(email).subscribe(
-            (userData) => {
-              const user = userData;
-              this.authService.setUserData(user); // Set userData
+          this.userService.getUserByEmail(email.toLowerCase()).subscribe(
+            (userData: any) => {
+              this.user = userData;
+              this.authService.setUserData(this.user);
+              setTimeout(() => {
+                // Navigate to home
+                this.loading = false;
+                this.router.navigate(['/home']);
+
+              }, 1000);
             },
             (userError) => {
               console.error('Error fetching user data:', userError);
             }
           );
-
-          // Navigate to home
-          this.router.navigate(['/home']);
         },
         (error) => {
           if (error.status === 401) {
+            this.loading = false;
             this.snackBar.open('Invalid email or password', 'Close', { duration: 5000 });
           } else {
             this.snackBar.open('Login failed! Unknown Error', 'Close', { duration: 5000 });

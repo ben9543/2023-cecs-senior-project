@@ -1,4 +1,4 @@
-<div class="card-container" (click) = "onCardClick({name,imageUrl,rating})">
+<div class="card-container">
     <div class="card-image">
       <img [src]="imageUrl" alt="Card Image">
     </div>
@@ -13,7 +13,7 @@
           <mat-icon class="bigger-icon">stars</mat-icon>
         </span>
       </div>
-      <div class="card-name">{{ name }}</div>
+      <div class="card-name" (click) = "onCardClick({name,imageUrl,rating})">{{ name }}</div>
     </div>
 </div>
   

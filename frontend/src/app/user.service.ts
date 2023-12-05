@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { API_URL } from './config';
+import { UserData } from './DTOs/user-data.dto';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getUserByEmail(email: string) {
+  getUserByEmail(email: string){
     const authToken = this.authService.getToken();
 
     //console.log('Auth token:', authToken);

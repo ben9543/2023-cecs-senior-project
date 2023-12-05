@@ -2,7 +2,7 @@
     background-color: cadetblue;
     position: relative;
     width: 900px;
-    height: fit-content;
+    height: max-content;
     margin: 230px auto;
     display: flex;
     flex-wrap: wrap;
@@ -11,7 +11,9 @@
     font-family: 'Chalkduster, fantasy';
     font-size: larger;
 }
-
+.spots-container-mobile{
+    display: none;
+}
 .study-spot-details {
     display: flex;
     align-items: flex-start;
@@ -29,13 +31,12 @@
   }
   
   :root {
-    --number-of-reviews: 0; 
+    --number-of-reviews: 5; 
   }
   .details-1 {
     width: max-content;
     flex: 1;
-    position: absolute;
-    top: calc(var(--number-of-reviews ) * 10%);
+    position:absolute;
     left: 2.2%; 
     padding: 20px 45px; 
     border: none;
@@ -111,8 +112,20 @@
     cursor: pointer; 
     border: rgb(14, 75, 77) 2px solid;
     margin-top: 10px;
-    padding: 5px;
+    padding: 5%;
 }
+
+#detail-a{
+    background-color: whitesmoke;
+    color: black;
+    font-size: 16px;
+    border-radius: 5px 0 0 5px;
+    cursor: pointer; 
+    border: rgb(14, 75, 77) 2px solid;
+    margin-top: 10px;
+    padding: 5%;
+}
+
 #detail-t{
     width: max-content;
     background-color: whitesmoke;
@@ -124,6 +137,12 @@
     padding: 4px;
 }
 
+.avail{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
 .select-features{
     background-color: whitesmoke;
     color: black;
@@ -131,6 +150,7 @@
     border-radius: 5px;
     cursor: pointer; 
     border: rgb(14, 75, 77) 2px solid;
+    padding-left: 2px;
 }
 
 .top-right-more {
@@ -153,6 +173,7 @@
     padding-left: 5%;
     margin-left: -5%;
     margin-top: 10%;
+    padding-bottom: 20%;
 }
 
 .detail-item-review {
@@ -169,15 +190,35 @@
     padding-left: 3%;
 }
 
+#blocker{
+    border-left: rgb(14, 75, 77) 2px solid;
+    color: bisque;
+    padding-bottom: 50%;
+    padding-left: 3%;
+}
+
+.green-icon {
+    color: green; 
+    background-color: green; 
+    border: rgb(14, 75, 77) 2px solid;
+    width: 43%;
+    margin-top: 10px;
+    padding: 4.2%;
+  }
+  
+.red-icon {
+    color: red; 
+    background-color: red;
+    border-left: rgb(180, 17, 17) 2px solid;
+    width: 43%;
+    margin-top: 10px;
+    padding: 4.2%;
+}
 
 /* Media queries for mobile responsiveness */
 @media screen and (max-width: 768px) {
     .spots-container {
-        width: 90%;
-        margin-left: 2.5%;
-        margin-top: 35%;
-        padding: 10px;
-        border-radius: 5px;
+        display: none;
     }
 
     .study-spot-image {
@@ -215,7 +256,7 @@
     }
 
     #special-button{
-        width: 120px;
+        width: 100px;
     }
 
     .details-2 {
@@ -228,9 +269,20 @@
         font-size: 14px;
     }
     .user-reviews{
-        border-left: rgb(14, 75, 77) 2px solid;
+        border-left: none;
+        border-top: rgb(14, 75, 77) 2px solid;
         margin-top: 5%;
     }
+    #blocker{
+        border-left: none;
+        border-top: rgb(14, 75, 77) 2px solid;
+        margin-top: 5%;
+    }
+
+    #blocker h2{
+        padding-left: 10%;
+    }
+
     .select-features{
         font-size: 16px;
         border-radius: 5px;
@@ -242,11 +294,32 @@
     }
     #features {
         padding: 0;
-        width: 60%;
+        width: 52%;
         height: 30px;
         border-radius: 3px;
+        opacity: 1;
+        color: #000;
     }
     #features option {
-        padding: 5px;
+        padding: 2%;
     }
+
+    .spots-container-mobile{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin-left: 2.5%;
+        margin-top: 35%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: cadetblue;
+    }
+    .box{
+        padding: 10px;
+        margin: 5px;
+    }
+    .green-icon, .red-icon{
+        width: 52%;
+    }
+
 }

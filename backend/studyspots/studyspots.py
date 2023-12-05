@@ -3,6 +3,7 @@
 from db.db_connection_test import Studyspots
 from db.db_connection_test import Reviews
 from sqlalchemy.sql import func
+import random
 
 def create_studyspot_and_review_object(data):
     return {
@@ -73,6 +74,12 @@ class StudySpots_API():
         else:
             return None
         
+    def get_all_studyspot_name(self):
+        names = []
+        studyspot_names = self.db.session.query(Studyspots.studyspot_name).all()
+        names = [name[0] for name in studyspot_names]
+        return names
+    
     def get_studyspot_by_name(self, name):
         studyspot = self.db.session.query(Studyspots).filter(Studyspots.studyspot_name == name).first()
         if studyspot:
@@ -105,6 +112,7 @@ class StudySpots_API():
                 Studyspots.studyspot_noise_level,
                 Studyspots.studspot_crowdedness_level,
                 Studyspots.studyspot_strong_wifi,
+                Studyspots.studyspot_image_url,
                 Reviews.studyspot_name,
                 func.avg(Reviews.review_rate).label('rating'),
             ).group_by(Reviews.studyspot_name,Studyspots.studyspot_location,
@@ -114,6 +122,7 @@ class StudySpots_API():
                 Studyspots.studyspot_easy_to_find,
                 Studyspots.studyspot_noise_level,
                 Studyspots.studspot_crowdedness_level,
+                Studyspots.studyspot_image_url,
                 Studyspots.studyspot_strong_wifi).having(Reviews.studyspot_name==name)
 
             # Get list of reivews that has the studyspot name
@@ -136,6 +145,7 @@ class StudySpots_API():
                 "studyspot_strong_wifi":studyspot_result.studyspot_strong_wifi,
                 "studyspot_name":studyspot_result.studyspot_name,
                 "studyspot_rating":studyspot_result.rating,
+                "studyspot_image_url": studyspot_result.studyspot_image_url,
                 "reviews":[]
             }
             for review in review_results:
@@ -167,6 +177,25 @@ class StudySpots_API():
 
     def create_studyspot(self, params):
         new_studyspot = Studyspots(**params)
+        self.db.session.add(new_studyspot)
+        self.db.session.commit()
+        return new_studyspot.as_dict()
+    
+    def create_studyspot_from_request(self, request):
+        new_studyspot = Studyspots(
+            studyspot_id = request["user_id"] + random.randint(1,100000000),
+            studyspot_name= request["studyspot_name"],
+            university_name = request["university_name"],
+            studyspot_is_indoor= request["request_is_indoor"],
+            studyspot_ada= request["request_ada"],
+            studyspot_power_outlets= request["request_power_outlets"],
+            studyspot_easy_to_find= request["request_easy_to_find"],
+            studyspot_image_url= request["request_image_url"],
+            studyspot_location= request["request_location"],
+            studyspot_noise_level= request["request_noise_level"],
+            studspot_crowdedness_level= request["request_crowdedness_level"],# Typo
+            studyspot_strong_wifi= request["request_strong_wifi"]
+        )
         self.db.session.add(new_studyspot)
         self.db.session.commit()
         return new_studyspot.as_dict()

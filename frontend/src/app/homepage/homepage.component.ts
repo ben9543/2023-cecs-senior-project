@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { StudyspotService } from '../studyspot.service';
+import { StudySpot } from '../DTOs/studyspot.dto';
 
 @Component({
   selector: 'app-homepage',
@@ -7,7 +8,7 @@ import { StudyspotService } from '../studyspot.service';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit, OnChanges {
-  spots: any[] = [];
+  spots!: Array<StudySpot>;
   filterCriteria: any;
   searchQuery: string = '';
 
@@ -43,7 +44,7 @@ private initializeComponent() {
       } else {
           if (this.filterCriteria === undefined) {
             this.spots = data.data;
-            console.log('Spots:', this.spots);
+            // console.log('Spots:', this.spots);
           } else {
             
             this.spots = data.data.filter((spot: any) => {
@@ -55,6 +56,8 @@ private initializeComponent() {
               // Check if the spot meets any of the selected criteria
               for (const key in flattenedData) {
                 if (flattenedData[key] !== null) {
+                  // console.log("spot:", spot)
+                  // console.log("Key Flattened :", key)
                   if (spot[key] !== flattenedData[key]) {
                     return false; // Doesn't meet the criteria
                   }
@@ -77,14 +80,14 @@ private flattenObject(obj: any, parentKey = ''): { [key: string]: any } {
   const result: { [key: string]: any } = {};
 
   for (const key in obj) {
-    const newKey = parentKey ? `${parentKey}.${key}` : key;
+    const newKey = key;
 
     if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
       const nestedObject = this.flattenObject(obj[key], newKey);
       Object.assign(result, nestedObject);
     } else if (obj[key] !== null && obj[key] !== '') {
-      if (key === 'location') {
-        result[newKey] = obj[key].toLowerCase() === 'indoor';
+      if (key === 'studyspot_is_indoor') {
+        result[newKey] = obj[key] === 'Indoor';
       } else {
         result[newKey] = obj[key];
       }

@@ -51,4 +51,41 @@ export class ConfirmationDialogService {
       },
     });
   }
+
+  openRequestSubmittedConfirmation(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Request Submitted',
+        dialogMessage: 'Thank you for submitting the request. We will take a look and get back to you with status update.',
+      },
+    });
+  }
+
+  requestedSpotIsApproved(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Request Approved',
+        dialogMessage: 'You (Admin) have approved the requested StudySpot.',
+      },
+    });
+  }
+
+  requestedSpotIsRejected(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Request Rejected',
+        dialogMessage: 'You (Admin) have rejected the requested StudySpot.',
+      },
+    });
+  }
+
+  spotAlreadyTaken(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        dialogTitle: 'Check-In Failed',
+        dialogMessage: 'Opps..Check-In Faster Next Time',
+      },
+      disableClose: true
+    });
+  }
 }

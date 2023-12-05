@@ -1,0 +1,61 @@
+ .spots-container{
+    background-color: cadetblue;
+    position: absolute;
+    width: 93%;
+    height: auto;
+    left: 40px;
+    margin-top: 16%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;    
+    padding: 20px;
+  }
+  
+  app-requested-spots {
+    padding: 10px; 
+  }
+  button{
+    margin-top: 0.4%;
+    margin-left: 0.2%;
+  }
+  /* Media queries for mobile devices */
+  @media (max-width: 768px) {
+    .spots-container {
+      width: 84.5%;
+      left: 5%;
+      margin-top: 50%;
+      height: auto;
+      border-radius: 0 0 10px 10px;
+      justify-content: center;
+  }
+    .search {
+        width: 90%;
+        left: 5%;
+        margin-top: 30%;
+        height: max-content;
+        border-radius: 10px 10px 0 0;
+    }
+    button{
+      margin-left: -5%;
+      margin-top: 3%;
+    }
+    
+  }
+  
+    /* Responsive styles for larger screens */
+    @media screen and (min-width: 2000px) {
+      .search {
+        left: 40px; 
+        margin-top: 12%;
+        height: 4%;
+      }
+    
+      .spots-container {
+        left: 40px; 
+        width: 90%;
+        margin-top: 14.5%; 
+        height: auto;
+        padding-bottom: 20px;
+        justify-content:space-around;
+      }
+    }

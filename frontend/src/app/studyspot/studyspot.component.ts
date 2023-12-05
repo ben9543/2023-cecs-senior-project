@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudyspotService } from '../studyspot.service';
 import { AuthService } from '../auth.service';
+import { UserData } from '../DTOs/user-data.dto';
 @Component({
   selector: 'app-studyspot',
   templateUrl: './studyspot.component.html',
@@ -10,10 +11,10 @@ import { AuthService } from '../auth.service';
 export class StudyspotComponent {
   @Input() name: string = '';
   @Input() rating: number = 0;
-  @Input() imageUrl: string = '../assets/spots/Spot1.jpeg';
+  @Input() imageUrl: string = '';
   
-  userID: number = -1;
-  
+  userID!: number;
+  userData!: UserData;
   liked: boolean = false;
 
   getStars(num: number) {
@@ -31,17 +32,15 @@ export class StudyspotComponent {
     this.studyspotService.getStudyspotByNameWithReviews(this.name).subscribe(
       (data: any) => {
         this.rating = data.data.studyspot_rating;
-        console.log("studyspot rating", this.rating);
+        this.imageUrl = `https://studyspot-123.s3.us-west-1.amazonaws.com/${this.name}.jpg`;
       },
       error => {
         console.error('Error fetching StudySpot details:', error);
       }
     );
 
-    this.authService.userData$.subscribe((userData) => {
-      this.userID = userData.user_id;
-      console.log("userData in studyspot", userData);
-    });
+    this.userData = this.authService.getUserData();
+    this.userID = this.userData?.user_id;
 
     this.studyspotService.getLikedState(this.name, this.userID).subscribe((response) => {
       this.liked = response.liked; 
@@ -49,6 +48,7 @@ export class StudyspotComponent {
   }
 
   onCardClick(data: any) {
+    this.studyspotService.addStudySpotName(this.name);
     this.router.navigate(['/studyspot-view'], { queryParams: { name: data.name } });
   }
 
@@ -67,12 +67,10 @@ export class StudyspotComponent {
   toggleLike() {
     if (this.liked) {
       // User has already liked it, so remove the like
-      console.log("User ID -->", this.userID)
       this.liked = false;
       this.unlikeCard();
     } else {
       // User liked it for the first time
-      console.log("User liked it");
       this.liked = true;
       this.likeCard();
     }

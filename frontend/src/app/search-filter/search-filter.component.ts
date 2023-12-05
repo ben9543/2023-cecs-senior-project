@@ -14,18 +14,17 @@ export class SearchFilterComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
-      studyspot_location: [''],
+      studyspot_is_indoor: [''],
       filters: this.formBuilder.group({
         studyspot_noise_level: [],
-        study_spot_crowdedness_level: [],
+        studspot_crowdedness_level: [],
         amenities: this.formBuilder.group({
           studyspot_power_outlets: [],
           studyspot_strong_wifi: [],
           studyspot_ada: [],
           studyspot_easy_to_find: []
         })
-      }),
-      temperature: ['']
+      })
     });
   }
 

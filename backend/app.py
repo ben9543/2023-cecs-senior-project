@@ -1,13 +1,21 @@
+import datetime
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
 from auth.auth import Auth
+from admins.admins import Admin_API
 from users.users import User_API
 from studyspots.studyspots import StudySpots_API
+from surveys.surveys import Surveys_API
 from universities.universities import Universities_API
 from favourite.favourite import Favourites_API
 from reviews.reviews import Reviews_API
+from rejections.rejections import Rejections_API
+# from requests.requests import Requests_API
+from requests_v2.requests import Requests_API
+from reports.reported_studyspot import Reported_studyspots_API
+from reports.reported_comment import Reported_comments_API
 from aws.s3 import S3_API
 
 # Create a SQLAlchemy engine and connect to your database
@@ -16,6 +24,9 @@ password = "Imma473923"
 hostname = "studyspot.cpudrqditw4f.us-west-1.rds.amazonaws.com:5432"
 database_name = "studyspot"
 port = "5432"
+access_key = "AKIAT5RLZLINSTBNW53R"
+secret_key = "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"
+
 DATABASE_URI = f"postgresql://{user}:{password}@{hostname}/{database_name}"
 
 # Create Flask app
@@ -25,10 +36,13 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # Allow Cross Origin from anywhere (will be restricted in prod)
-CORS(app, resources={r"/api/*": {"origins": "http://www.studyspot.info"}})
+CORS(app, resources={r"/api/*": {"origins": ["http://www.studyspot.info", "http://studyspot.info", "http://localhost:4200"]}})
 
 # Create Users instance
 users_instance = User_API(db)
+
+# Create Admins instance
+admins_instance = Admin_API(db)
 
 # Create Studyspot instance
 studyspots_instance = StudySpots_API(db)
@@ -42,27 +56,36 @@ universities_instance = Universities_API(db)
 # Create Favourite API
 favourite_instance = Favourites_API(db)
 
-# Create auth instance
-auth_instance = Auth(db, users_instance)
+# Create Survey API
+survey_instance = Surveys_API(db)
 
-# S3 Object (Sample code)
-# Make sure to replace "****" accordingly to your bucket settings for testing.
-# access_key = "****"
-# secret_key = "****"
-# #region = "****" 
-# bucket_name = "****"
-# s3_instance = S3_API(access_key, secret_key, region, bucket_name)
-# objects = s3_instance.list_bucket()
-# for o in objects:
-#     print(o)
+# Create Request instance
+request_instance = Requests_API(db)
+
+# Create Rejection instance
+rejection_instance = Rejections_API(db)
+
+# Create Reported studyspots instance
+reports_studyspots_instance = Reported_studyspots_API(db)
+
+# Create Reported comments instance
+reports_comments_instance = Reported_comments_API(db)
+
+# Create S3 instance
+s3_instace = S3_API(aws_access_key_id = access_key, aws_secret_access_key = secret_key)
+
+# Create auth instance
+auth_instance = Auth(db, users_instance, admins_instance)
 
 # Constants
 AUTH_HEADER_KEY  = 'Authorization'
 
 # Define a function to set CORS headers
 def add_cors_headers(response):
-    # Replace with the actual origin of your Angular application
-    response.headers['Access-Control-Allow-Origin'] = 'http://www.studyspot.info'
+    allowed_origins = ["http://www.studyspot.info", "http://studyspot.info", "http://localhost:4200"]
+    origin = request.headers.get("Origin")
+    if origin in allowed_origins:
+        response.headers['Access-Control-Allow-Origin'] = origin
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
     return response
@@ -75,13 +98,30 @@ def after_request(response):
 # Protect routes
 def login_required(func):
     def secure_function(*args, **kwargs):
+        # print("Print All Headers: ",request.headers)
+        if(not AUTH_HEADER_KEY in request.headers):
+            return make_response(jsonify({'error': 'Authorization header missing'}), 401)
+        token = request.headers.get(AUTH_HEADER_KEY)
+        # print("Payload->>>>>>",token)
+        if not token:
+            return make_response(jsonify({'error': 'Token is missing'}), 401)
+        if auth_instance.verify_token(token):
+            return func(*args, **kwargs)
+        else:
+            return make_response(jsonify({'error': 'Authentication failed (invalid token)'}), 401)
+    secure_function.__name__ = func.__name__
+    return secure_function
+
+# Protect routes
+def admin_login_required(func):
+    def secure_function(*args, **kwargs):
         if(not AUTH_HEADER_KEY in request.headers):
             return make_response(jsonify({'error': 'Authorization header missing'}), 401)
         token = request.headers.get(AUTH_HEADER_KEY)
         #print("Payload->>>>>>",token)
         if not token:
             return make_response(jsonify({'error': 'Token is missing'}), 401)
-        if auth_instance.verify_token(token):
+        if auth_instance.verify_admin_token(token):
             return func(*args, **kwargs)
         else:
             return make_response(jsonify({'error': 'Authentication failed (invalid token)'}), 401)
@@ -97,23 +137,81 @@ def parameter_check(data):
 def alive():
     return make_response(jsonify({"message": "Success", "response":True}), 200)
 
-""" Users Routes """
-# GET all users
-# @app.route('/api/users', methods=['GET'])
-# @login_required
-# def get_users():
-#     data = users_instance.get_users()
-#     return make_response(jsonify({"message": "Success", "response":data}), 200)
 
-# # GET user by ID
-# @app.route('/api/users/<int:user_id>', methods=['GET'])
-# @login_required
-# def get_user(user_id):
-#     user = users_instance.get_user(user_id)
-#     if(user):
-#         return make_response(jsonify({"message":"Success", "response":user}),200)
-#     else:
-#         return make_response(jsonify({"error": "No such user with the given id."}), 404)
+""" Admin Routes """
+@app.route('/api/admin/login', methods=['POST'])
+def admin_login():
+    email = request.json.get('email')
+    password = request.json.get('password')
+    admin_user = admins_instance.find_user_by_email(email)
+    if admin_user:
+        stored_password = admin_user.password
+        if stored_password == password:
+            token = auth_instance.generate_jwt_admin(email)
+            if token:
+                expiration_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+                # return jsonify({'admin_token': token.decode('utf-8'), 'expires_in': expiration_time, 'authenticated': True}), 200
+                return jsonify({'admin_token': token, 'expires_in': expiration_time, 'authenticated': True}), 200
+            else:
+                return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
+        else:
+            return jsonify({'message': 'Invalid password', 'authorized': False}), 401
+    return jsonify({'message': 'Invalid email', 'authenticated': False}), 401
+
+""" Admin Routes """
+@app.route('/api/admin/approve', methods=['POST'])
+@admin_login_required
+def admin_approve():
+    try:
+        name = request.json.get('studyspot_name')
+        user_id = request.json.get('user_id')
+        req = request_instance.get_studyspot_by_name(name)
+
+        # Get the request from the table using the studyspot name
+        req = request_instance.get_studyspot_by_name(name)
+        if not req:
+            return jsonify({'message': "Internal Error: Please Check the Study Spot Name", 'result': False}), 400
+        
+        # 1. Create a new studyspot using the Request
+        new_studyspot = studyspots_instance.create_studyspot_from_request(req)
+        
+        # 2. Delete the Request
+        deleted = request_instance.delete_request(user_id, name)
+
+        # 3. Return the response
+        return jsonify({'message': "Successfully Approved the New Studyspot", 'result': True}), 200
+    except:
+        # 4. Return the error
+        return jsonify({'message': "Internal Error: Please Check the Primary Key", 'result': False}), 400
+
+@app.route('/api/admin/reject', methods=['POST'])
+def admin_reject():
+    try:
+        # The route takes three arguments
+        name = request.json.get('studyspot_name')
+        #rejection_reason = request.json.get('rejection_reason')
+        rejection_reason = "Not Qualified"
+        user_id = request.json.get('user_id')
+
+        # Get the request from the table using the studyspot name
+        req = request_instance.get_studyspot_by_name(name)
+        if not req:
+            return jsonify({'message': "Internal Error: Please Check the Study Spot Name", 'result': False}), 400
+        
+        # 1. Create a new rejection using the Request
+        new_rejection = rejection_instance.create_rejection_from_request(req, rejection_reason)
+        
+        # 2. Delete the Request
+        deleted = request_instance.delete_request(user_id, name)
+
+        # 3. Return the response
+        return jsonify({'message': "Successfully Approved the New Studyspot", 'result': True}), 200
+    except:
+        # 4. Return the error
+        return jsonify({'message': "Internal Error: Please Check the Primary Key", 'result': False}), 400
+
+
+""" Users Routes """
 
 # Login route
 @app.route('/api/login', methods=['POST'])
@@ -127,8 +225,9 @@ def login():
         if password_check:
             token = auth_instance.generate_jwt(email)
             if token:
-                #return jsonify({'token': token.decode('utf-8'), 'authenticated': True}), 200
-                return jsonify({'token': token, 'authenticated': True}), 200
+                expiration_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+                #return jsonify({'token': token.decode('utf-8'), 'expires_in': expiration_time, 'authenticated': True}), 200
+                return jsonify({'token': token, 'expires_in': expiration_time, 'authenticated': True}), 200
             else:
                 return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
         else:
@@ -169,6 +268,7 @@ def handle_preflight_change_pswd():
     return '', 200
 
 @app.route('/api/change-password', methods=['PUT'])
+@login_required
 def change_password():
     try:
         user_id = request.json.get('user_id')
@@ -193,6 +293,8 @@ def change_password():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/user/<string:user_name>', methods=['GET'])
+@admin_login_required
+@login_required
 def get_user(user_name):
     # Retrieve user data based on the username from the database
     user = users_instance.get_user_by_username(user_name)
@@ -245,6 +347,7 @@ def handle_preflight_email():
 # Define an API route for updating user data
 @app.route('/api/update-user', methods=['PUT'])  # Use PUT for updating data
 @cross_origin()  # Allow cross-origin requests for this route
+@login_required
 def update_user():
     try:
         # Get the user data from the request
@@ -311,9 +414,9 @@ def check_email_availability():
         return jsonify({'taken': False})
 
 @app.route('/api/users/<int:user_id>', methods=['GET'])
+@login_required
 def get_username_by_id(user_id):
     user = users_instance.get_user_by_id(user_id)
-    print(user.user_name)
     if user:
         return jsonify(user.user_name), 200
     else:
@@ -325,6 +428,8 @@ def get_username_by_id(user_id):
 
 """ StudySpot API """
 @app.route('/api/studyspots', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@login_required
+@login_required
 def main_studyspot():
     if request.method == 'GET':
         try:
@@ -363,8 +468,37 @@ def main_studyspot():
                 'data': True
             }), 201)
 
+@app.route('/api/studyspot-names', methods=['GET'])
+@login_required
+def get_names_from_studyspots():
+    names = studyspots_instance.get_all_studyspot_name()
+    return make_response(jsonify({
+                'message': 'OK', 
+                'data': names
+            }), 200)
+
+@app.route('/api/requested-names', methods=['GET'])
+@login_required
+def get_names_from_requests():
+    names = request_instance.get_all_studyspot_name()
+    return make_response(jsonify({
+                'message': 'OK', 
+                'data': names
+            }), 200)
+
+@app.route('/api/studyspots-by-name', methods=['GET'])
+@login_required
+def get_studyspot():
+    studyspot_name = request.args.get('name')
+    spot = studyspots_instance.get_studyspot_by_name(studyspot_name)
+    return make_response(jsonify({
+                'message': 'OK', 
+                'data': spot
+            }), 200)
+
 # Studyspot aggregation API
 @app.route('/api/studyspots/reviews', methods=['GET'])
+@login_required
 def get_studyspot_with_reviews():
     try:
         data = None
@@ -372,7 +506,11 @@ def get_studyspot_with_reviews():
         if not studyspot_name:
             data = studyspots_instance.get_studyspots_with_reviews()
         else:
-            data = studyspots_instance.get_studyspot_by_name_with_reviews(studyspot_name)
+            spot_in_reviews = reviews_instance.get_review_by_studyspot_name(studyspot_name)
+            if spot_in_reviews:
+                data = studyspots_instance.get_studyspot_by_name_with_reviews(studyspot_name)
+            else:
+                data = studyspots_instance.get_studyspot_by_name(studyspot_name)
         # print(data)
         return make_response(jsonify({
             'message': 'OK', 
@@ -384,7 +522,6 @@ def get_studyspot_with_reviews():
             'message': 'FAILED', 
             'data': None
         }), 400)
-    
 
 # Studyspot search API
 @app.route('/api/studyspots/serach', methods=['POST'])
@@ -394,6 +531,7 @@ def search_studyspot():
 
 # Get a single studyspot by id
 @app.route('/api/studyspots/<int:studyspot_id>', methods=['GET'])
+@login_required
 def get_studyspot_by_id(studyspot_id):
     #studyspot = next((spot for spot in studyspots_instance if spot['id'] == studyspot_id), None)
     studyspot = None
@@ -407,6 +545,7 @@ REVIEWS API
 '''
 
 @app.route('/api/add_review', methods=['POST'])
+@login_required
 def add_new_review():
     if request.method == 'POST':
         data = request.get_json()
@@ -421,6 +560,7 @@ def add_new_review():
     
 # Get review by id
 @app.route('/api/review/<int:review_id>', methods=['GET'])
+@login_required
 def get_review_id(review_id):
     review = reviews_instance.get_review_by_id(review_id)
     if review:
@@ -429,8 +569,24 @@ def get_review_id(review_id):
     else:
         return jsonify({'message': 'Review not found'}), 404
 
+# Get Review by user_id
+@app.route('/api/review/user', methods=['GET'])
+@login_required
+def get_review_by_user_id():
+    reviews = None
+    user_id = request.args.get("user_id")
+    reviews = reviews_instance.get_review_by_user_id(user_id)
+    if reviews:
+        return make_response(jsonify({
+                    'message': 'OK', 
+                    'data': reviews
+                }), 200)
+    else:
+        return jsonify({'message': 'Review not found'}), 404
+
 # Adding a new review 
 @app.route('/api/review/add-user', methods=['POST'])
+@login_required
 def add_new_user():
     review_id = request.json.get('review_id')
     user_id= request.json.get('user_id')
@@ -455,6 +611,7 @@ def add_new_user():
 
 # Updating a review by id    
 @app.route('/api/reviews/<int:review_id>', methods=['PUT'])
+@login_required
 def update_review(review_id):
     try:
         # Parse the JSON data from the request
@@ -493,6 +650,7 @@ def update_review(review_id):
 
 # Deleting a review 
 @app.route('/api/reviews/<int:review_id>', methods=['DELETE'])
+@login_required
 def delete_review(review_id):
     try:
         # Call the delete_review method
@@ -520,6 +678,7 @@ def get_university_list():
 Favourtie API
 '''
 @app.route('/api/like-card', methods=['POST'])
+@login_required
 def like_card():
     try:
         data = request.get_json()
@@ -535,6 +694,7 @@ def like_card():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/unlike-card', methods=['POST'])
+@login_required
 def unlike_card():
     try:
         data = request.get_json()
@@ -550,6 +710,7 @@ def unlike_card():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/get-liked-state', methods=['GET'])
+@login_required
 def get_liked_state():
     try:
         studyspot_name = request.args.get("studyspot_name")
@@ -566,6 +727,7 @@ def get_liked_state():
     
 
 @app.route('/api/users/favorites/get-favorites-list/<int:user_id>', methods=['GET'])
+@login_required
 def get_favorites_by_user(user_id):
     user = users_instance.get_user_by_id(user_id)
     if user:
@@ -575,8 +737,182 @@ def get_favorites_by_user(user_id):
         else:
             return jsonify({"error": "User has no favorites"}), 404
     else:
-        return jsonify({"error": "User not found"}), 404 
+        return jsonify({"error": "User not found"}), 404
 
+'''
+SURVEY API
+'''
+@app.route('/api/users/surveys/get_checked_in_studyspots/<int:user_id>', methods=['GET'])
+@login_required
+def get_checked_in_studyspots(user_id):
+    checked_in_spots = survey_instance.get_checked_in_studyspots(user_id)
+    if checked_in_spots:
+        return jsonify({'message': 'Success', 'data': checked_in_spots}), 200
+    else:
+        return jsonify({'message': 'No checked-in study spots found for this user'}), 404
+
+@app.route('/api/users/surveys/get_checked_in_studyspots_name', methods=['GET'])
+@login_required
+def get_checked_in_studyspots_name():
+    checkedin_names = survey_instance.get_checkedin_studyspots_names()
+    if checkedin_names:
+        return jsonify({'message': 'Success', 'data': checkedin_names}), 200
+    else:
+        return jsonify({'message': 'No checked-in study spots found for this user'}), 404
+
+@app.route('/api/users/surveys/check_in', methods=['POST'])
+@login_required
+def check_in():
+    data = request.get_json()
+    studyspot_name = data.get('studyspot_name')
+    user_id = data.get('user_id')
+    crowdedness = data.get('survey_crowdednes_level')
+    noise_level = data.get('survey_noise_level')
+    wifi = data.get('survey_wifi')
+
+    if survey_instance.create_check_in(studyspot_name, user_id, crowdedness, noise_level, wifi):
+        return jsonify({'message': 'Check-in created successfully'}), 201
+    else:
+        return jsonify({'message': 'Failed to create a check-in'}), 500
+
+@app.route('/api/users/surveys/latestsurvey/<string:studyspot_name>', methods=['GET'])
+@login_required
+def get_latest_survey(studyspot_name):
+    latest_survey = survey_instance.get_latest_survey_for_studyspot(studyspot_name)
+    return jsonify({'message': 'Latest survey retrieved', 'data': latest_survey}), 200
+
+# Handle OPTIONS requests for /api/users/surveys/checkout/<int:survey_id>'
+@app.route('/api/users/surveys/checkout/', methods=['OPTIONS'])
+@login_required
+def handle_preflight_survey():
+    return '', 200
+
+@app.route('/api/users/surveys/checkout/<int:survey_id>', methods=['PUT'])
+def checkout_from_current_survey(survey_id):
+   
+    
+    if survey_instance.checkout_from_studyspot(survey_id):
+        return jsonify({'message': 'Successfully Checked-Out'}), 200
+    else:
+        return jsonify({'message': 'No surveys found for the given survey id'}), 404
+    
+'''Request API'''
+@app.route('/api/requests/upload_image',methods=['POST'])
+@login_required
+def upload_image_to_s3():
+
+    try:
+        
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'})
+
+        file = request.files.get('file')
+        
+        print("File: ", file)
+        file_name = file.filename
+
+        mimetype = file.content_type
+        extension = mimetype.split('/')[1] 
+        file_name = f"{file_name}.{extension}"
+        print("File Name: ", file_name)
+        # file = data.get('file')
+        # file_name = data.get("name")
+        s3_instace.upload_to_s3(file,file_name)
+        return jsonify({"message":"Successfully uploaded the image"}),200
+    except:
+        return jsonify({"message":"Error Uploading image"}),400
+
+@app.route('/api/requests/create_request',methods=['PUT'])
+@login_required
+def create_request():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    studyspot_name = data.get('studyspot_name')
+    if request_instance.check_duplicate(user_id,studyspot_name):
+        return jsonify({"message":"Error: The request has already been submitted"}),409
+    request_instance.add_requests(data)
+    return jsonify({'message': 'Requests has been submitted successfully!'}), 200
+
+@app.route('/api/requests/get_requested_spots',methods=['GET'])
+@admin_login_required
+def get_requested_studyspots():
+    
+    requested_spots = request_instance.get_requested_studyspots()
+    if requested_spots:
+        return jsonify({'message': 'Sucessful!', 'data': requested_spots}), 200
+    return jsonify({"message":"Error: Couldn't get the requested spots"}),409
+
+@app.route('/api/requests/get_requested_spot_by_name', methods=['GET'])
+@admin_login_required
+def get_requested_spot_by_name():
+    try:
+        data = None
+        studyspot_name = request.args.get('name')
+        data = request_instance.get_studyspot_by_name(studyspot_name)
+        return make_response(jsonify({
+            'message': 'OK', 
+            'data': data
+        }), 200)
+    except Exception as e:
+        # print(e)
+        return make_response(jsonify({
+            'message': 'FAILED', 
+            'data': None
+        }), 400)
+
+@app.route('/api/reports/create-studyspot-report',methods=['PUT'])
+@login_required
+def create_studyspot_report():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        studyspot_name = data.get('studyspot_name')
+        if reports_studyspots_instance.check_duplicate(user_id,studyspot_name):
+            return jsonify({'message': 'Report has already been submitted successfully!'}), 200
+        
+        report_comment = data.get('comment')
+        report_id = reports_studyspots_instance.count_report()+1
+        reports_studyspots_instance.add_report(report_id,user_id,studyspot_name,report_comment)
+        
+        return jsonify({'message': 'Report has been submitted successfully!'}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/admin/reported-studyspots', methods=['GET'])
+@login_required
+def admin_get_reported_studyspot_list():
+    data = reports_studyspots_instance.get_reported_list()
+    if data:
+        return jsonify({"message": "ok", "data": data}),200
+    else:
+        return jsonify({"message":"Reports not found"}), 404
+    
+@app.route('/api/reports/create-comment-report',methods=['PUT'])
+@login_required
+def create_comment_report():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        review_id = data.get('review_id')
+        if reports_comments_instance.check_duplicate(user_id,review_id):
+            return jsonify({'message': 'Report has already been submitted successfully!'}), 200
+        
+        report_comment = data.get('comment')
+        report_id = reports_comments_instance.count_report()+1
+        reports_comments_instance.add_report(report_id,user_id,review_id,report_comment)
+        
+        return jsonify({'message': 'Report has been submitted successfully!'}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/admin/reported-comment', methods=['GET'])
+@login_required
+def admin_get_reported_comment_list():
+    data = reports_comments_instance.get_reported_list()
+    if data:
+        return jsonify({"message": "ok", "data": data}),200
+    else:
+        return jsonify({"message":"Reports not found"}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

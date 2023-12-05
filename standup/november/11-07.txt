@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly -
+Deep -
+Sal - Fixed the submit request form
+Tony -
+Ben -
+Jose -
+
+What will you do today?
+
+Amanuel -
+Holly -
+Deep -
+Sal - Added the attribute multi select for study spot request
+Tony -
+Ben -
+Jose -
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben -
+Jose -

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { StudyspotService } from '../studyspot.service';
 import { AuthService } from '../auth.service';
+import { PreviousCheckIn } from '../DTOs/previous-checked-in.dto';
+import { UserData } from '../DTOs/user-data.dto';
 
 @Component({
   selector: 'app-history',
@@ -8,23 +10,23 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent {
-  pastspotnames: any;
-  userId: number = -1;
-  constructor(private studyspotService: StudyspotService, private authService: AuthService) { }
+  userID!: number;
+  userData!: UserData;
+  studySpots: Array<PreviousCheckIn> = [];
+
+  isEmpty: boolean = false;
+
+  constructor(private studyspotService: StudyspotService, private authService: AuthService) { 
+  }
   
   ngOnInit(){
-    this.authService.userData$.subscribe((userData) => {
-      this.userId = userData.user_id;
+    this.userData = this.authService.getUserData();
+    this.userID = this.userData?.user_id;
+    this.studyspotService.getCheckedInStudySpots(this.userID).subscribe((data: any)=> {
+      this.studySpots = data.data;
+      this.isEmpty = this.studySpots.length > 0? true: false;
+    }, (error) =>{
+      console.error("Error fetching study spot latest survey:", error);
     });
-    this.loadStudySpotData();
-  }
-​
-  private loadStudySpotData() {
-    this.studyspotService.getAllLikedStudySpotsByUser(this.userId)
-      .subscribe((data: any) => {
-        this.pastspotnames = data.data;
-      }, (error) => {
-        console.error("Error fetching study spot data:", error);
-      });
   }
 }

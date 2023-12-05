@@ -1,7 +1,7 @@
 <div class="search-filter">
 <form [formGroup]="searchForm" (ngSubmit)="applyFilters(searchForm.value)">
   <!-- Indoor and Outdoor checkboxes -->
-  <mat-radio-group formControlName="studyspot_location">
+  <mat-radio-group formControlName="studyspot_is_indoor">
     <mat-radio-button value="Indoor">Indoor</mat-radio-button>
     <mat-radio-button value="Outdoor">Outdoor</mat-radio-button>
   </mat-radio-group>
@@ -15,9 +15,9 @@
     </div>
 
     <!-- Custom Crowdedness Level Slider -->
-    <p>Crowdedness Level: {{ searchForm.get('filters.study_spot_crowdedness_level')?.value }}</p>
+    <p>Crowdedness Level: {{ searchForm.get('filters.studspot_crowdedness_level')?.value }}</p>
     <div class="custom-slider">
-      <input type="range" formControlName="study_spot_crowdedness_level" min="1" max="5" id="crowdednessLevel">
+      <input type="range" formControlName="studspot_crowdedness_level" min="1" max="5" id="crowdednessLevel">
     </div>
 
     <!-- Group for Amenities -->
@@ -28,17 +28,6 @@
       <mat-checkbox formControlName="studyspot_easy_to_find">Easy to Find</mat-checkbox>
     </div>
   </div>
-
-  <div class="temperature-radio">
-    <label>Temperature:</label>
-    <mat-radio-group formControlName="temperature">
-      <mat-radio-button value="Cold">Cold</mat-radio-button>
-      <mat-radio-button value="Warm">Warm</mat-radio-button>
-      <mat-radio-button value="Hot">Hot</mat-radio-button>
-    </mat-radio-group>
-    
-  </div>
-
   <button type="submit">Apply</button>
 </form>
 </div>

@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS Studyspots (
     studyspot_noise_level INT NOT NULL,
     studspot_crowdedness_level INT NOT NULL,
     studyspot_strong_wifi BOOLEAN,
+    studyspot_is_approved BOOLEAN,
     UNIQUE(studyspot_name),
     CONSTRAINT FK_studyspot_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
 );
@@ -33,6 +34,13 @@ CREATE TABLE IF NOT EXISTS Users (
 	CONSTRAINT FK_user_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
 );
 
+CREATE TABLE IF NOT EXISTS Admins (
+    admin_id INT NOT NULL, 
+    admin_email VARCHAR(254),
+    password VARCHAR(512),
+    UNIQUE (admin_email)
+);
+
 CREATE TABLE IF NOT EXISTS Surveys (
     survey_id INT NOT NULL,
     studyspot_name VARCHAR(254) NOT NULL,
@@ -40,6 +48,7 @@ CREATE TABLE IF NOT EXISTS Surveys (
     survey_crowdednes_level INT NOT NULL, 
     survey_noise_level INT NOT NULL,
     survey_wifi INT NOT NULL,
+    survey_created_at timestamptz NOT NULL DEFAULT now()
     UNIQUE (survey_id),
 	CONSTRAINT FK_survey_studyspot FOREIGN KEY (studyspot_name) REFERENCES Studyspots(studyspot_name),
     CONSTRAINT FK_survey_user FOREIGN KEY (user_id) REFERENCES Users(user_id)
@@ -64,6 +73,84 @@ CREATE TABLE IF NOT EXISTS Favorites (
     CONSTRAINT FK_review_user FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
+CREATE TABLE IF NOT EXISTS Requests (
+    user_id INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
+    university_name VARCHAR(200),
+    request_is_indoor BOOLEAN, 
+    request_ada BOOLEAN, /*ADA accommodation: TRUE, NO ADA: FALSE*/
+    request_power_outlets BOOLEAN,
+    request_easy_to_find BOOLEAN,
+    request_image_url VARCHAR(3000),
+    request_location VARCHAR(3000),
+    request_noise_level INT NOT NULL,
+    request_crowdedness_level INT NOT NULL,
+    request_strong_wifi BOOLEAN,
+    request_reason VARCHAR(3000),
+    CONSTRAINT PK_request PRIMARY KEY (user_id, studyspot_name), 
+    CONSTRAINT FK_request_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    CONSTRAINT FK_request_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
+);
+
+CREATE TABLE IF NOT EXISTS Rejections (
+    user_id INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
+    university_name VARCHAR(200),
+    rejection_is_indoor BOOLEAN, 
+    rejection_ada BOOLEAN, /*ADA accommodation: TRUE, NO ADA: FALSE*/
+    rejection_power_outlets BOOLEAN,
+    rejection_easy_to_find BOOLEAN,
+    rejection_image_url VARCHAR(3000),
+    rejection_location VARCHAR(3000),
+    rejection_noise_level INT NOT NULL,
+    rejection_crowdedness_level INT NOT NULL,
+    rejection_strong_wifi BOOLEAN,
+    rejection_reason VARCHAR(3000),
+    CONSTRAINT PK_rejection PRIMARY KEY (user_id, studyspot_name), 
+    CONSTRAINT FK_rejection_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    CONSTRAINT FK_rejection_university FOREIGN KEY (university_name) REFERENCES Universities(university_name)
+);
+
+CREATE TABLE IF NOT EXISTS Reported_studyspots(
+    report_id INT NOT NULL,
+    studyspot_name VARCHAR(254) NOT NULL,
+    user_id INT NOT NULL,
+    report_comment VARCHAR(3000) NOT NULL,
+    UNIQUE(report_id),
+    CONSTRAINT FK_report_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    CONSTRAINT FK_report_studyspot FOREIGN KEY(studyspot_name) REFERENCES Studyspots(studyspot_name)
+);
+
+CREATE TABLE IF NOT EXISTS Reported_comments(
+    report_id INT NOT NULL,
+    review_id INT NOT NULL,
+    user_id INT NOT NULL,
+    report_comment VARCHAR(3000) NOT NULL, 
+    UNIQUE(report_id),
+    CONSTRAINT FK_report_user FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    CONSTRAINT FK_report_review FOREIGN KEY(review_id) REFERENCES Reviews(review_id)
+);
+
 -- Default Values
 INSERT INTO Universities(university_name, university_state, university_zip)
 VALUES('CSULB', 'CA', 90840);
+
+
+-- Funtions and Triggers
+
+CREATE OR REPLACE FUNCTION update_studyspots()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE studyspots
+  SET studyspot_noise_level = NEW.survey_noise_level,
+      studspot_crowdedness_level = NEW.survey_crowdednes_level
+  WHERE studyspot_name = NEW.studyspot_name; 
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_studyspots_trigger
+AFTER INSERT ON surveys 
+FOR EACH ROW
+EXECUTE FUNCTION update_studyspots();

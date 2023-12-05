@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, ForeignKey, UniqueConstraint
+from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, ForeignKey, UniqueConstraint, DateTime
+from datetime import datetime
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
 
@@ -28,7 +29,7 @@ class Studyspots(Base):
     studyspot_image_url = Column(String(3000))
     studyspot_location = Column(String(3000))
     studyspot_noise_level = Column(Integer)
-    studspot_crowdedness_level = Column(Integer)
+    studspot_crowdedness_level = Column(Integer) # Typo
     studyspot_strong_wifi = Column(Boolean)
 
     university = relationship("Universities")
@@ -45,6 +46,13 @@ class Users(Base):
 
     university = relationship("Universities")
 
+class Admins(Base):
+    __tablename__ = 'admins'
+
+    admin_id = Column(Integer, primary_key=True)
+    admin_email = Column(String(254))
+    password = Column(String(512))
+
 class Surveys(Base):
     __tablename__ = 'surveys'
 
@@ -54,6 +62,8 @@ class Surveys(Base):
     survey_crowdednes_level = Column(Integer, nullable=False)
     survey_noise_level = Column(Integer, nullable=False)
     survey_wifi = Column(Integer, nullable=False)
+    survey_created_at = Column(DateTime, default=datetime.utcnow)
+    checked_out = Column(Boolean)
 
     studyspot = relationship("Studyspots")
     user = relationship("Users")
@@ -77,4 +87,63 @@ class Favorites(Base):
     studyspot_name = Column(String(254), ForeignKey('studyspots.studyspot_name'), nullable=False, primary_key=True)
     studyspot = relationship("Studyspots")
     user = relationship("Users")
+
+class Requests(Base):
+    __tablename__="requests"
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False, primary_key=True)
+    studyspot_name = Column(String(254), nullable=False, primary_key=True)
+    university_name = Column(String(200), ForeignKey('universities.university_name'))
+    request_is_indoor = Column(Boolean)
+    request_ada = Column(Boolean)
+    request_power_outlets = Column(Boolean)
+    request_easy_to_find = Column(Boolean)
+    request_image_url = Column(String(3000))
+    request_location = Column(String(3000))
+    request_noise_level = Column(Integer, nullable=False)
+    request_crowdedness_level = Column(Integer, nullable=False)
+    request_strong_wifi = Column(Boolean)
+    request_reason = Column(String(3000))
+
+    university = relationship("Universities")
+    user = relationship("Users")
+
+class Rejection(Base):
+    __tablename__="rejections"
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False, primary_key=True)
+    studyspot_name = Column(String(254), nullable=False, primary_key=True)
+    university_name = Column(String(200), ForeignKey('universities.university_name'))
+    rejection_is_indoor = Column(Boolean)
+    rejection_ada = Column(Boolean)
+    rejection_power_outlets = Column(Boolean)
+    rejection_easy_to_find = Column(Boolean)
+    rejection_image_url = Column(String(3000))
+    rejection_location = Column(String(3000))
+    rejection_noise_level = Column(Integer, nullable=False)
+    rejection_crowdedness_level = Column(Integer, nullable=False)
+    rejection_strong_wifi = Column(Boolean)
+    rejection_reason = Column(String(3000))
+
+    university = relationship("Universities")
+    user = relationship("Users")
+
+class Reported_studyspots(Base):
+    __tablename__ = 'reported_studyspots'
+    
+    report_id = Column(Integer,nullable=False,primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    studyspot_name = Column(String(254), ForeignKey('studyspots.studyspot_name'), nullable=False)
+    report_comment = Column(String(3000),nullable=False)
+    studyspot = relationship("Studyspots")
+    user = relationship("Users")
+
+class Reported_comments(Base):
+    __tablename__ = 'reported_comments'
+    
+    report_id = Column(Integer,nullable=False,primary_key=True)
+    review_id = Column(Integer, ForeignKey('reviews.review_id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
+    report_comment = Column(String(3000),nullable=False)
+    review = relationship("Reviews")
+    user = relationship("Users")
+
     

@@ -1,30 +1,41 @@
 <div class="spots-container">
   <!-- Div for the study spot component using hard coded data-->
   <div class="studyspotCard">
-    <app-studyspot [ngStyle]="" name="{{ studySpot.studyspot_name }}"></app-studyspot>
-  </div>
-  <!-- Div for details 1 (bottom left) -->
+    <app-studyspot [ngStyle]="" [name]="studyspotWOReviews.studyspot_name"></app-studyspot>
+      <!-- Div for details 1 (bottom left) -->
   <div class="details-1">
-    <p id="detail-p">Location:{{ studySpot.studyspot_location}}</p>
+    <p id="detail-p">Location:<span>&nbsp;&nbsp;&nbsp;</span>{{ studyspotWOReviews.studyspot_location}}</p>
     <!-- Dropdown for Features, will be iteration once we have all in db -->
     <div class="select-features">
-        <label for="features">Features</label>
+        <label for="features"><span>&nbsp;&nbsp;&nbsp;</span>Features</label>
         <select id="features" name="features">
-        <option value="powerOutlets" *ngIf="studySpot.studyspot_power_outlets">Power Outlets</option>
-        <option value="strongWifi" *ngIf="studySpot.studyspot_strong_wifi">Strong Wi-Fi Signal</option>
-        <option value="ada" *ngIf="studySpot.studyspot_ada">ADA Accessible</option>
-        <option value="easyToFind" *ngIf="studySpot.studyspot_easy_to_find">Easy to Find</option>
+        <option value="powerOutlets" *ngIf="studyspotWOReviews.studyspot_power_outlets">Power Outlets</option>
+        <option value="strongWifi" *ngIf="studyspotWOReviews.studyspot_strong_wifi">Strong Wi-Fi Signal</option>
+        <option value="ada" *ngIf="studyspotWOReviews.studyspot_ada">ADA Accessible</option>
+        <option value="easyToFind" *ngIf="studyspotWOReviews.studyspot_easy_to_find">Easy to Find</option>
+        <option value="indoor" *ngIf="studyspotWOReviews.studyspot_is_indoor">In-Door</option>
+        <option value="Outdoor" *ngIf="!studyspotWOReviews.studyspot_is_indoor">Out-Door</option>
         </select>
     </div>
-    <p id="detail-p">Noise Level: {{ studySpot.studyspot_noise_level}}</p>
-    <p id="detail-p">Availablity: Available</p>
+    <p id="detail-p">Noise Level Out Of 5: {{ studyspotWOReviews.studyspot_noise_level}}</p>
+    <div class="avail">
+      <p id="detail-a"><span>&nbsp;&nbsp;&nbsp;</span>Availability:</p>
+      <ng-container *ngIf="isCheckedIn && this.isCheckInAllowed(this.latest.survey_created_at); else notCheckedIn">
+        <mat-icon class="red-icon">block</mat-icon>
+      </ng-container>
+      <ng-template #notCheckedIn>
+        <mat-icon class="green-icon">done</mat-icon>
+      </ng-template>
+   </div>
+  </div>
   </div>
 
   <!-- Div for details 2 (right side) -->
   <div class="details-2">
     <div class="btnBegin">
         <div class="detail-item-button">
-            <button id = "special-button" (click)="openDialog()">Check-In</button>
+          <button *ngIf="isSpotAvailable" id = "special-button" (click)="openDialog()">Check-In</button>
+          <button *ngIf="!isSpotAvailable" id = "special-button" (click)="performCheckOut()">Hey {{userData.user_name}}, Check-Out?</button>
           </div>
           <div class="detail-item-button">
             <button id = "special-button" (click)="rateMe()">Rate Me</button>
@@ -32,9 +43,12 @@
     </div>
 
     <div class="detail-item">
-      <p id="detail-t">Traffic Status: {{ studySpot.studspot_crowdedness_level}}</p>
+      <p id="detail-t">Traffic Status Out Of 5: {{ studyspotWOReviews.studspot_crowdedness_level}}</p>
     </div>
-    <div class="user-reviews" >
+    <div id="blocker" *ngIf="!spotHasReviews">
+      <h2> No Users Rating To Display</h2>
+    </div>
+    <div class="user-reviews" *ngIf="spotHasReviews">
         <div class="detail-item-review" *ngFor="let review of reviews">
             <app-userrating userID={{review.user_id}} rating={{review.review_rate}} comment={{review.review_comments}}></app-userrating>
         </div>
@@ -55,3 +69,75 @@
     </mat-menu>
   </div>
 </div>
+
+<div class="spots-container-mobile">
+  <!-- Div for the study spot component using hard coded data-->
+  <div class="box">
+    <app-studyspot [ngStyle]="" [name]="studyspotWOReviews.studyspot_name"></app-studyspot>
+  </div>
+  <!-- Div for details 1 (bottom left) -->
+  <div class="box">
+    <p id="detail-p">Location:<span>&nbsp;&nbsp;&nbsp;</span>{{ studyspotWOReviews.studyspot_location}}</p>
+    <!-- Dropdown for Features, will be iteration once we have all in db -->
+    <div class="select-features">
+        <label for="features"><span>&nbsp;&nbsp;&nbsp;</span>Features</label>
+        <select id="features" name="features">
+        <option value="powerOutlets" *ngIf="studyspotWOReviews.studyspot_power_outlets">Power Outlets</option>
+        <option value="strongWifi" *ngIf="studyspotWOReviews.studyspot_strong_wifi">Strong Wi-Fi Signal</option>
+        <option value="ada" *ngIf="studyspotWOReviews.studyspot_ada">ADA Accessible</option>
+        <option value="easyToFind" *ngIf="studyspotWOReviews.studyspot_easy_to_find">Easy to Find</option>
+        <option value="indoor" *ngIf="studyspotWOReviews.studyspot_is_indoor">In-Door</option>
+        <option value="Outdoor" *ngIf="!studyspotWOReviews.studyspot_is_indoor">Out-Door</option>
+        </select>
+    </div>
+    <p id="detail-p">Noise Level Out Of 5: {{ studyspotWOReviews.studyspot_noise_level}}</p>
+    <div class="avail">
+      <p id="detail-a"><span>&nbsp;&nbsp;&nbsp;</span>Availability:</p>
+      <ng-container *ngIf="isCheckedIn && this.isCheckInAllowed(this.latest.survey_created_at); else notCheckedIn">
+        <mat-icon class="red-icon">block</mat-icon>
+      </ng-container>
+      <ng-template #notCheckedIn>
+        <mat-icon class="green-icon">done</mat-icon>
+      </ng-template>
+   </div>
+  </div>
+
+  <!-- Div for details 2 (right side) -->
+  <div class="box">
+    <div class="btnBegin">
+        <div class="detail-item-button">
+          <button *ngIf="isSpotAvailable" id = "special-button" (click)="openDialog()">Check-In</button>
+          <button *ngIf="!isSpotAvailable" id = "special-button" (click)="performCheckOut()">Check-Out</button>
+          </div>
+          <div class="detail-item-button">
+            <button id = "special-button" (click)="rateMe()">Rate Me</button>
+          </div>
+    </div>
+    <div class="detail-item">
+      <p id="detail-t">Traffic Status Out Of 5: {{ studyspotWOReviews.studspot_crowdedness_level}}</p>
+    </div>
+    <div id="blocker" *ngIf="!spotHasReviews">
+      <h2> No Users Rating To Display</h2>
+    </div>
+    <div class="user-reviews" *ngIf="spotHasReviews">
+        <div class="detail-item-review" *ngFor="let review of reviews">
+            <app-userrating userID={{review.user_id}} rating={{review.review_rate}} comment={{review.review_comments}}></app-userrating>
+        </div>
+    </div>
+  </div>
+
+  <div class="top-right-more">
+    <button mat-icon-button matTooltip="More" [matMenuTriggerFor]="reportSpotMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #reportSpotMenu [overlapTrigger]="false" yPosition="below" class="customize">
+        <button id="more-on-spot" mat-menu-item>
+            <span>Report</span>
+        </button>
+        <button id="more-on-spot" mat-menu-item>
+            <span>Feedback</span>
+        </button>
+    </mat-menu>
+  </div>
+</div>
+

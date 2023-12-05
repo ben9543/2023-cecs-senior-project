@@ -6,6 +6,7 @@ import { UserService } from '../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogService } from '../confirmation-dialog.service';
 import { AuthService } from '../auth.service';
+import { UserData } from '../DTOs/user-data.dto';
 
 @Component({
   selector: 'app-change-password',
@@ -13,7 +14,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent {
-  userData: any;
+  userData!: UserData;
   changePassword!: FormGroup;
   errorMessage: string = '';
   
@@ -22,9 +23,7 @@ export class ChangePasswordComponent {
     private confirmationDialogService: ConfirmationDialogService) { }
   
   ngOnInit(): void {
-    this.authService.userData$.subscribe((userData) => {
-      this.userData = userData;
-    });
+    this.userData = this.authService.getUserData();
     this.changePassword = this.formBuilder.group({
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
@@ -42,7 +41,7 @@ export class ChangePasswordComponent {
         return; 
       }
 
-      this.userData.password = password;
+      this.userData = {...this.userData, ...{password: password}};
 
       console.log(this.userData)
 

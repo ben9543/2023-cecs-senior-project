@@ -1,4 +1,4 @@
-<div *ngIf="!isLoginPage && !isSignUpPage && !isResetPasswordPage && !isResetLinkPage && !isCheckInPage">
+<div *ngIf="!isLoginPage && !isSignUpPage && !isResetPasswordPage && !isResetLinkPage && !isCheckInPage && !isAdminLoginPage && !isAdminHomePage && !isLandingPage && !isRequestedSpotView">
     <mat-toolbar>
         <button mat-icon-button class="button_header" matTooltip="Main Menu" [matMenuTriggerFor]="mainMenu">
             <mat-icon>menu</mat-icon>
@@ -15,7 +15,7 @@
             </button>
         </mat-menu>
         <div class="middle">
-            <img src="assets/Logo/ssl.png" alt="Logo">
+            <img src="assets/Logo/ssl.png" alt="Logo" routerLink="/home">
         </div>
         <div class="user">
             <div class="username">

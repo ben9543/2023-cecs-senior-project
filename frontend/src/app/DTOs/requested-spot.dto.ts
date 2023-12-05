@@ -1,0 +1,15 @@
+export interface RequestedSpotDTO {
+  request_ada: boolean,
+  request_crowdedness_level: number,
+  request_easy_to_find: boolean,
+  request_image_url: string,
+  request_is_indoor: boolean,
+  request_location: string,
+  request_noise_level: number,
+  request_power_outlets: boolean,
+  request_reason: string,
+  request_strong_wifi: boolean,
+  studyspot_name: string,
+  university_name: string,
+  user_id: number,
+}

@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
 import { ConfirmationDialogService } from '../confirmation-dialog.service';
+import { UserData } from '../DTOs/user-data.dto';
 
 
 // validator to check if the username is empty
@@ -60,21 +61,16 @@ const collegeEmptyValidator: ValidatorFn = (control: AbstractControl): Validatio
 })
 export class SettingsComponent {
   edit!: FormGroup;
-  user: any = {}; // Initialize user object
-  userData: any | null = null;
+  userData!: UserData;
   universities: any;
   constructor(private router: Router, private formBuilder: FormBuilder, private activeroute: ActivatedRoute,
     private userService: UserService, private authService: AuthService, private snackBar: MatSnackBar, 
     private confirmationDialogService: ConfirmationDialogService) { }
   
 ngOnInit(): void {
-  // Subscribe to userData$ and wait for it to emit data
-  this.authService.userData$.subscribe((userData) => {
-    this.userData = userData;
-
-    // Once userData is available, initialize the form
-    this.initializeForm();
-  });
+  this.userData = this.authService.getUserData();
+  // Once userData is available, initialize the form
+  this.initializeForm();
 }
 
 initializeForm(): void {

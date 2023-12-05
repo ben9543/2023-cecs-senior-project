@@ -1,1 +1,29 @@
-<p>reviews works!</p>
+<div class = "title">
+    <p>Previously Reviewed</p>
+</div>
+<div class="container">
+    <div id="blocker" *ngIf="noReviews">
+        <h2> You Haven't Reviewed Any Spot Yet🥲</h2>
+    </div>
+    <div class="container-objects" *ngIf="!noReviews">
+        <button (click)="previousPage()" [disabled]="currentPage === 0" class="previous">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+      
+        <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
+            <mat-tab *ngFor="let spot of paginatedSpots">
+                <ng-template mat-tab-label class="name">
+                    {{ spot.studyspot_name }}
+                  </ng-template>
+                <app-studyspot [name]="spot.studyspot_name"></app-studyspot>
+                <div class="star-uc-container">
+                    <app-userrating userID="{{ spot.user_id }}" rating="{{ spot.review_rate }}" comment="{{ spot.review_comments }}"></app-userrating>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+      
+        <button (click)="nextPage()" [disabled]="currentPage === spots.length / itemsPerPage - 1" class="next">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+    </div>
+</div>

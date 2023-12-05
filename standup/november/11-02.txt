@@ -1,0 +1,29 @@
+What did you do yesterday?
+
+Amanuel -
+Holly - Added request class in db_connection_test.py 
+Deep -
+Sal - Met with team to discuss errors found in my form
+Tony -
+Ben -
+Jose -
+
+What will you do today?
+
+Amanuel -
+Holly - Create api for requests table
+Deep -
+Sal - Redo request form to fix errors
+Tony -
+Ben -
+Jose -
+
+What is blocking your progress?
+
+Amanuel -
+Holly -
+Deep -
+Sal -
+Tony -
+Ben -
+Jose -

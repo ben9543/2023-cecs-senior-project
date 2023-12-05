@@ -1,1 +1,109 @@
-<p>submit-request works!</p>
+<!-- Make sure to add attribute multiple select for study spots: ada, power, ect. -->
+<div class="container_form">
+    <h2>Submit Request</h2>
+    <div class="survey">
+        <div class="noise-level">
+            <p> How Would You Rate The Noise Level Out Of 5?</p>
+            <mat-slider [min]="min" [max]="max" [step]="step">
+            <input matSliderThumb [(ngModel)]="finalValueNoise" #slider>
+            </mat-slider>
+            <span >{{finalValueNoise}}</span>
+        </div>
+        <div class="crowdednessLevel">
+            <p> How Would You Rate The Crowdedness Level Out Of 5?</p>
+            <mat-slider [min]="min" [max]="max" [step]="step">
+            <input matSliderThumb [(ngModel)]="finalValueCrowdiness" #slider>
+            </mat-slider>
+            <span >{{finalValueCrowdiness}}</span>
+        </div>
+    </div>
+    <form
+      [formGroup]="request"
+      (ngSubmit)="onSubmit()"
+      #formDirective="ngForm"
+    >
+    <label for="uploader">Upload Image:</label>
+    <input 
+        id="uploader"
+        formControlName="image"
+        placeholder="image"
+        type="file"
+        (change)="onFileSelected($event)" 
+        accept="image/*"
+        required="true"/>
+    
+    <mat-form-field>
+      <mat-select formControlName="studyspot_name" placeholder="Select Spot Name">
+        <mat-option *ngFor="let city of availableSpotNames" [value]="city">{{ city }}</mat-option>
+      </mat-select>
+      <mat-error
+      >
+        <span
+          >Please Select Spot Name</span
+        >
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Attributes</mat-label>
+      <mat-select formControlName="features" multiple>
+        <mat-option *ngFor="let attribute of attributeList" [value]="attribute">{{attribute}}</mat-option>
+      </mat-select>
+      <mat-error>
+        Please select an option
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select formControlName="university" placeholder="Select University">
+          <mat-option *ngFor="let university of universities" [value]="university">{{ university }}</mat-option>
+        </mat-select>
+        <mat-error
+        >
+          <span
+            >Please enter your college</span
+          >
+        </mat-error>
+      </mat-form-field>
+    <mat-form-field>
+        <mat-label>Location</mat-label>
+        <input
+          matInput
+          formControlName="location"
+          placeholder="Location"
+          type="text"
+        />
+        <mat-error
+          >Please enter a location</mat-error
+        >
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Comments</mat-label>
+        <textarea
+        matInput
+          formControlName="comments"
+          placeholder="Comments">
+        </textarea>
+    </mat-form-field>
+    <div class = "row">
+        <div class = 'btn-primary'>
+            <button
+                mat-raised-button
+                type="submit"
+                color="primary"
+                style="background-color: rgb(6, 59, 61);"
+            >
+            Submit
+            </button>
+        </div>
+        <div class = 'btn-primary'>
+            <button
+            mat-raised-button
+            routerLink="/home"
+            color="primary"
+            style="background-color: rgb(6, 59, 61);"
+          >
+          Cancel
+          </button>
+        </div>
+    </div>
+    </form>
+</div>

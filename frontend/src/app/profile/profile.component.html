@@ -21,9 +21,9 @@
             <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="tabChanged($event)">
                 <mat-tab *ngFor="let spot of spotsRecent">
                     <ng-template mat-tab-label>
-                      {{ spot.name }}
+                      {{ spot }}
                     </ng-template>
-                    <app-studyspot [name]="spot.name"></app-studyspot>
+                    <app-studyspot [name]="spot"></app-studyspot>
                 </mat-tab>
             </mat-tab-group>
           
@@ -35,7 +35,7 @@
 
     <div class="container-ymlt"> 
         <mat-toolbar class="container-title">
-            <b>You might like these...</b>
+            <b>Trending Study Spots</b>
         </mat-toolbar>
 
         <div class="container-objects">
@@ -46,9 +46,9 @@
             <mat-tab-group [selectedIndex]="selectedMightTabIndex" (selectedIndexChange)="tabChangedmight($event)">
                 <mat-tab *ngFor="let spot of spotsSuggested">
                     <ng-template mat-tab-label>
-                      {{ spot.name }}
+                      {{ spot }}
                     </ng-template>
-                    <app-studyspot [name]="spot.name"></app-studyspot>
+                    <app-studyspot [name]="spot"></app-studyspot>
                 </mat-tab>
             </mat-tab-group>
           
