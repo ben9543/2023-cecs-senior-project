@@ -150,8 +150,8 @@ def admin_login():
             token = auth_instance.generate_jwt_admin(email)
             if token:
                 expiration_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-                # return jsonify({'admin_token': token.decode('utf-8'), 'expires_in': expiration_time, 'authenticated': True}), 200
-                return jsonify({'admin_token': token, 'expires_in': expiration_time, 'authenticated': True}), 200
+                return jsonify({'admin_token': token.decode('utf-8'), 'expires_in': expiration_time, 'authenticated': True}), 200
+                # return jsonify({'admin_token': token, 'expires_in': expiration_time, 'authenticated': True}), 200
             else:
                 return jsonify({'message': 'Failed to generate a token', 'authenticated': False}), 401
         else:
@@ -810,6 +810,10 @@ def upload_image_to_s3():
         
         print("File: ", file)
         file_name = file.filename
+
+        mimetype = file.content_type
+        extension = mimetype.split('/')[1] 
+        file_name = f"{file_name}.{extension}"
         print("File Name: ", file_name)
         # file = data.get('file')
         # file_name = data.get("name")
