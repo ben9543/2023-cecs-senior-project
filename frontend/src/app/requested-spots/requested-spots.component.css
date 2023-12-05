@@ -39,7 +39,7 @@
   }
   
   .requester{
-    background-color: none !important;
+    background-color: rgba(255, 255, 255, 0.8);
     font-size: 24px;
     color: rgb(0, 0, 0);
     padding: 2%;
