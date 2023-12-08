@@ -23,7 +23,7 @@ export class RequestedSpotsComponent {
     this.adminService.getRequestedStudySpotByName(this.name).subscribe(
       (data: any) => {
         this.requestedspot = data.data;
-        this.imageUrl = `https://studyspot-123.s3.us-west-1.amazonaws.com/${this.name}.jpeg`
+        this.imageUrl = `https://studyspot-123.s3.us-west-1.amazonaws.com/${this.requestedspot.request_image_url}`
         this.userService.getUsernameById(this.requestedspot.user_id).subscribe(
           (data: any) => {
             this.username = data;

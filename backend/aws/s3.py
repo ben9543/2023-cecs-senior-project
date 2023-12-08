@@ -38,6 +38,7 @@ class S3_API():
         try:
             self.client.upload_fileobj(uploaded_file, self.bucket_name, s3_object_key)
             print(f'Successfully uploaded the image file to {self.bucket_name}/{s3_object_key}')
+            return s3_object_key
         except NoCredentialsError:
             return 'AWS credentials not found'
         except Exception as e:

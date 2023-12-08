@@ -65,5 +65,16 @@ class Requests_API():
         studyspot_names = self.db.session.query(Requests.studyspot_name).all()
         names = [name[0] for name in studyspot_names]
         return names
+    
+    def update_studyspot_image_url(self, name, image_key):
+        studyspot = self.db.session.query(Requests).filter(Requests.studyspot_name == image_key).first()
+        # print("Studyspot to be updated: ", studyspot)
+        if studyspot:
+            studyspot.request_image_url = name
+            self.db.session.commit()
+            return True
+        else:
+            return False
+
 
 
