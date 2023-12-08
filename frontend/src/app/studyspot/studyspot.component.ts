@@ -31,8 +31,16 @@ export class StudyspotComponent {
   ngOnInit() {
     this.studyspotService.getStudyspotByNameWithReviews(this.name).subscribe(
       (data: any) => {
+        console.log(this.name);
         this.rating = data.data.studyspot_rating;
-        this.imageUrl = `https://studyspot-123.s3.us-west-1.amazonaws.com/${this.name}.jpg`;
+        this.studyspotService.getAllStudyspotName(this.name).subscribe(
+          (data: any) => {
+            this.imageUrl = `https://studyspot-123.s3.us-west-1.amazonaws.com/${data.data.studyspot_image_url}`;
+          },
+          error => {
+            console.error('Error Getting Image:', error);
+          }
+        );
       },
       error => {
         console.error('Error fetching StudySpot details:', error);

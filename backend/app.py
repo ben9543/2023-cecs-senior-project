@@ -1,4 +1,5 @@
 import datetime
+import os
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
@@ -808,16 +809,17 @@ def upload_image_to_s3():
 
         file = request.files.get('file')
         
-        print("File: ", file)
-        file_name = file.filename
+        # print("File: ", file)
+        name = file.filename
 
         mimetype = file.content_type
         extension = mimetype.split('/')[1] 
-        file_name = f"{file_name}.{extension}"
-        print("File Name: ", file_name)
+        file_name = f"{name}.{extension}"
+        # print("File Name: ", file_name)
         # file = data.get('file')
         # file_name = data.get("name")
         s3_instace.upload_to_s3(file,file_name)
+        request_instance.update_studyspot_image_url(file_name, name)
         return jsonify({"message":"Successfully uploaded the image"}),200
     except:
         return jsonify({"message":"Error Uploading image"}),400

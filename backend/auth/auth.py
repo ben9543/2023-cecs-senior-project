@@ -49,7 +49,7 @@ class Auth:
             payload = jwt.decode(token, SECRET, algorithms=["HS256",])
             admin_id = int(payload["id"])
             admin = self.admins.get_admin_by_id(admin_id)
-            print(admin)
+            # print(admin)
             # If the payload exists, and user_id exists and user with the user_id exists in the DB, we return the token
             if(payload and admin_id and admin):
                 return admin.as_dict()

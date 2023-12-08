@@ -95,8 +95,6 @@ export class SubmitRequestComponent {
       formData.append('file', this.selectedFile, this.selectedFile.name);
 
       try {
-        const fileUrl = await this.s3Service.uploadFileToS3(formData, this.request.value.studyspot_name);
-        console.log("Image URL:", fileUrl)
         const requestData: CreateRequestDTO= {
           user_id: this.userID.toString(),
           studyspot_name: this.request.value.studyspot_name,
@@ -117,6 +115,7 @@ export class SubmitRequestComponent {
           (response) => {
             this.router.navigate(['/home']);
             this.confirmationDialogService.openRequestSubmittedConfirmation();
+            this.s3Service.uploadFileToS3(formData, this.request.value.studyspot_name);
           },
           (error) => {
             console.error('Error submitting request:', error);
