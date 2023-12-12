@@ -65,7 +65,7 @@ class Reviews_API():
     # Add a new review
     def add_review(self, user_id, studyspot_name, review_comments, review_rate):
         try:
-            review_id =self.db.session.query(Reviews).count() + 1
+            review_id =self.db.session.query(Reviews).count() + 111
             new_review = Reviews(review_id=review_id, user_id=user_id, studyspot_name=studyspot_name, review_comments=review_comments, review_rate=review_rate)
             self.db.session.add(new_review)
             self.db.session.commit()
