@@ -13,6 +13,7 @@ import { UserData } from '../DTOs/user-data.dto';
 import { Review, StudyspotDetails } from '../DTOs/studyspot-with-review.dto';
 import { StudySpot } from '../DTOs/studyspot.dto';
 import { ConfirmationDialogService } from '../confirmation-dialog.service';
+import { ReportdialogComponent } from '../reportdialog/reportdialog.component';
 
 @Component({
   selector: 'app-studyspot-view',
@@ -85,6 +86,15 @@ export class StudyspotViewComponent {
   checkLatest(): boolean{
     this.loadStudySpotData();
     return this.canFillTheSurvey;
+  }
+
+  openReport() {
+    let dialogRef = this.dialog.open(ReportdialogComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Report dialog was closed');
+    });
   }
 
   openDialog() {
