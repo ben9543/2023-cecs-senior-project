@@ -1,0 +1,25 @@
+<div class="spots-container">
+    <h2 mat-dialog-title>Report Study Spot</h2>
+    <div class="question">
+        <p> Is there something wrong with this study spot page?</p>
+        <mat-form-field>
+            <mat-label>Report</mat-label>
+            <input
+              matInput
+              formControlName="report"
+              placeholder="Report"
+              type="text"
+            />
+            <mat-error
+        >
+          <span
+            >Can't submit a blank report</span
+          >
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="action-checking">
+        <button mat-button mat-dialog-close id = "special-button">Cancel</button>
+        <button mat-button [mat-dialog-close]="true" id = "special-button" (click)="Report()">Submit</button>
+    </div>
+</div>

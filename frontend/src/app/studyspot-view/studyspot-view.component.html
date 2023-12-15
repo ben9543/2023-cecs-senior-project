@@ -61,7 +61,7 @@
     </button>
     <mat-menu #reportSpotMenu [overlapTrigger]="false" yPosition="below" class="customize">
         <button id="more-on-spot" mat-menu-item>
-            <span>Report</span>
+            <span (click)="openReport()">Report</span>
         </button>
         <button id="more-on-spot" mat-menu-item>
             <span>Feedback</span>
